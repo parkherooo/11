@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>JSP 테스트</title>
 </head>
 <body>
-	JSP
+	JSP 테스트입니다.
 </body>
 </html>
