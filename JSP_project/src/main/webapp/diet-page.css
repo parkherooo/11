@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+header h1 span {
+    font-size: 0.8rem;
+    font-weight: normal;
+    display: block;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav > ul > li > a {
+    text-decoration: none;
+    color: #333;
+    padding: 0 1rem;
+}
+
+header nav > ul > li > a.active {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.diet-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.diet-page h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.diet-nav {
+    margin-bottom: 1rem;
+}
+
+.diet-nav a {
+    text-decoration: none;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.diet-nav a.active {
+    color: #4CAF50;
+    font-weight: bold;
+    border-bottom: 2px solid #4CAF50;
+}
+
+.diet-instruction {
+    margin-bottom: 1rem;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.calendar-wrapper, .diet-form-wrapper {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.calendar td.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.diet-record h4 {
+    margin-bottom: 1rem;
+}
+
+.meal-input {
+    margin-bottom: 1rem;
+}
+
+.meal-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.meal-input textarea {
+    width: 100%;
+    height: 60px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+.total-calories {
+    margin-bottom: 1rem;
+}
+
+.total-calories input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.form-actions button {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.form-actions button[type="reset"] {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+}
