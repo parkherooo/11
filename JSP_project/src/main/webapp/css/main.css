@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+* {
+	font-family: 'Arial', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    background-color: white; 
+    display: flex;
+    flex-direction: column; /* 컨테이너 안의 요소 세로 배치 */
+    justify-content: space-between; /* 컨테이너 안의 요소 중앙 배치 */
+    align-items: center;
+    padding: 30px 50px;
+    border-bottom: 1px solid #000; /* 하단 구분선 */
+    height: 100px;
+
+}
+
+.logo img {
+    width: 210px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: center; /* ul 리스트를 중앙에 배치 */
+    align-items: center; /* 메뉴와 버튼이 같은 높이에 배치되도록 설정 */
+    position: relative;
+    width: 100%;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-right: 70px;
+}
+
+nav ul li a {
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 18px;
+    color: #000;
+    transition: color 0.3s ease; /* 색상 전환 효과 */
+}
+
+.login-container {
+	position: absolute;
+    right: 0; /* 오른쪽 끝으로 배치 */
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽 끝에 배치 */
+}
+
+.login-btn1 {
+    background-color: #D9D9D9;
+    border: none; 
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.main-content {
+    margin-top: 100px; /* 고정된 배너의 높이만큼 추가 여백 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px); /* 배너를 제외한 나머지 화면을 차지 */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* 콘텐츠의 너비 */
+}
+
+.arrow img {
+    width: 100px;  /* 원하는 크기로 조정 */
+    height: auto;
+    cursor: pointer;  /* 클릭할 수 있게 마우스 포인터 적용 */
+}
+
+.right-arrow img {
+    transform: rotate(180deg); /* 이미지를 180도 회전 */
+}
+
+.slide {
+    text-align: center;
+}
+
+.slide h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.slide p {
+    font-size: 18px;
+    color: #666;
+}
+
+.slider-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.slider-nav .current-slide, .slider-nav .total-slides {
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+.slider-nav .line {
+    width: 100px;
+    height: 1px;
+    background-color: #000;
+}
