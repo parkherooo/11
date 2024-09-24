@@ -50,9 +50,12 @@
             text-align: center; /* 전체 내용 가운데 정렬 */
             color: black; /* 기본 글자 색상 검정색 */
         }
-        h2 {
-        margin-left: 10%; /* h3 태그 왼쪽 마진 70% */
-        text-align: left; /* 왼쪽 정렬 */
+        h1 {
+       		text-align: center;
+   		}
+   		h3 {
+   			 margin-left: 21%; 
+       		 text-align: left; /* 왼쪽 정렬 */
    		}
         form {
             border: none; /* 테두리 없음 */
@@ -73,7 +76,7 @@
         hr {
             border: none; /* 기본 테두리 없애기 */
             height: 1px;
-            width: 70%; /* 줄의 길이 */
+            width: 60%; /* 줄의 길이 */
             background-color: gray; /* 회색 줄 */
             margin: 20px auto; /* 여백 추가 및 가운데 정렬 */
         }
@@ -88,7 +91,6 @@
             padding: 10px;
             margin: 5px 0;
             color: black; /* 글자 색상 검정색 */
-            background-color: #f9f9f9; /* 배경색 추가 */
         }
         .recipe-item:hover {
             background-color: #f1f1f1; /* 마우스 오버 시 색상 변경 */
@@ -105,7 +107,8 @@
     </style>
 </head>
 <body>
-    <h2>레시피 목록</h2>
+	<h1>Recipe</h1>
+    <h3>레시피 목록</h3>
 
     <form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
@@ -135,14 +138,17 @@
         %>
     </div>
 
-    <div class="pagination"> <!-- 페이지 버튼을 감싸는 div 추가 -->
+   <div class="pagination"> <!-- 페이지 버튼을 감싸는 div 추가 -->
     <%
         int totalRecipes = 1124; // 전체 레시피 수 (API에서 가져온 정보로 변경 가능)
         int totalPages = (int) Math.ceil((double) totalRecipes / 15); // 총 페이지 수
 
+        // 이전 페이지 계산 (최소 1 페이지)
+        int prevPage = Math.max(1, currentPage - 5);
+
         if (currentPage > 1) { // 이전 페이지가 있는 경우
     %>
-        <a href="recipeList.jsp?page=<%= currentPage - 5 %>&search=<%= searchQuery != null ? java.net.URLEncoder.encode(searchQuery, "UTF-8") : "" %>">이전</a>
+        <a href="recipeList.jsp?page=<%= prevPage %>&search=<%= searchQuery != null ? java.net.URLEncoder.encode(searchQuery, "UTF-8") : "" %>">이전</a>
     <%
         }
 
@@ -158,14 +164,17 @@
     <%
         }
 
+        // 다음 페이지 계산 (최대 totalPages)
+        int nextPage = Math.min(totalPages, currentPage + 5);
+
         if (currentPage < totalPages) { // 다음 페이지가 있는 경우
     %>
-        <a href="recipeList.jsp?page=<%= currentPage + 5 %>&search=<%= searchQuery != null ? java.net.URLEncoder.encode(searchQuery, "UTF-8") : "" %>">다음</a>
+        <a href="recipeList.jsp?page=<%= nextPage %>&search=<%= searchQuery != null ? java.net.URLEncoder.encode(searchQuery, "UTF-8") : "" %>">다음</a>
     <%
         }
     %>
-</div>
-
-    <a href="recipeList.jsp" class="recipe-item">목록으로</a>
+	</div>
+    <a href="recipeList.jsp" class="recipe-item">[목록]</a>
+     <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 </html>

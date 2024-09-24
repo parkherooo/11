@@ -35,28 +35,63 @@
 <html>
 <head>
     <title><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피 상세" %></title>
+    <style>
+        body {
+            text-align: center; /* 전체 내용 가운데 정렬 */
+        }
+        .recipe-detail {
+            text-align: left; /* 레시피 상세 정보 왼쪽 정렬 */
+            margin-left: 20%; /* 왼쪽 마진 30% */
+            margin-right: 20%; /* 오른쪽 마진 30% */
+        }
+        .recipe-detail div {
+            margin-bottom: 10px; /* 각 div 요소에 여백 추가 */
+        }
+        img {
+            display: block;
+            margin: 30px auto; /* 이미지를 가운데 정렬 */
+        }
+        a {	
+        	margin-top: 30px;
+            text-decoration: none; /* 밑줄 제거 */
+            padding: 10px 20px; /* 여백 추가 */
+            color: black; /* 글자 색상 검정색 */
+        }
+    </style>
 </head>
 <body>
-    <h1><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피를 찾을 수 없습니다." %></h1>
-    <h3>조리방법</h3>
-    <ul>
+	<h1>Recipe</h1>
+    
+    <div class="recipe-detail">
+    	<h2><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피를 찾을 수 없습니다." %></h2>	
+        <h3>조리방법</h3>
         <% 
         for (int i = 1; i <= 20; i++) {
             String manualKey = "MANUAL0" + i;
             if (recipeDetail != null && recipeDetail.has(manualKey) && !recipeDetail.getString(manualKey).isEmpty()) {
         %>
-                <li><%= recipeDetail.getString(manualKey) %></li>
+                <div><%= recipeDetail.getString(manualKey) %></div>
         <% 
             }
         } 
         %>
-        <li>재료: <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "" %></li>
-        <li>탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %></li>
-        <li>단백질: <%= recipeDetail != null ? recipeDetail.getString("INFO_PRO") : "" %></li>
-        <li>지방: <%= recipeDetail != null ? recipeDetail.getString("INFO_FAT") : "" %></li>
-        <li>나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %></li>
-        <li>열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %></li>
-    </ul>
-    <a href="recipeList.jsp">목록으로</a>
+        <div>재료: <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "" %></div>
+        <h3>성분</h3>
+        <div>탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %>g</div>
+        <div>단백질: <%= recipeDetail != null ? recipeDetail.getString("INFO_PRO") : "" %>g</div>
+        <div>지방: <%= recipeDetail != null ? recipeDetail.getString("INFO_FAT") : "" %>g</div>
+        <div>나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %>g</div>
+        <div>열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %>cal</div>
+        <h3>저감 조리법 Tip</h3>
+        <div><%= recipeDetail != null ? recipeDetail.getString("RCP_NA_TIP") : "" %></div>
+        <div>
+            <img src="<%= recipeDetail != null ? recipeDetail.getString("ATT_FILE_NO_MK") : "" %>" 
+                 alt="조리 이미지" 
+                 style="width: 300px; height: auto;" />
+        </div>
+    </div>
+    <a href="recipeList.jsp">[목록]</a>
+    <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 </html>
+
