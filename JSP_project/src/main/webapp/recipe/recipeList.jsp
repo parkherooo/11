@@ -1,7 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.io.BufferedReader, java.io.InputStreamReader, java.net.HttpURLConnection, java.net.URL, org.json.JSONArray, org.json.JSONObject" %>
-
-<%
+<%@ page import="recipe.UserAllergyMgr" %>
+<%	
+	String userId = (String) session.getAttribute("userId");
+	//String userId = "root"; //테스트
+	UserAllergyMgr allergyMgr = new UserAllergyMgr();
+	String[] userAllergies = allergyMgr.selectAllergy(userId); // 사용자 알러지 목록 가져오기
+	
     String searchQuery = request.getParameter("search");
     String pageParam = request.getParameter("page");
     int currentPage = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
@@ -37,6 +42,31 @@
         recipes = jsonResponse.getJSONObject("COOKRCP01").getJSONArray("row");
     } catch (Exception e) {
         e.printStackTrace();
+    }
+    
+ 	// 필터링된 레시피 목록
+    JSONArray filteredRecipes = new JSONArray();
+    if (recipes != null) {
+        for (int i = 0; i < recipes.length(); i++) {
+            JSONObject recipe = recipes.getJSONObject(i);
+            String food = recipe.getString("RCP_NA_TIP");
+            boolean containsAllergy = false;
+
+            // 사용자 알러지 목록과 비교
+            if (userAllergies != null) {
+                for (String allergy : userAllergies) {
+                    if (food.contains(allergy)) {
+                        containsAllergy = true;
+                        break; // 하나의 알러지가 포함되면 더 이상 확인할 필요 없음
+                    }
+                }
+            }
+
+            // 제외할 알러지가 포함되어 있지 않은 경우 추가
+            if (!containsAllergy) {
+                filteredRecipes.put(recipe);
+            }
+        }
     }
 %>
 
@@ -121,12 +151,12 @@
 
     <div class="recipe-list"> <!-- 레시피 리스트를 감싸는 div 추가 -->
         <%
-            if (recipes != null) {
-                for (int i = 0; i < recipes.length(); i++) {
-                    JSONObject recipe = recipes.getJSONObject(i);
+            if (filteredRecipes != null && filteredRecipes.length() > 0) {
+                for (int i = 0; i < filteredRecipes.length(); i++) {
+                    JSONObject recipe = filteredRecipes.getJSONObject(i);
                     String title = recipe.getString("RCP_NM");
                     String id = recipe.getString("RCP_SEQ");
-        %>
+        %>			
                 <a href="recipeDetail.jsp?id=<%= id %>&title=<%= title %>" class="recipe-item"><%= title %></a>
         <%
                 }
