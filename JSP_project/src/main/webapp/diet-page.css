@@ -186,6 +186,33 @@ header nav > ul > li > a.active {
     color: #333;
 }
 
+.calendar td.selectable {
+    cursor: pointer;
+}
+
+.calendar td.selectable:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar td.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .content-wrapper {
         flex-direction: column;
