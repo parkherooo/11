@@ -15,7 +15,7 @@
 	
 	//관리자 확인
 	String userId = (String) session.getAttribute("userId");
-	int manger = noticeMgr.mangerChk("root");
+	int manger = noticeMgr.mangerChk(userId);
 %>
 <html>
 <head>
@@ -257,6 +257,6 @@
 	<%
 	    }
 	%>
-
+	 <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 </html>
