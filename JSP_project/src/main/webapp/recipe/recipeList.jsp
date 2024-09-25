@@ -73,72 +73,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
     <title>레시피 목록</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            text-align: center; /* 전체 내용 가운데 정렬 */
-            color: black; /* 기본 글자 색상 검정색 */
-        }
-        h1 {
-       		text-align: center;
-   		}
-   		h3 {
-   			 margin-left: 21%; 
-       		 text-align: left; /* 왼쪽 정렬 */
-   		}
-        form {
-            border: none; /* 테두리 없음 */
-            margin-left: 20%; /* 검색 폼 왼쪽 마진 70% */
-        	text-align: left; /* 검색 폼 내의 텍스트 왼쪽 정렬 */
-        }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-        }
-        .serch {
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 20px; /* 아이콘 크기 증가 */
-        }
-        hr {
-            border: none; /* 기본 테두리 없애기 */
-            height: 1px;
-            width: 60%; /* 줄의 길이 */
-            background-color: gray; /* 회색 줄 */
-            margin: 20px auto; /* 여백 추가 및 가운데 정렬 */
-        }
-        .recipe-list {
-            text-align: left; /* 왼쪽 정렬 */
-            margin-left: 20%; /* 왼쪽 간격 설정 */
-            margin-right: 20%;
-        }
-        .recipe-item {
-            text-decoration: none; /* 밑줄 제거 */
-            display: block; /* 각 레시피를 블록으로 표시 */
-            padding: 10px;
-            margin: 5px 0;
-            color: black; /* 글자 색상 검정색 */
-        }
-        .recipe-item:hover {
-            background-color: #f1f1f1; /* 마우스 오버 시 색상 변경 */
-        }
-        .pagination {
-            display: inline-block; /* 버튼을 같은 줄에 배치 */
-            margin: 20px 0; /* 여백 추가 */
-        }
-        .pagination a {
-            text-decoration: none; /* 밑줄 제거 */
-            padding: 10px 20px; /* 여백 추가 */
-            color: black; /* 글자 색상 검정색 */
-        }
-    </style>
+    <link rel="stylesheet" href="../css/recipe.css">
 </head>
-<body>
-	<h1>Recipe</h1>
-    <h3>레시피 목록</h3>
+<body class="recipe-body">
+	<h1 class="recipe-h1">Recipe</h1>
+    <h3 class="recipe-h3">레시피 목록</h3>
 
     <form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
@@ -207,4 +149,5 @@
     <a href="recipeList.jsp" class="recipe-item">[목록]</a>
      <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

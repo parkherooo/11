@@ -21,85 +21,25 @@ function confirmDelete(nNum) {
 }
 </script>
 <head>
+	<%@ include file="/main/header.jsp" %>
+	<link rel="stylesheet" href="../css/notice.css">
     <title>공지사항 상세 보기</title>
-    <style>
-        body {
-            text-align: center;
-        }
-		.type{
-			text-align: left;
-		}
-		
-        .container {
-            width: 50%;
-            margin: 0 auto;
-            padding: 20px; /* 여백 추가 */
-        }
-
-        h1 {
-            font-size: 36px; /* 제목 크기 */
-            margin-bottom: 20px; /* 제목과 본문 사이 여백 */
-            text-align: left; /* 제목 왼쪽 정렬 */
-             
-        }
-        hr{
-        	margin-top: 10%;
-        }
-
-        .date {
-            font-size: 14px; /* 날짜 글자 크기 */
-            color: gray; /* 날짜 색상 */
-            margin-bottom: 20px; /* 날짜와 본문 사이 여백 */
-            text-align: left;
-        }
-
-        .content {
-            font-size: 20px; /* 본문 글자 크기 */
-            line-height: 1.5; /* 줄 간격 */
-            text-align: left; /* 본문 왼쪽 정렬 */
-            margin-bottom: 10%;
-        }
-
-        .back{
-            color: black; /* 버튼 글자색 */
-            border: none; /* 버튼 테두리 제거 */
-            cursor: pointer; /* 커서 포인터 변경 */
-            font-size: 16px; /* 버튼 글자 크기 */
-        }
-
-        .back:hover {
-           background-color: #f1f1f1;
-        }
-        a {
-        	text-align:right;
-            margin: 0 10px;
-            font-size: 18px;
-            color: black; /* 글자 색상 검정 */
-            text-decoration: none; /* 밑줄 제거 */
-        }
-        a:hover {
-            background-color: #f1f1f1;
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end; /* 오른쪽 정렬 */
-            margin-bottom: 20px;
-        }
-    </style>
+	
 </head>
-<body>
-<div class="container">
+<body class="noicebody">
+
+<div class="noticeD-container">
 	<%if(notice.getNoticeType()==0) {%>
 	<div class="type">공지사항</div>
 	<%} else {%>
 	<div class="type">이벤트</div>
 	<%} %>
-    <h1><%= notice.getTitle() %></h1>
+    <h1 class="notice-h1"><%= notice.getTitle() %></h1>
     <div class="date"><%= notice.getnDate() %></div>
     <div class="action-buttons">
         <% if(manger == 1) { %>
-            <a href="noticeUpdate.jsp?nNum=<%= nNum %>">수정</a>
-            <a style="color: #c91b1b;" href="#" onclick="confirmDelete(<%= nNum %>)">삭제</a>
+            <a class="notice-a" href="noticeUpdate.jsp?nNum=<%= nNum %>">수정</a>
+            <a class="notice-a" style="color: #c91b1b;" href="#" onclick="confirmDelete(<%= nNum %>)">삭제</a>
 
 <form id="deleteForm" action="noticeDelete" method="post" style="display: none;">
     <input type="hidden" name="nNum" value="">
@@ -107,10 +47,18 @@ function confirmDelete(nNum) {
 
         <% } %>
     </div>
-    <hr>
-    <div class="content"><%= notice.getContent() %></div>
+    <hr class="nohr" style="margin-top: 10%; width: 100%">
+    <div class="content">  <%= notice.getContent().replace("\n", "<br>") %></div>
+    <div class="image-container" >
+        <% if (notice.getnImg() != null && !notice.getnImg().isEmpty()) { %>
+            <img class="notice-img" src="../notice/notice_img/<%= notice.getnImg() %>" alt="공지사항 이미지" style="max-width: 40%; height: auto;">
+        <% } %>
+    </div>
+    <br>
     <a class="back" href="noticeList.jsp">[목록]</a>
 </div>
 	 <%@ include file="/chatbot/chatbot.jsp" %>
+	 
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

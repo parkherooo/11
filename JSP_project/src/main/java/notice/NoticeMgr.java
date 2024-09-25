@@ -138,7 +138,7 @@ public class NoticeMgr {
 		 Vector<NoticeBean>vlist = new Vector<NoticeBean>();
 		try {
 			con = pool.getConnection();
-			sql = "select * from tblnotice";
+			sql = "select * from tblnotice order by nNum desc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) { 
