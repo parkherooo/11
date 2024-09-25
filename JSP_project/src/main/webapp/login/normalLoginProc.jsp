@@ -17,7 +17,7 @@
 
     if (loggedIn) {
         session.setAttribute("userId", userId);
-        response.sendRedirect("main.jsp");
+        response.sendRedirect("../main/main.jsp");
     } else {
         out.println("로그인 실패. 아이디와 비밀번호를 확인해주세요.");
     }
