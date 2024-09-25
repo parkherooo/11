@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="notice.NoticeMgr" %>
+<%@ page import="notice.NoticeMgr, notice.NoticeBean" %>
+<%
+    // NoticeMgr 인스턴스 생성
+    NoticeMgr noticeMgr = new NoticeMgr();
+
+    // 공지사항 번호 가져오기
+    int nNum = Integer.parseInt(request.getParameter("nNum"));
+    NoticeBean notice = noticeMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
+%>
 <html>
 <head>
-    <title>공지사항 작성</title>
+    <title>공지사항 수정</title>
     <style>
         body {
             text-align: center;
@@ -38,14 +46,6 @@
             border-radius: 4px; /* 모서리 둥글게 */
         }
 
-        input[type="file"] {
-            margin-bottom: 20px; /* 파일 선택 버튼과 다음 요소 사이 여백 */
-        }
-
-        .radio-group {
-            margin-bottom: 20px; /* 라디오 버튼 그룹과 다음 요소 사이 여백 */
-        }
-
         button {
             padding: 10px 15px; /* 버튼 여백 */
             color: white; /* 버튼 글자색 */
@@ -59,33 +59,41 @@
         button:hover {
             background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
         }
+        .button-container {
+            margin-top: 30px; /* 버튼 상단에 여백 추가 */
+            text-align: left;
+        }
     </style>
 </head>
 <body>
 
 <div class="container" >
-    <h1>공지사항 작성</h1>
-    <form action="noticePost" method="post" enctype="multipart/form-data">
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" required>
-		<label>공지 타입</label>
-        <div class="radio-group">
-            <label><input type="radio" name="noticeType" value="0" required> 공지사항</label>
-            <label><input type="radio" name="noticeType" value="1"> 이벤트</label>
+    <h1>공지사항 수정</h1>
+    <form action="noticeUpdate" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="nNum" value="<%= nNum %>">
+        <label>공지사항 타입</label>
+        <div style="margin: 10px; auto">
+            <b><%= (notice.getNoticeType() == 0) ? "공지사항" : "이벤트" %></b>
         </div>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" value="<%= notice.getTitle() %>" required>
         
         <label for="content">내용</label>
-        <textarea id="content" name="content" rows="15" required></textarea>
-		<div> 
-		<label for="image">이미지</label>
-        <input type="file" id="image" name="image" accept="image/*">
+        <textarea id="content" name="content" rows="15" required><%= notice.getContent() %></textarea>
+        
+        <div>
+            <label for="image">이미지</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <% if(notice.getnImg() != null && !notice.getnImg().isEmpty()) { %>
+                <p>현재 이미지: <%= notice.getnImg() %></p>
+            <% } %>
         </div>
-       
-		
-        <button type="submit">작성하기</button>
-        <button type="reset">다시쓰기</button>
+       	<div class="button-container">
+            <button type="submit">수정하기</button>
+        </div>
+        
     </form>
 </div>
-	 <%@ include file="/chatbot/chatbot.jsp" %>
+
 </body>
 </html>

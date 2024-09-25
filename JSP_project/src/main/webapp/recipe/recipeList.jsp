@@ -97,7 +97,7 @@
             font-size: 16px;
             border: none;
         }
-        button {
+        .serch {
             border: none;
             background: none;
             cursor: pointer;
@@ -142,7 +142,7 @@
 
     <form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
-        <button type="submit">
+        <button type="submit" class="serch">
             <i class="fas fa-search"></i>
         </button>
     </form>

@@ -97,6 +97,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
         }
+        
     </style>
 </head>
 <body>
@@ -106,7 +107,7 @@
         <div class="messages" id="chatWindow"></div>
         <div class="input-container">
             <input type="text" id="userInput" placeholder="메시지를 입력하세요..." onkeydown="handleKeyPress(event)" />
-            <button onclick="sendMessage()">전송</button>
+            <button class="" onclick="sendMessage()">전송</button>
         </div>
     </div>
 

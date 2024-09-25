@@ -1,77 +1,132 @@
 package notice;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import DB.DBConnectionMgr;
+import DB.MUtil;
 
 public class NoticeMgr {
 	private DBConnectionMgr pool;
+	public static final String SAVEFOLDER = "C:\\JSP_project\\JSP_project\\src\\main\\webapp\\notice\\notice_img";
+	public static final String ENCODING = "UTF-8";
+	public static final int MAXSIZE = 1202*1024*50;
+	
 	public NoticeMgr() {
 		pool = DBConnectionMgr.getInstance();
+		
 	}
 	
 	//공지사항 작성
-	public void noticeInsert(NoticeBean bean) {
+	public boolean noticeInsert(HttpServletRequest req) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
-		
+		boolean flag = false;
 		try {
+			File dir = new File(SAVEFOLDER);
+			if(!dir.exists())
+				dir.mkdirs(); //상위 폴더가 없더라도 생성
+				//dir.mkdir();// 상위 폴더가 없으면 생성 불가
+			MultipartRequest multi = new MultipartRequest(req,SAVEFOLDER,MAXSIZE,ENCODING, new DefaultFileRenamePolicy());
+			String filename = null;
+			if(multi.getFilesystemName("image")!=null) {
+				//첨부파일
+				filename = multi.getFilesystemName("image");
+			}
 			con = pool.getConnection();
 			sql = "insert tblnotice values(null,?,?,?,?,now())";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bean.getNoticeType());
-			pstmt.setString(2, bean.getTitle());
-			pstmt.setString(3, bean.getContent());
-			pstmt.setString(4, bean.getnImg());
-			pstmt.executeUpdate();
+			pstmt.setInt(1, Integer.parseInt(multi.getParameter("noticeType")));
+			pstmt.setString(2, multi.getParameter("title"));
+			pstmt.setString(3, multi.getParameter("content"));
+			pstmt.setString(4, filename);
+			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return flag;
 	}
 	
 	//공지사항 수정
-	public void noticeUpdate(NoticeBean bean) {
+	public boolean noticeUpdate(MultipartRequest multi) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
+		boolean flag = false;
 		try {
 			con = pool.getConnection();
+			int nNum = Integer.parseInt(multi.getParameter("nNum"));
+			String title = multi.getParameter("title");
+			String content = multi.getParameter("content");
+			String filename = multi.getFilesystemName("image");
+			if(filename!=null&&!filename.equals("")) {
+				//파일 업로드 수정
+				NoticeBean bean = getNotice(nNum);
+				String dbFile = bean.getnImg();
+				if(dbFile!=null&&!dbFile.equals("")) {
+					//기존에 업로드 파일이 존재
+					File f = new File(SAVEFOLDER+dbFile);
+					if(f.exists())
+						f.delete();
+			}
 			sql = "update tblnotice set title=?, content=?, nImg=? where nNum = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getTitle());
-			pstmt.setString(2, bean.getContent());
-			pstmt.setString(3, bean.getnImg());
-			pstmt.setInt(4, bean.getnNum());
-			pstmt.executeUpdate();
+			pstmt.setString(1,title);
+			pstmt.setString(2,content);
+			pstmt.setString(3, filename);
+			pstmt.setInt(4, nNum);
+			} else {
+				sql = "update tblnotice set title=?, content=? where nNum = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1,title);
+				pstmt.setString(2,content);
+				pstmt.setInt(3, nNum);
+			}
+			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return flag;
 	}
 	
 	//공지사항 삭제
-	public void noticeDelete(int nNum) {
+	public boolean noticeDelete(int nNum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
+		boolean flag = false;
 		try {
+			NoticeBean bean = getNotice(nNum);
+			String filename = bean.getnImg();
+			if(filename!=null&&!filename.equals("")) {
+				File f = new File(SAVEFOLDER+filename);
+				if(f.exists())
+					f.delete(); //첨부된 파일 삭제
+			}
 			con = pool.getConnection();
 			sql = "delete from tblnotice where nNum= ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, nNum);
-			pstmt.executeUpdate();
+			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return flag;
 	}
 	
 	//전체 리스트
