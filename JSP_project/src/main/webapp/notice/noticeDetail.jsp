@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="notice.NoticeMgr, notice.NoticeBean" %>
+<%@ include file="/main/header.jsp" %>
 <%
     // NoticeMgr 인스턴스 생성
     NoticeMgr noticeMgr = new NoticeMgr();
-
-	String userId = (String) session.getAttribute("userId");
-	int manger = noticeMgr.mangerChk("root");
+	int manger = noticeMgr.mangerChk(userId);
     // 공지사항 번호 가져오기
     int nNum = Integer.parseInt(request.getParameter("nNum"));
     NoticeBean notice = noticeMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
@@ -21,7 +20,7 @@ function confirmDelete(nNum) {
 }
 </script>
 <head>
-	<%@ include file="/main/header.jsp" %>
+	
 	<link rel="stylesheet" href="../css/notice.css">
     <title>공지사항 상세 보기</title>
 	

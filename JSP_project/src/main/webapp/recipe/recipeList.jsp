@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.io.BufferedReader, java.io.InputStreamReader, java.net.HttpURLConnection, java.net.URL, org.json.JSONArray, org.json.JSONObject" %>
 <%@ page import="recipe.UserAllergyMgr" %>
+<%@ include file="/main/header.jsp" %>
 <%	
-	String userId = (String) session.getAttribute("userId");
-	//String userId = "root"; //테스트
+
 	UserAllergyMgr allergyMgr = new UserAllergyMgr();
 	String[] userAllergies = allergyMgr.selectAllergy(userId); // 사용자 알러지 목록 가져오기
 	
@@ -72,8 +72,7 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<%@ include file="/main/header.jsp" %>
+<head>	
     <title>레시피 목록</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/recipe.css">
