@@ -4,6 +4,7 @@
 //이미 제공되는 session 객체를 사용하여 userId를 가져옴
 String userId = (String) session.getAttribute("userId");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +58,7 @@ String userId = (String) session.getAttribute("userId");
                     </ul>
                 </li>
                 <li><a href="community.jsp">Community</a></li>
-                <li><a href="notice.jsp">Notice</a></li>
+                <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <div class="login-container">
                 <% if (userId != null) { %>
