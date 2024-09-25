@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -97,16 +97,19 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
         }
+        
     </style>
 </head>
 <body>
     <div class="circle-button" onclick="toggleChatbot()">FitBot</div>
     <div class="chat-container" id="chatContainer">
-        <img alt="로고" src="../img/fittime.png">
+
+        <img alt="로고" src="${pageContext.request.contextPath}/chatbot/fittime.png" style="display: block; margin-left: 10px;">
+
         <div class="messages" id="chatWindow"></div>
         <div class="input-container">
             <input type="text" id="userInput" placeholder="메시지를 입력하세요..." onkeydown="handleKeyPress(event)" />
-            <button onclick="sendMessage()">전송</button>
+            <button class="" onclick="sendMessage()">전송</button>
         </div>
     </div>
 
@@ -141,7 +144,10 @@
             if (userMessage === '') return;
 
             addMessageToChat(userMessage, 'user');
-
+            
+            // 세션에 메시지 추가
+            updateSessionStorage(userMessage, 'user');
+            
             const loadingMessage = document.createElement('div');
             loadingMessage.classList.add('message', 'bot', 'loading-indicator');
             loadingMessage.textContent = 'GPT 응답 중...';
@@ -158,6 +164,9 @@
             .then(data => {
                 loadingMessage.remove();
                 addMessageToChat(data, 'bot');
+                
+                // 세션에 GPT 응답 추가
+                updateSessionStorage(data, 'bot');
             })
             .catch(error => {
                 loadingMessage.remove();
@@ -167,8 +176,20 @@
             userInput.value = '';
             userInput.focus();
         }
+        function updateSessionStorage(message, sender) {
+            let chatHistory = JSON.parse(sessionStorage.getItem('chatHistory')) || [];
+            chatHistory.push({ message, sender });
+            sessionStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+        }
 
+        function loadChatHistory() {
+            const chatHistory = JSON.parse(sessionStorage.getItem('chatHistory')) || [];
+            chatHistory.forEach(entry => {
+                addMessageToChat(entry.message, entry.sender);
+            });
+        }
         window.onload = function() {
+        	loadChatHistory(); // 세션에서 대화 내용 로드
             addMessageToChat('FitTime 챗봇입니다. 레시피, 식단, 운동루틴을 물어보세요!', 'bot');
         };
     </script>
