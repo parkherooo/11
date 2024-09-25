@@ -190,3 +190,7 @@
             justify-content: flex-end; /* 오른쪽 정렬 */
             margin-bottom: 20px;
         }
+        .type{
+        	text-align: left; /* 본문 왼쪽 정렬 */
+        }
+        

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java"  pageEncoding="UTF-8"%>
 
 <%
 //이미 제공되는 session 객체를 사용하여 userId를 가져옴
