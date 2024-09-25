@@ -8,12 +8,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>카카오 로그인 처리</title>
 </head>
 <body>
 <%
     // 카카오에서 받아온 access_token 처리
     String accessToken = request.getParameter("access_token");
+
     if (accessToken != null && !accessToken.isEmpty()) {
         // 카카오 API 요청 URL
         String apiUrl = "https://kapi.kakao.com/v2/user/me";
@@ -31,15 +32,23 @@
             String inputLine;
             StringBuffer responseBuffer = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
-            	responseBuffer.append(inputLine);
+                responseBuffer.append(inputLine);
             }
             in.close();
             
             // 카카오에서 받은 사용자 정보 출력 (JSON 형식)
             out.println("<h2>카카오 사용자 정보</h2>");
-            out.println("<pre>" + response.toString() + "</pre>");
+            out.println("<pre>" + responseBuffer.toString() + "</pre>");
+
+            // 여기서 필요한 사용자 정보 추출 및 처리 가능
+            // JSON 라이브러리를 사용해 파싱한 후 원하는 데이터를 처리할 수 있습니다.
+            // 예시:
+            // JSONObject jsonResponse = new JSONObject(responseBuffer.toString());
+            // String userId = jsonResponse.getJSONObject("id").toString();
+            // String nickname = jsonResponse.getJSONObject("properties").getString("nickname");
             
-            // 여기서 사용자 정보에 따라 필요한 처리 (예: 로그인 세션 생성) 수행 가능
+            // 세션 설정 등
+            // session.setAttribute("userId", userId);
         } else {
             out.println("카카오 API 호출 실패: " + responseCode);
         }

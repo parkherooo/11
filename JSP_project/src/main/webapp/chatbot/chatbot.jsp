@@ -103,7 +103,9 @@
 <body>
     <div class="circle-button" onclick="toggleChatbot()">FitBot</div>
     <div class="chat-container" id="chatContainer">
+
         <img alt="로고" src="${pageContext.request.contextPath}/chatbot/fittime.png" style="display: block; margin-left: 10px;">
+
         <div class="messages" id="chatWindow"></div>
         <div class="input-container">
             <input type="text" id="userInput" placeholder="메시지를 입력하세요..." onkeydown="handleKeyPress(event)" />
