@@ -19,8 +19,8 @@
 				<li><a href="#">Recipe</a></li>
 				<li class="dropdown"><a href="#" class="active">Diet</a>
 					<ul class="dropdown-content">
-						<li><a href="#">식단 기록</a></li>
-						<li><a href="#">하루 권장 칼로리</a></li>
+						<li><a href="DietRecord.jsp">식단 기록</a></li>
+						<li><a href="CalorieCalc.jsp">하루 권장 칼로리</a></li>
 					</ul></li>
 				<li><a href="#">Exercise</a></li>
 				<li><a href="#">Community</a></li>

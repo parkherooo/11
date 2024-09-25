@@ -15,11 +15,11 @@ public class GetDietServlet extends HttpServlet {
         ResultSet rs = null;
         
         try {
-            // 데이터베이스 연결 (연결 정보는 실제 환경에 맞게 수정해야 합니다)
+            // 데이터베이스 연결
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime", "root", "1234");
 
-            String sql = "SELECT breakfast, lunch, dinner, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate = ?";
+            String sql = "SELECT diet FROM tblDietaryRecords WHERE userId = ? AND drDate = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
             pstmt.setDate(2, java.sql.Date.valueOf(selectedDate));
