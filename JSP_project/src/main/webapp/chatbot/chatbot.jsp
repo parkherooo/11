@@ -104,7 +104,7 @@
     <div class="circle-button" onclick="toggleChatbot()">FitBot</div>
     <div class="chat-container" id="chatContainer">
 
-        <img alt="로고" src="${pageContext.request.contextPath}/chatbot/fittime.png" style="display: block; margin-left: 10px;">
+        <img alt="로고" src="../img/fittime.png" style="display: block; margin-left: 10px;">
 
         <div class="messages" id="chatWindow"></div>
         <div class="input-container">

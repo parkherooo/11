@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@
                     </ul>
                 </li>
                 <li><a href="community.jsp">Community</a></li>
-                <li><a href="notice.jsp">Notice</a></li>
+                <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <div class="login-container">
                 <button class="login-btn1" onclick="goToLogin()">Login</button>

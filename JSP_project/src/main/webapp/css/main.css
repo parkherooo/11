@@ -1,17 +1,19 @@
 @charset "UTF-8";
 
 * {
+	margin: 0;
+    padding: 0;
 	font-family: 'Arial', sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+	padding-top: 200px;
+
 }
 
 /* ---- header CSS ---- */
 .banner {
-    background-color: white; 
+    background-color:rgb(255, 255, 255); 
     display: flex;
     flex-direction: column; 
     justify-content: space-between;
@@ -19,6 +21,11 @@ body {
     padding: 30px 50px;
     border-bottom: 1px solid #000;
     height: 100px;
+    position: fixed; /* 고정 위치 설정 */
+    top: 0; /* 상단 고정 */
+    left: 0;
+    right: 0;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
 }
 
 .logo img {
@@ -73,6 +80,8 @@ nav ul li .dropdown-menu {
     opacity: 0; /* 투명하게 시작 */
     transform: translateY(-10px); /* 메뉴가 위에서 내려오는 효과 */
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; /* 애니메이션 효과 */
+    width: 110vw;
+    margin-left: calc(-50vw + 50%); 
 }
 
 /* 마우스를 올렸을 때 드롭다운 메뉴 보이기 */
@@ -80,11 +89,13 @@ nav ul li:hover .dropdown-menu {
     visibility: visible; /* 보이도록 설정 */
     opacity: 1; /* 불투명하게 보임 */
     transform: translateY(0); /* 원래 위치로 이동 */
-    left: 0;
 }
 
 .dropdown-menu li {
     margin-right: 20px;
+    width: 100%;
+     padding: 10px 0; /* 상하 여백 추가 */
+    margin: 0; /* 간격 제거 */
 }
 
 .dropdown-menu li a {
@@ -348,9 +359,10 @@ form input {
 
 /* ---- footer CSS ---- */
 .footer {
+	margin-top:100px;
     background-color: #333; /* 푸터 배경색 */
     color: white; /* 푸터 텍스트 색상 */
-    padding: 20px 0; /* 위아래 여백 */
+    padding: 30px 0; /* 위아래 여백 */
     width: 100%;
 }
 
@@ -381,7 +393,8 @@ form input {
 }
 
 .footer-social a:hover {
-    color: #fff; /* 호버 시 텍스트 색상 변경 */
+
+    text-shadow: black;
 }
 
 .footer-bottom {
