@@ -1,28 +1,18 @@
-<%@page import="user.UserMgr"%>
-<%@page import="user.UserBean"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="user.UserMgr, user.UserBean" %>
 
-</head>
-<body>
 <%
-    // 폼에서 받은 회원 정보
     String userId = request.getParameter("userId");
     String name = request.getParameter("name");
     String pwd = request.getParameter("password");
-    String birth = request.getParameter("birthDate");
+    String birth = request.getParameter("birth");
     String phone = request.getParameter("phone");
     String address = request.getParameter("address");
-    String allergy = request.getParameter("allergies");
+    String allergy = request.getParameter("allergy");
     float height = Float.parseFloat(request.getParameter("height"));
     float weight = Float.parseFloat(request.getParameter("weight"));
     int gender = Integer.parseInt(request.getParameter("gender"));
-
+    
     UserBean user = new UserBean();
     user.setUserId(userId);
     user.setName(name);
@@ -35,14 +25,12 @@
     user.setWeight(weight);
     user.setGender(gender);
 
-    UserMgr userMgr = new UserMgr();
-    boolean success = userMgr.insertUser(user);
+    UserMgr mgr = new UserMgr();
+    boolean result = mgr.insertUser(user);
 
-    if (success) {
-        response.sendRedirect("signupSuccess.jsp");
+    if (result) {
+        out.println("<script>alert('회원가입이 완료되었습니다.'); location.href='../login/logIn.jsp';</script>");
     } else {
-        out.println("회원가입 실패. 다시 시도해주세요.");
+        out.println("<script>alert('회원가입에 실패했습니다.'); history.back();</script>");
     }
 %>
-</body>
-</html>

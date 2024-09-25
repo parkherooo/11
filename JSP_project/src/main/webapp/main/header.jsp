@@ -1,5 +1,10 @@
-<%@ page language="java" 
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+//이미 제공되는 session 객체를 사용하여 userId를 가져옴
+String userId = (String) session.getAttribute("userId");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +15,18 @@
 	// 로그인 페이지로 이동하는 함수
 	function goToLogin() {
 		window.location.href = "../login/logIn.jsp";
+	}
+	
+	// 마이페이지로 이동하는 함수
+	function goToMyPage() {
+		window.location.href = "../user/myPage.jsp";
+	}
+	
+	// 로그아웃 페이지로 이동하는 함수
+	function goToLogout() {
+		if (confirm("로그아웃 하시겠습니까?")) {
+			window.location.href = "../login/logOut.jsp"; // 로그아웃 페이지로 이동
+		}
 	}
 </script>
 </head>
@@ -44,7 +61,14 @@
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <div class="login-container">
-                <button class="login-btn1" onclick="goToLogin()">Login</button>
+                <% if (userId != null) { %>
+                    <!-- 로그인 상태라면 MyPage 버튼 -->
+                    <button class="login-btn1" onclick="goToMyPage()">MyPage</button>
+                    <button class="login-btn1" onclick="goToLogout()">Logout</button>
+                <% } else { %>
+                    <!-- 로그아웃 상태라면 Login 버튼 -->
+                    <button class="login-btn1" onclick="goToLogin()">Login</button>
+                <% } %>
             </div>
         </nav>
     </div>
