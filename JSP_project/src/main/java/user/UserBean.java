@@ -10,7 +10,9 @@ public class UserBean {
 	private String allergy;
 	private float height;
 	private float weight;
+	private String profile;
 	private int gender;
+	private String msg;
 	
 	public String getUserId() {
 		return userId;
@@ -66,10 +68,23 @@ public class UserBean {
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	public int getGender() {
 		return gender;
 	}
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	
 }

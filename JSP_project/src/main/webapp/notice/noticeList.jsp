@@ -31,10 +31,10 @@
 
 <div class="noticeheader">
     <div class="noticecategories">
-    <a class="notice-a <%= (category == null || category.equals("전체")) ? "active" : "" %>" href="noticeList.jsp?category=전체">전체</a>
-    <a class="notice-a <%= (category != null && category.equals("공지사항")) ? "active" : "" %>" href="noticeList.jsp?category=공지사항">공지사항</a>
-    <a class="notice-a <%= (category != null && category.equals("이벤트")) ? "active" : "" %>" href="noticeList.jsp?category=이벤트">이벤트</a>
-    </div>
+	    <a class="notice-a <%= (category == null || category.equals("전체")) ? "active" : "" %>" href="noticeList.jsp?category=전체">전체</a>
+	    <a class="notice-a <%= (category != null && category.equals("공지사항")) ? "active" : "" %>" href="noticeList.jsp?category=공지사항">공지사항</a>
+	    <a class="notice-a <%= (category != null && category.equals("이벤트")) ? "active" : "" %>" href="noticeList.jsp?category=이벤트">이벤트</a>
+	</div>
 
     <div class="noticesearch-container">
         <form action="noticeList.jsp" method="get">
