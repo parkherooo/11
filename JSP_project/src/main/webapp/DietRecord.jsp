@@ -10,6 +10,69 @@
 <title>Fit Time - Diet</title>
 <link rel="stylesheet" href="diet-page.css">
 <script src="calendar-script.js"></script>
+<style>
+    .content-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px; /* 전체 콘텐츠의 최대 너비 설정 */
+        margin: 0 auto; /* 중앙 정렬 */
+    }
+
+    .calendar-wrapper, .diet-form-wrapper {
+        width: 48%; /* 캘린더와 식단 입력 폼의 너비 */
+    }
+
+    .food-search {
+        width: 100%; /* 식품 검색 섹션 전체 너비 사용 */
+        margin-top: 20px;
+    }
+
+    #searchResults table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 1px solid #ddd; /* 테이블 외곽선 추가 */
+    }
+
+    #searchResults th, #searchResults td {
+        border: 1px solid #ddd; /* 셀 테두리 추가 */
+        padding: 10px;
+        text-align: left;
+    }
+
+    #searchResults th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    #searchResults tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    #searchResults tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #foodSearchInput {
+        width: 88%;
+        padding: 10px;
+        margin-right: 10px;
+    }
+
+    #searchButton {
+        width: 10%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    #searchButton:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
 	<header>
@@ -68,20 +131,13 @@
 				<input type="hidden" id="userId" name="userId" value="">
 				<input type="hidden" id="selectedDate" name="selectedDate" value="">
 				<div class="meal-input">
-					<label for="breakfast">아침식단:</label>
-					<textarea id="breakfast" name="breakfast"></textarea>
-				</div>
-				<div class="meal-input">
-					<label for="lunch">점심식단:</label>
-					<textarea id="lunch" name="lunch"></textarea>
-				</div>
-				<div class="meal-input">
-					<label for="dinner">저녁식단:</label>
-					<textarea id="dinner" name="dinner"></textarea>
-				</div>
+					<label for="diet">오늘의 식단:</label>
+					<textarea id="diet" name="diet" rows="6" placeholder="오늘 하루 동안 먹은 음식을 자유롭게 기록해주세요."></textarea>
+					</div>
 				<div class="total-calories">
-					<label for="calories">총 칼로리 계산:</label> <input type="number"
-						id="calories" name="calories">
+					<label for="calories">총 칼로리:</label> 
+					<input type="number" id="calories" name="calories">
+					<span>kcal</span>
 				</div>
 				<div class="form-actions">
 					<button type="reset">취소</button>
@@ -90,7 +146,15 @@
 			</form>
 		</div>
 		</div>
+				<div class="food-search">
+					<h3>식품 영양분석</h3>
+					<input type="text" id="foodSearchInput" placeholder="검색어를 입력하세요.">
+					<button id="searchButton">검색</button>
+					<h3>	식품영양분석 API 검색기록</h3>
+					<div id="searchResults"></div>
+				</div>
 	</main>
+	<script src="dietsearch-script.js"></script>
 	
 	<%-- <script>
 	// 페이지 로드 시 로그인 상태 확인
