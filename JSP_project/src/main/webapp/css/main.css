@@ -5,11 +5,9 @@
     padding: 0;
 	font-family: 'Arial', sans-serif;
 }
-
 body {
-	margin-top: 10%;
+    margin-top: 400px; /* 헤더의 높이만큼 상단 여백 추가 */
 }
-
 /* ---- header CSS ---- */
 .banner {
     background-color:rgb(255, 255, 255); 
@@ -390,7 +388,7 @@ form input {
 
 /* ---- footer CSS ---- */
 .footer {
-	margin-top:100px;
+    bottom: 0; /* 화면 하단에 위치 */
     background-color: #333; /* 푸터 배경색 */
     color: white; /* 푸터 텍스트 색상 */
     padding: 30px 0; /* 위아래 여백 */

@@ -95,4 +95,38 @@ public class UserMgr {
 		}
 		return flag;
 	}
+	//마이페이지 유저 정보
+	public UserBean myInfo(String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		UserBean bean = new UserBean();
+		try {
+			con = pool.getConnection();
+			sql = "select * from tbluser where userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { 
+				bean.setUserId(rs.getString("userId"));
+				bean.setName(rs.getString("name"));
+				bean.setPwd(rs.getString("pwd"));
+				bean.setBirth(rs.getString("birth"));
+				bean.setPhone(rs.getString("phone"));
+				bean.setAddress(rs.getString("address"));
+				bean.setAllergy(rs.getString("allergy"));
+				bean.setHeight(rs.getFloat("height"));
+				bean.setWeight(rs.getFloat("weight"));
+				bean.setProfile(rs.getString("profile"));
+				bean.setGender(rs.getInt("gender"));
+				bean.setMsg(rs.getString("msg"));
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return bean;
+	}
 }

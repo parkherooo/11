@@ -19,7 +19,7 @@ String userId = (String) session.getAttribute("userId");
 	
 	// 마이페이지로 이동하는 함수
 	function goToMyPage() {
-		window.location.href = "../user/myPage.jsp";
+		window.location.href = "../mypage/myPage.jsp";
 	}
 	
 	// 로그아웃 페이지로 이동하는 함수
