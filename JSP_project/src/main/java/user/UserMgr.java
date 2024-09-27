@@ -1,15 +1,22 @@
 package user;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import com.oreilly.servlet.MultipartRequest;
+
 import DB.DBConnectionMgr;
 import mypage.freindBean;
+import notice.NoticeBean;
 
 public class UserMgr {
 	private DBConnectionMgr pool;
+	public static final String SAVEFOLDER = "C:\\JSP_project\\JSP_project\\src\\main\\webapp\\img\\profile";
+	public static final String ENCODING = "UTF-8";
+	public static final int MAXSIZE = 1202*1024*50;
 	
 	public UserMgr() {
 		pool = DBConnectionMgr.getInstance();
@@ -351,6 +358,129 @@ public class UserMgr {
 			sql = "delete from tblfriend where num =?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//내 프로필 수정
+	public boolean myprofileUpdate(MultipartRequest multi) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			String userId = multi.getParameter("userId");
+			String introduce = multi.getParameter("introduce");
+			String filename = multi.getFilesystemName("image");
+			if(filename!=null&&!filename.equals("")) {
+				//파일 업로드 수정
+				UserBean bean = myInfo(userId);
+				String dbFile = bean.getProfile();
+				if(dbFile!=null&&!dbFile.equals("")) {
+					//기존에 업로드 파일이 존재
+					File f = new File(SAVEFOLDER+dbFile);
+					if(f.exists())
+						f.delete();
+			}
+			sql = "update tbluser set profile=?, msg=? where userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, filename);
+			pstmt.setString(2, introduce);
+			pstmt.setString(3, userId);
+			} else {
+				sql = "update tbluser set msg=? where userId = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, introduce);
+				pstmt.setString(2, userId);
+			}
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//프로필삭제
+	public void deleteProfile(MultipartRequest multi) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		String userId = multi.getParameter("userId");
+		String filename = multi.getFilesystemName("image");
+		try {
+			if (filename != null && !filename.equals("")) {
+			    // 파일 업로드 수정
+			    UserBean bean = myInfo(userId);
+			    String dbFile = bean.getProfile();
+			    System.out.println("파일" + dbFile);
+			    if (dbFile != null && !dbFile.equals("")) {
+			        // 기존에 업로드 파일이 존재
+			        File f = new File(UserMgr.SAVEFOLDER + dbFile);
+			        
+			        // 파일이 존재하는지 확인하고 삭제
+			        if (f.exists()) {
+			            boolean deleted = f.delete();
+			            if (deleted) {
+			                System.out.println("파일이 성공적으로 삭제되었습니다: " + dbFile);
+			            } else {
+			                System.out.println("파일 삭제에 실패했습니다: " + dbFile);
+			            }
+			        }
+			    }
+			}
+			con = pool.getConnection();
+			sql = "update tbluser set profile=null where userId= ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+	}
+	
+	//내 정보 수정
+	public boolean myinfoUpdate(UserBean bean) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update tbluser set name = ?, phone=?, address=?, birth = ? where userId =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setString(2, bean.getPhone());
+			pstmt.setString(3, bean.getAddress());
+			pstmt.setString(4, bean.getBirth());
+			pstmt.setString(5, bean.getUserId());
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	public boolean myinfoDelete(String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "delete from tbluser where userId= ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
 			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();

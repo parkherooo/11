@@ -41,7 +41,7 @@
     <div class="myprofile">
         <table class="profile-table">
             <tr>
-                <%if(bean.getProfile()==null) {%>
+                <%if(bean.getProfile()==null||bean.getProfile().equals("")) {%>
                 <th><img class="profile" alt="빈프로필" src="../img/profile/null_Profile.png"></th>
                 <%} else {%>
                 <th><img class="profile" alt="프로필" src="../img/profile/<%=bean.getProfile()%>"></th>
@@ -71,7 +71,32 @@
         <div class="mypage-info">
             <% if(category == null || category.equals("프로필관리")) { %>
                 <h2>회원 정보 수정</h2>
-                <form action="updateUserInfo.jsp" method="post">
+                <form action="mypageProfile" method="post" enctype="multipart/form-data">
+	                <div>
+	                	<label class="" for="image">프로필 이미지 등록</label>
+		       			<input type="file" id="image" name="image" accept="image/*">
+				            <% if(bean.getProfile() != null && !bean.getProfile().isEmpty()) { %>
+				                <p>현재 이미지: <%= bean.getProfile() %></p>
+				            <% } %>  
+	                </div>
+	                
+		            <div>
+		                <label class="" for="introduce">소개글</label><br>
+		                <%           
+		                if(bean.getMsg()==null||bean.getMsg().equals("")){ %>
+		                	<input type="text" id="introduce" name="introduce" value="소개글이 없습니다." required><br>
+		                <%} else{%>
+	      				<input type="text" id="introduce" name="introduce" value="<%= bean.getMsg() %>" required><br>
+	      				<%} %>
+		            </div>
+		            <br>
+		       			<button class="mypage-button" name="action" type="submit" value="update">수정하기</button>
+		       			<button class="mypage-button" name="action" type="submit" value="delete" style="background-color: RED">사진삭제</button>
+		       			<input type="hidden" name="userId" value="<%= userId %>">
+	       			
+                </form>
+                
+                <form action="updateUser" method="post">
                     <table>
                         <tr>
                             <td>이름:</td>
@@ -91,11 +116,12 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: right;">
-                                <input type="submit" value="수정" class="submit-button">
-                                <input type="submit" value="회원탈퇴" class="submit-button" style="background-color: RED">
+                                <button class="mypage-button" name="action" type="submit" value="update">수정하기</button>
+		       					<button class="mypage-button" name="action" type="submit" value="delete" style="background-color: RED">탈퇴하기</button>
                             </td>
                         </tr>
                     </table>
+                    <input type="hidden" name="userId" value="<%= userId %>">
                 </form>
             <% } else if (category.equals("알러지관리")) { %>
            <div class="allergy">
@@ -214,7 +240,7 @@
                	<div>
 				    <form action="" method="post">
 				        <input type="text" name="friendId" placeholder="친구추가할 사용자의 ID를 입력하세요" style="width: 300px;">
-				        <button type="submit" class="search">
+				        <button class="mypage-button" type="submit" class="search">
 				            <i class="fas fa-search"></i>
 				        </button>
 				    </form>
@@ -233,7 +259,7 @@
 					   	 	친구이름: <%=frname %>
 					   	 	<input type="hidden" name="userId" value="<%= userId %>">
 			                <input type="hidden" name="friendId" value="<%= friendId %>">
-			                <button type="submit">+</button>
+			                <button class="mypage-button" type="submit">+</button>
 			            </form>
 					   	<%} else{ %>
 					   	검색하신 아이디가 없습니다.
@@ -250,8 +276,8 @@
 					   		요청 아이디 :<%=vlist.get(i) %>
 							<input type="hidden" name="friendId" value="<%= vlist.get(i)%>">
 							<input type="hidden" name="userId" value="<%= userId %>">
-				            <button type="submit" name="action" value="accept">수락</button>
-				            <button type="submit" name="action" value="delete" style="background-color: red;">삭제</button>
+				            <button class="mypage-button" type="submit" name="action" value="accept">수락</button>
+				            <button class="mypage-button" type="submit" name="action" value="delete" style="background-color: red;">삭제</button>
 					   		<%} %>
 					   	</form>
 					   	<form action="friendDelete" method="post">
@@ -272,9 +298,9 @@
 					   			%>
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
-						   			<button onclick="">식단관리</button>
-						   			<button onclick="">운동관리</button>
-						   			<button type="submit" style="background-color: red;">삭제</button>
+						   			<button class="mypage-button" onclick="">식단관리</button>
+						   			<button class="mypage-button" onclick="">운동관리</button>
+						   			<button class="mypage-button" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
 					   			<%} for(int i=0; i<tofrlist.size();i++){
@@ -282,9 +308,9 @@
 					   			%>
 					   			<td><%=frbean.getFriendId() %></td>
 					   			<td>
-						   			<button onclick="">식단관리</button>
-						   			<button onclick="">운동관리</button>
-						   			<button type="submit" style="background-color: red;">삭제</button>
+						   			<button class="mypage-button" onclick="">식단관리</button>
+						   			<button class="mypage-button" onclick="">운동관리</button>
+						   			<button class="mypage-button" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
 					   			<%} %>
