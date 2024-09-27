@@ -84,7 +84,7 @@
 	}
 </script>
 </head>
-<body>
+<body class="Signupbody">
 <%@ include file="../main/header.jsp" %>
 	<section class="normal-signup-section">
         <h1>회원가입</h1>

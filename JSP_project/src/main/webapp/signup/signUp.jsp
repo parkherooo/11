@@ -55,7 +55,7 @@
     };
 </script>
 </head>
-<body>
+<body class="signupbody">
 <%@ include file="../main/header.jsp" %>
 	<!-- 회원가입 폼 -->
     <section class="signup-section">

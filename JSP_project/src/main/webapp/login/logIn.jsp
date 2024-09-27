@@ -53,14 +53,15 @@
 </script>
 
 </head>
-<body>
 <%@ include file="../main/header.jsp" %>
+<body class="loginbody">
+
     <!-- 로그인 폼 -->
     <section class="login-section">
         <h1>로그인</h1>
         <!-- 일반 로그인 폼 -->
         <form id="normalLoginForm" action="normalLoginProc.jsp" method="post">
-            <input class="login-input" type="text" name="userId" placeholder="아이디 (이메일)" required><br>
+            <input class="login-input" type="text" name="myuserId" placeholder="아이디 (이메일)" required><br>
             <input class="login-input" type="password" name="password" placeholder="비밀번호" required><br>
             <button  type="submit" class="login-btn2">로그인</button>
             <div class="options">
@@ -83,6 +84,7 @@
         <input type="hidden" id="access_token" name="access_token" />
     </form>
 <%@ include file="../chatbot/chatbot.jsp" %>
-<%@ include file="../main/footer.jsp" %>
+
 </body>
+<footer><%@ include file="../main/footer.jsp" %></footer>
 </html>
