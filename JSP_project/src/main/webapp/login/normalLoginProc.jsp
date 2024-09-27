@@ -7,13 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body class="loginbody">
 <%
-    String userId = request.getParameter("userId");
+    String myuserId = request.getParameter("myuserId");
     String pwd = request.getParameter("password");
 
     UserMgr userMgr = new UserMgr();
-    boolean loggedIn = userMgr.loginUser(userId, pwd, session);
+    boolean loggedIn = userMgr.loginUser(myuserId, pwd, session);
 
     if (loggedIn) {
         response.sendRedirect("../main/main.jsp");

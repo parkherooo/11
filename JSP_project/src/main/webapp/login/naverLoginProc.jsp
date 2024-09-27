@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>네이버 로그인 처리</title>
 </head>
-<body>
+<body class="loginbody">
 <%
     // 네이버에서 전달된 access_token 받기
     String accessToken = request.getParameter("access_token");

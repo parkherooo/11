@@ -2,7 +2,7 @@
 
 <%
 	// 이미 제공되는 session 객체를 사용하여 userId를 가져옴
-	String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+	String userId = (String) session.getAttribute("userId");
 	String name = (String) session.getAttribute("name");
 %>
 
@@ -68,7 +68,7 @@
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <div class="login-container">
-                <% if (loggedInUserId != null) { %>
+                <% if (userId != null) { %>
                     <!-- 로그인 상태라면 MyPage 버튼 -->
                     <button class="mypage-btn" onclick="goToMyPage()">MyPage</button>&nbsp;&nbsp;
                     <button class="logout-btn" onclick="goToLogout()">Logout</button>

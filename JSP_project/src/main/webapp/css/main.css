@@ -6,7 +6,7 @@
 	font-family: 'Arial', sans-serif;
 }
 body {
-    margin-top: 400px; /* 헤더의 높이만큼 상단 여백 추가 */
+    margin-top: 200px; /* 헤더의 높이만큼 상단 여백 추가 */
 }
 /* ---- header CSS ---- */
 .banner {
