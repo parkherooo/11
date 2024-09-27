@@ -83,7 +83,7 @@
 
     <form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
-        <button type="submit" class="serch">
+        <button type="submit" class="search">
             <i class="fas fa-search"></i>
         </button>
     </form>

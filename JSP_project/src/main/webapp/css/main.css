@@ -200,7 +200,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 /* 로그인 입력 필드 */
-form input {
+.login-input {
     width: 90%;
     padding: 15px;
     margin-bottom: 20px;

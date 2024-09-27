@@ -1,3 +1,6 @@
+<%@page import="mypage.freindBean"%>
+<%@page import="java.util.Vector"%>
+<%@page import="recipe.UserAllergyMgr"%>
 <%@page import="user.UserMgr"%>
 <%@page import="user.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,13 +14,28 @@
 <head>
     <meta charset="UTF-8">
     <title>myPage</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/mypage.css">
     <%@ include file="/main/header.jsp" %>
 </head>
-<%
+<%	
+	//카테고리 분류
     String category = request.getParameter("category");
+	//내정보 가져오기
     bean = mgr.myInfo(userId);
+    
+	//알러지 정보 가져오기
+    UserAllergyMgr allergyMgr = new UserAllergyMgr();
+	String[] userAllergies = {"없음"};
+	
+	//비로그인시 메인으로 이동
+    if(userId==null||userId.equals("")){
 %>
+<script>
+       alert("로그인이 필요합니다. 메인 페이지로 이동합니다.");
+       window.location.href = "../main/main.jsp"; 
+</script>
+<%} %>
 <body>
 <div class="mypage-body">
     <div class="myprofile">
@@ -36,7 +54,7 @@
                 <%if(bean.getMsg()==null) {%>
                 <th>소개글이 없습니다.</th>
                 <%} else { %>
-                <th><%=bean.getMsg() %></th>
+                <th><%=bean.getMsg().replace("\n", "<br>") %></th>
                 <%} %>
             </tr>
         </table>
@@ -80,31 +98,202 @@
                     </table>
                 </form>
             <% } else if (category.equals("알러지관리")) { %>
-            <div class="allergy">
-         	    <h3>먹을 수 없는 음식을 선택하세요.</h3>
-         	    <div>
-         	    	<input type="button" value="견과류" class="allergy-btn">
-         	    	<input type="button" value="유제품" class="allergy-btn">
-         	    	<input type="button" value="계란" class="allergy-btn">
-         	    	<input type="button" value="생선" class="allergy-btn">
-         	    	<input type="button" value="갑각류" class="allergy-btn">
-         	    </div>
-         	    <div class="input-row">
-         	    	<input type="text" value="음식 직접입력" class="allergy-input">
-         	    	<input type="submit" value="추가" class="allergy-plus">
-         	    </div>
-            </div>
-               
+           <div class="allergy">
+		    <h3>먹을 수 없는 음식을 선택하세요.</h3><br>
+				<form id="allergyForm" class="allergyForm" action="allergyUpdate" method="post">
+				    <div>
+				        <input type="button" value="견과류" class="allergy-btn" onclick="toggleAllergy(this.value)">
+				        <input type="button" value="유제품" class="allergy-btn" onclick="toggleAllergy(this.value)">
+				        <input type="button" value="계란" class="allergy-btn" onclick="toggleAllergy(this.value)">
+				        <input type="button" value="생선" class="allergy-btn" onclick="toggleAllergy(this.value)">
+				        <input type="button" value="갑각류" class="allergy-btn" onclick="toggleAllergy(this.value)">
+				    </div>
+				    <br>
+				    <div class="input-row">
+				        <input type="text" id="allergyInput" class="allergy-input" placeholder="음식 직접입력(음식이름을 입력해주셔야 합니다.)">
+				        <input type="button" value="추가" class="allergy-plus" onclick="addAllergyFromInput()">
+				    </div>
+				    
+				    <div>
+				        <br><h3>기존 알러지</h3><br>
+				        <div>
+				            <% 
+				            if(allergyMgr.selectAllergy(userId)!=null){
+				            	 userAllergies=allergyMgr.selectAllergy(userId); 
+				            }
+				            for (int i = 0; i < userAllergies.length; i++) { %>
+				                <input type="button" value="<%= userAllergies[i] %>" class="existing-allergy-btn" onclick="toggleAllergy(this.value)">
+				            <% } %>
+				        </div>
+				        
+				        <div>
+				            <br><h3>수정 할 알러지</h3><br>
+				            <div id="selectedAllergies"></div>
+				        </div>
+				        <div>
+				            <input type="submit" value="수정" class="update-allergy-btn" onclick="updateAllergies()">
+				            <input type="hidden" name="selectedAllergies" id="hiddenAllergies">
+				            <input type="hidden" name="userId" id="userId" value="<%= session.getAttribute("userId") %>">
+				        </div>
+				    </div>
+				</form>
+		
+		</div>
+
+<script type="text/javascript">
+    // 선택된 알러지를 저장할 배열
+    var selectedAllergies = [];
+
+    // 알러지를 토글하는 함수 (추가/삭제)
+    function toggleAllergy(allergy) {
+    // allergy가 selectedAllergies 배열에 있는지 확인
+	    if (selectedAllergies.includes(allergy)) {
+	        // 알러지가 배열에 있으면 제거
+	        selectedAllergies = selectedAllergies.filter(item => item !== allergy);
+	    } else {
+	        // 알러지가 배열에 없으면 추가
+	        selectedAllergies.push(allergy);
+	    }
+	    updateAllergyDisplay();
+	}
+
+
+    // 입력된 값을 추가하는 함수
+    function addAllergyFromInput() {
+        var allergy = document.getElementById("allergyInput").value;
+        if (allergy.trim() === "") {
+            alert("알러지 이름을 입력해주세요.");
+            return;
+        }
+        toggleAllergy(allergy); // 입력한 값을 토글
+        document.getElementById("allergyInput").value = ""; // 입력 필드를 비움
+    }
+
+    // 선택된 알러지를 화면에 표시하는 함수
+    function updateAllergyDisplay() {
+        var allergyContainer = document.getElementById("selectedAllergies");
+        allergyContainer.innerHTML = ""; // 기존 내용 초기화
+
+        // 선택된 알러지 배열을 순회하며 버튼으로 추가
+        selectedAllergies.forEach(function(allergy) {
+            var button = document.createElement("input");
+            button.type = "button";
+            button.value = allergy;
+            button.className = "selected-allergy-btn"; // 버튼 스타일 지정 가능
+            button.onclick = function() {
+                toggleAllergy(allergy); // 클릭 시 알러지 토글 (제거)
+            };
+            allergyContainer.appendChild(button);
+            
+        });
+    }
+
+    // 초기화 함수 (기존 알러지 추가)
+    function initializeAllergies() {
+        <% for (int i = 0; i < userAllergies.length; i++) { %>
+            toggleAllergy("<%= userAllergies[i] %>"); // 기존 알러지 추가
+        <% } %>
+    }
+    
+    function updateAllergies() {
+        // 선택된 알러지 배열을 쉼표로 구분된 문자열로 변환
+        document.getElementById("hiddenAllergies").value = selectedAllergies.join(",");
+        // 폼을 제출
+        document.getElementById("allergyForm").submit();
+    }
+
+    // 페이지 로드 시 초기화
+    window.onload = initializeAllergies;
+</script>
 
             <% } else if (category.equals("커뮤니티관리")) { %>
-                <h2>커뮤니티 관리</h2>
-                <!-- 커뮤니티 관리에 대한 내용 추가 -->
+           		
                 <p>여기에서 커뮤니티 관리 기능을 구현하세요.</p>
             <% } else if (category.equals("친구관리")) { %>
                 <h2>친구 관리</h2>
-                <!-- 친구 관리에 대한 내용 추가 -->
-                <p>여기에서 친구 관리 기능을 구현하세요.</p>
-            <% } %>
+               	<div>
+				    <form action="" method="post">
+				        <input type="text" name="friendId" placeholder="친구추가할 사용자의 ID를 입력하세요" style="width: 300px;">
+				        <button type="submit" class="search">
+				            <i class="fas fa-search"></i>
+				        </button>
+				    </form>
+				        <%
+				        String friendId = null;
+				        friendId = request.getParameter("friendId");
+				        String frname = mgr.frChk(friendId); 
+				        if(friendId != null&&friendId.equals(userId)){
+				        	out.println("<br>자기 자신을 친구 추가할 수 없습니다.");
+				        } else{
+				        %>
+					   	<div>
+					   	 <br>
+					   	<%if(frname!=null) {%>
+					   	<form action="friendPlus" method="post"> <!-- 추가하기 위한 별도 폼 -->
+					   	 	친구이름: <%=frname %>
+					   	 	<input type="hidden" name="userId" value="<%= userId %>">
+			                <input type="hidden" name="friendId" value="<%= friendId %>">
+			                <button type="submit">+</button>
+			            </form>
+					   	<%} else{ %>
+					   	검색하신 아이디가 없습니다.
+					   	<%} //--else%>
+					   	</div>
+					   	<%} //--else %>
+					   	<form action="FriendAction" method="post">
+					   		친구요청<br>
+					   		<%
+					   			Vector<String>vlist = new Vector<String>();
+					   			vlist = mgr.frState(userId);
+					   			for(int i=0; i<vlist.size(); i++){
+					   		%>
+					   		요청 아이디 :<%=vlist.get(i) %>
+							<input type="hidden" name="friendId" value="<%= vlist.get(i)%>">
+							<input type="hidden" name="userId" value="<%= userId %>">
+				            <button type="submit" name="action" value="accept">수락</button>
+				            <button type="submit" name="action" value="delete" style="background-color: red;">삭제</button>
+					   		<%} %>
+					   	</form>
+					   	<form action="friendDelete" method="post">
+					   	<table>
+					   	<tr>
+					   		<td>친구 목록</td>
+					   	</tr>
+					   		<tr>
+					   			<%
+					   				Vector<freindBean>frlist = new Vector<freindBean>();
+					   				frlist = mgr.myFriend(userId);
+					   				
+					   				Vector<freindBean>tofrlist = new Vector<freindBean>();
+					   				tofrlist = mgr.toMyfriend(userId);
+					   				
+					   				for(int i=0; i<frlist.size();i++){
+					   					freindBean frbean = frlist.get(i);
+					   			%>
+					   			<td><%=frbean.getUserId() %></td>
+					   			<td>
+						   			<button onclick="">식단관리</button>
+						   			<button onclick="">운동관리</button>
+						   			<button type="submit" style="background-color: red;">삭제</button>
+						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
+					   			</td>
+					   			<%} for(int i=0; i<tofrlist.size();i++){
+					   				freindBean frbean = tofrlist.get(i);
+					   			%>
+					   			<td><%=frbean.getFriendId() %></td>
+					   			<td>
+						   			<button onclick="">식단관리</button>
+						   			<button onclick="">운동관리</button>
+						   			<button type="submit" style="background-color: red;">삭제</button>
+						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
+					   			</td>
+					   			<%} %>
+					   		</tr>
+					   	</table>
+					   	
+					   	</form>
+				</div>
+            <% }%>
         </div>
     </div>
 </div>
