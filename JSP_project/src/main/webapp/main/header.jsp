@@ -1,8 +1,9 @@
 <%@ page language="java"  pageEncoding="UTF-8"%>
 
 <%
-//이미 제공되는 session 객체를 사용하여 userId를 가져옴
-String userId = (String) session.getAttribute("userId");
+	// 이미 제공되는 session 객체를 사용하여 userId를 가져옴
+	String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+	String name = (String) session.getAttribute("name");
 %>
 
 <!DOCTYPE html>
@@ -25,7 +26,7 @@ String userId = (String) session.getAttribute("userId");
 	// 로그아웃 페이지로 이동하는 함수
 	function goToLogout() {
 		if (confirm("로그아웃 하시겠습니까?")) {
-			window.location.href = "../login/logOut.jsp"; // 로그아웃 페이지로 이동
+			window.location.href = "../login/logOut.jsp"; 
 		}
 	}
 </script>
@@ -34,6 +35,12 @@ String userId = (String) session.getAttribute("userId");
 	<!-- header.jsp -->
 	<header>
     <div class="banner">
+    	<!-- 환영 메시지 -->
+        <% if (name != null) { %>
+            <div class="welcome-message">
+                <span><%= name %>님 환영합니다!</span>
+            </div>
+        <% } %>
         <div class="logo">
             <a href="../main/main.jsp">
                 <img src="../img/logo.png" alt="Fit Time 로고"/>
@@ -61,10 +68,10 @@ String userId = (String) session.getAttribute("userId");
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <div class="login-container">
-                <% if (userId != null) { %>
+                <% if (loggedInUserId != null) { %>
                     <!-- 로그인 상태라면 MyPage 버튼 -->
-                    <button class="login-btn1" onclick="goToMyPage()">MyPage</button>
-                    <button class="login-btn1" onclick="goToLogout()">Logout</button>
+                    <button class="mypage-btn" onclick="goToMyPage()">MyPage</button>&nbsp;&nbsp;
+                    <button class="logout-btn" onclick="goToLogout()">Logout</button>
                 <% } else { %>
                     <!-- 로그아웃 상태라면 Login 버튼 -->
                     <button class="login-btn1" onclick="goToLogin()">Login</button>

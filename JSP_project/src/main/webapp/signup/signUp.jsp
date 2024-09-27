@@ -62,8 +62,11 @@
         <h1>회원가입</h1>
         <!-- 일반 회원가입 폼 -->
         <form id="normalSignupForm" action="normalSignup.jsp" method="post">
-        	<p>당신의 건강한 변화를 돕겠습니다 :-)</p>
+        	<p>당신의 건강한 변화를 돕겠습니다 :-)</p><br>
             <button type="submit" class="signup-btn">이메일 주소로 회원가입</button>
+            <div class="options">
+                <a href="../login/logIn.jsp">로그인</a> | <a href="../find//findId.jsp">아이디 찾기</a> | <a href="../find//findPwd.jsp">비밀번호 찾기</a>
+            </div>
         </form>
 
         <!-- 소셜 로그인 -->
