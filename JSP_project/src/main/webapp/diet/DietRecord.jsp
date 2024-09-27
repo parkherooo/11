@@ -8,25 +8,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fit Time - Diet</title>
-<link rel="stylesheet" href="diet-page.css">
-<script src="calendar-script.js"></script>
+<link rel="stylesheet" href="../css/main.css">
 <style>
+
+/* 	main.diet-page {
+    padding: 2rem 0; /* 상하 여백 추가 */
+	}
+
+ */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #ffffff; /* 흰색으로 변경 */
+}
+
+	/* 메인 컨텐츠 영역 스타일 */
+	.diet-page {
+  	  max-width: 1200px;
+  	  margin: 2rem auto;
+   	 	padding: 0 1rem;
+   		background-color: #ffffff;
+	}
+
+	/* 메인 제목 스타일 */
+	.diet-page h2 {
+	    font-size: 2rem;
+  	  	margin-bottom: 1rem;
+  	  	padding-top: 240px;
+  	  	clear: both;
+	}
+	
     .content-wrapper {
         display: flex;
         justify-content: space-between;
+        gap: 2rem;
         width: 100%;
         max-width: 1200px; /* 전체 콘텐츠의 최대 너비 설정 */
         margin: 0 auto; /* 중앙 정렬 */
     }
 
     .calendar-wrapper, .diet-form-wrapper {
+    	background-color: #ffffff;
+    	border-radius: 8px;
+    	padding: 1rem;
+    	border: 1px solid #000;
+    	box-shadow: none;
         width: 48%; /* 캘린더와 식단 입력 폼의 너비 */
+    }
+    
+    .calendar-wrapper {
+    	flex: 0.75;
+    }
+    
+    .diet-form-wrapper {
+    	flex: 1.25;
     }
 
     .food-search {
         width: 100%; /* 식품 검색 섹션 전체 너비 사용 */
         margin-top: 20px;
     }
+    
+    .search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 입력 필드와 버튼 사이의 간격 */
+}
+    
+    .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* 캘린더 헤더 버튼 스타일 */
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 캘린더 테이블 스타일 */
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 캘린더 셀 스타일 */
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+/* 활성화된 캘린더 셀 스타일 */
+.calendar td.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 선택 가능한 캘린더 셀 스타일 */
+.calendar td.selectable {
+    cursor: pointer;
+}
+
+/* 선택 가능한 캘린더 셀 호버 스타일 */
+.calendar td.selectable:hover {
+    background-color: #f0f0f0;
+}
+
+/* 선택된 캘린더 셀 스타일 */
+.calendar td.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 다이어트 기록 제목 스타일 */
+.diet-record h4 {
+    margin-bottom: 1rem;
+}
+
+/* 식사 입력 영역 스타일 */
+.meal-input {
+    margin-bottom: 1rem;
+}
+
+.meal-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.meal-input textarea {
+    width: calc(100% - 18px);
+    height: 60px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+/* 총 칼로리 입력 영역 스타일 */
+.total-calories {
+    margin-bottom: 1rem;
+}
+
+.total-calories input {
+    width: calc(100% - 18px);
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 폼 액션 버튼 영역 스타일 */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* 폼 액션 버튼 공통 스타일 */
+.form-actions button {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 제출 버튼 스타일 */
+.form-actions button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 리셋 버튼 스타일 */
+.form-actions button[type="reset"] {
+    background-color: #f0f0f0;
+    color: #333;
+}
 
     #searchResults table {
         width: 100%;
@@ -55,43 +216,33 @@
     }
 
     #foodSearchInput {
-        width: 88%;
+        flex-grow: 1;
         padding: 10px;
-        margin-right: 10px;
+        
     }
 
     #searchButton {
-        width: 10%;
         padding: 10px;
         background-color: #4CAF50;
         color: white;
         border: none;
         cursor: pointer;
+        white-space: nowrap;
     }
 
     #searchButton:hover {
         background-color: #45a049;
     }
+    
+    @media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+}
 </style>
 </head>
 <body>
-	<header>
-		<h1>Fit Time.</h1>
-		<nav>
-			<ul>
-				<li><a href="#">Recipe</a></li>
-				<li class="dropdown"><a href="#" class="active">Diet</a>
-					<ul class="dropdown-content">
-						<li><a href="DietRecord.jsp">식단 기록</a></li>
-						<li><a href="CalorieCalc.jsp">하루 권장 칼로리</a></li>
-					</ul></li>
-				<li><a href="#">Exercise</a></li>
-				<li><a href="#">Community</a></li>
-				<li><a href="#">Notice</a></li>
-			</ul>
-		</nav>
-		<button class="login-btn">Login</button>
-	</header>
+	<%@ include file="../main/header.jsp" %>
 
 	<main class="diet-page">
 		<h2>Diet</h2>
@@ -148,8 +299,10 @@
 		</div>
 				<div class="food-search">
 					<h3>식품 영양분석</h3>
+					<div class="search-container">
 					<input type="text" id="foodSearchInput" placeholder="검색어를 입력하세요.">
 					<button id="searchButton">검색</button>
+					</div>
 					<h3>	식품영양분석 API 검색기록</h3>
 					<div id="searchResults"></div>
 				</div>
@@ -181,7 +334,8 @@
 	    }
 	});
 	</script> --%>
-
-	<!-- <script src="script.js"></script> -->
+	<%@ include file="/chatbot/chatbot.jsp" %>
+	<%@ include file="../main/footer.jsp" %>
+	<script src="../diet/calendar-script.js"></script>
 </body>
 </html>
