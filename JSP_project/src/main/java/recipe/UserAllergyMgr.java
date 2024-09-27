@@ -8,7 +8,7 @@ import DB.DBConnectionMgr;
 
 public class UserAllergyMgr {
 	private DBConnectionMgr pool;
-	
+	//알러지 ,으로 나눠서 배열로 가져오기
 	public UserAllergyMgr() {
 		pool = DBConnectionMgr.getInstance();
 	}
@@ -35,6 +35,7 @@ public class UserAllergyMgr {
 		}
 		return allergies;
 	}
+	
 }
 
 
