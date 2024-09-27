@@ -13,13 +13,17 @@
     String pwd = request.getParameter("password");
 
     UserMgr userMgr = new UserMgr();
-    boolean loggedIn = userMgr.loginUser(userId, pwd);
+    boolean loggedIn = userMgr.loginUser(userId, pwd, session);
 
     if (loggedIn) {
-        session.setAttribute("userId", userId);
         response.sendRedirect("../main/main.jsp");
     } else {
-        out.println("로그인 실패. 아이디와 비밀번호를 확인해주세요.");
+%>
+        <script>
+            alert('로그인 실패. 아이디와 비밀번호를 확인해주세요.');
+            history.back(); // 이전 페이지로 
+        </script>
+<%
     }
 %>
 </body>

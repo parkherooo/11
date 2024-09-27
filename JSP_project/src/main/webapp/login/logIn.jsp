@@ -64,7 +64,7 @@
             <input type="password" name="password" placeholder="비밀번호" required><br>
             <button type="submit" class="login-btn2">로그인</button>
             <div class="options">
-                <a href="../signup/signUp.jsp">회원가입</a> | <a href="#">로그인 정보 찾기</a>
+                <a href="../signup/signUp.jsp">회원가입</a> | <a href="../find/findId.jsp">아이디 찾기</a> | <a href="../find/findPwd.jsp">비밀번호 찾기</a>
             </div>
         </form>
 

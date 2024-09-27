@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
 <%@ page import="user.UserMgr" %>
 <%
     // AJAX 요청을 받으면 처리
@@ -87,7 +88,7 @@
 <%@ include file="../main/header.jsp" %>
 	<section class="normal-signup-section">
         <h1>회원가입</h1>
-        <form action="normalSignUpProc.jsp" method="post" class="normal-signup-form" onsubmit="return validateForm()">
+        <form action="normalSignUpProc.jsp" accept-charset="UTF-8" method="post" class="normal-signup-form" onsubmit="return validateForm()">
             <!-- 이름 -->
             <div class="full-width">
                 <label for="name">이름:</label>
