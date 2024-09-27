@@ -145,7 +145,7 @@ input[type="submit"]:hover {
      cursor: pointer;
      font-size: 20px; /* 아이콘 크기 증가 */
  }
- button{
+ .mypage-button{
  	background-color: #000000; /* 배경 색 */
     border: none; /* 테두리 없음 */
     color: white; /* 글자 색 */

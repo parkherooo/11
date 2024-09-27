@@ -24,6 +24,8 @@
 		<div> 
 		<label class="notice-label" for="image">이미지</label>
         <input class="notice-input" type="file" id="image" name="image" accept="image/*">
+        <br>
+        <br>
         </div>
        
 		
