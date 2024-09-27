@@ -1,5 +1,5 @@
 @charset "UTF-8";
-body {
+		.chatbot-body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
@@ -75,7 +75,7 @@ body {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: #007BFF;
+            background-color: black;
             color: white;
             display: flex;
             justify-content: center;

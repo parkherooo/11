@@ -50,7 +50,7 @@ function confirmDelete(nNum) {
     <div class="content">  <%= notice.getContent().replace("\n", "<br>") %></div>
     <div class="image-container" >
         <% if (notice.getnImg() != null && !notice.getnImg().isEmpty()) { %>
-            <img class="notice-img" src="../notice/notice_img/<%= notice.getnImg() %>" alt="공지사항 이미지" style="max-width: 40%; height: auto;">
+            <img class="notice-img" src="../notice/notice_img/<%= notice.getnImg() %>" alt="공지사항 이미지" style="max-width: 100%; height: auto;">
         <% } %>
     </div>
     <br>

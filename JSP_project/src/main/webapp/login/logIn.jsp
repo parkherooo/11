@@ -60,9 +60,9 @@
         <h1>로그인</h1>
         <!-- 일반 로그인 폼 -->
         <form id="normalLoginForm" action="normalLoginProc.jsp" method="post">
-            <input type="text" name="userId" placeholder="아이디 (이메일)" required><br>
-            <input type="password" name="password" placeholder="비밀번호" required><br>
-            <button type="submit" class="login-btn2">로그인</button>
+            <input class="login-input" type="text" name="userId" placeholder="아이디 (이메일)" required><br>
+            <input class="login-input" type="password" name="password" placeholder="비밀번호" required><br>
+            <button  type="submit" class="login-btn2">로그인</button>
             <div class="options">
                 <a href="../signup/signUp.jsp">회원가입</a> | <a href="../find/findId.jsp">아이디 찾기</a> | <a href="../find/findPwd.jsp">비밀번호 찾기</a>
             </div>

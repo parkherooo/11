@@ -1,16 +1,28 @@
 package user;
 
+
 import java.security.MessageDigest;
+
+import java.io.File;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Vector;
+
+import com.oreilly.servlet.MultipartRequest;
 
 import javax.servlet.http.HttpSession;
 
 import DB.DBConnectionMgr;
+import mypage.freindBean;
+import notice.NoticeBean;
 
 public class UserMgr {
 	private DBConnectionMgr pool;
+	public static final String SAVEFOLDER = "C:\\JSP_project\\JSP_project\\src\\main\\webapp\\img\\profile";
+	public static final String ENCODING = "UTF-8";
+	public static final int MAXSIZE = 1202*1024*50;
 	
 	public UserMgr() {
 		pool = DBConnectionMgr.getInstance();
@@ -123,6 +135,7 @@ public class UserMgr {
 		}
 		return flag;
 	}
+
 	
 	// 전화번호 중복 체크
     public boolean phoneChk(String phone) {
@@ -175,7 +188,7 @@ public class UserMgr {
         return foundId;
     }
     
- // 비밀번호 재설정
+    // 비밀번호 재설정
     public boolean resetPassword(String userId, String newPassword) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -203,5 +216,392 @@ public class UserMgr {
         return isSuccess;
     }
 
+
+
+	//마이페이지 유저 정보
+	public UserBean myInfo(String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		UserBean bean = new UserBean();
+		try {
+			con = pool.getConnection();
+			sql = "select * from tbluser where userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { 
+				bean.setUserId(rs.getString("userId"));
+				bean.setName(rs.getString("name"));
+				bean.setPwd(rs.getString("pwd"));
+				bean.setBirth(rs.getString("birth"));
+				bean.setPhone(rs.getString("phone"));
+				bean.setAddress(rs.getString("address"));
+				bean.setAllergy(rs.getString("allergy"));
+				bean.setHeight(rs.getFloat("height"));
+				bean.setWeight(rs.getFloat("weight"));
+				bean.setProfile(rs.getString("profile"));
+				bean.setGender(rs.getInt("gender"));
+				bean.setMsg(rs.getString("msg"));
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return bean;
+	}
+	//알러지 수정
+	public boolean updateAllergy(String userId, String Allergy) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update tbluser set allergy = ? where userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, Allergy);
+			pstmt.setString(2, userId);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//친구아이디 존재 확인 후 이름 반환
+	public String frChk(String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String frname = null;
+		try {
+			con = pool.getConnection();
+			sql = "SELECT name FROM tbluser WHERE userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				frname = rs.getString(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return frname;
+	}
+	
+	//친구 추가
+	public boolean frPlus(String userId, String frId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "insert tblfriend values(null,?,?,0)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, frId);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	//친구 요청여부 확인
+	public boolean frplusChk(String userId){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		boolean flag =false;
+		try {
+			con = pool.getConnection();
+			sql = "select * from tblfriend where friendId = ? and frcheck = 0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { 
+				flag = true;
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return flag;
+	}
+	
+	
+	//친구 요청 리스트
+	public Vector<String> frState (String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<String> vlist = new Vector<String>();
+		try {
+			con = pool.getConnection();
+			sql = "select userId from tblfriend where friendId = ? and frcheck = 0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) { 
+				String frId = rs.getString(1);
+				vlist.addElement(frId);
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	
+	
+	//친구 수락
+	public boolean frOk(String userId, String frId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update tblfriend set frcheck = 1 where friendId = ? and userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, frId);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//친구 요청 삭제
+	public boolean frDelete(String userId, String frId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "delete from tblfriend where friendId = ? and userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, frId);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//수락한 친구 리스트
+	public Vector<freindBean> myFriend (String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<freindBean> vlist = new Vector<freindBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select num,userId from tblfriend where friendId = ? and frcheck = 1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) { 
+				freindBean bean = new freindBean();
+				bean.setNum(rs.getInt(1));
+				bean.setUserId(rs.getString(2));
+				vlist.addElement(bean);
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//수락받은 친구 리스트
+	public Vector<freindBean> toMyfriend (String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<freindBean> vlist = new Vector<freindBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select num,friendId from tblfriend where userId = ? and frcheck = 1";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) { 
+				freindBean bean = new freindBean();
+				bean.setNum(rs.getInt(1));
+				bean.setFriendId(rs.getString(2));
+				vlist.addElement(bean);
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//친구삭제
+	public boolean freindDelete(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "delete from tblfriend where num =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//내 프로필 수정
+	public boolean myprofileUpdate(MultipartRequest multi) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			String userId = multi.getParameter("userId");
+			String introduce = multi.getParameter("introduce");
+			String filename = multi.getFilesystemName("image");
+			if(filename!=null&&!filename.equals("")) {
+				//파일 업로드 수정
+				UserBean bean = myInfo(userId);
+				String dbFile = bean.getProfile();
+				if(dbFile!=null&&!dbFile.equals("")) {
+					//기존에 업로드 파일이 존재
+					File f = new File(SAVEFOLDER+dbFile);
+					if(f.exists())
+						f.delete();
+			}
+			sql = "update tbluser set profile=?, msg=? where userId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, filename);
+			pstmt.setString(2, introduce);
+			pstmt.setString(3, userId);
+			} else {
+				sql = "update tbluser set msg=? where userId = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, introduce);
+				pstmt.setString(2, userId);
+			}
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	//프로필삭제
+	public void deleteProfile(MultipartRequest multi) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		String userId = multi.getParameter("userId");
+		String filename = multi.getFilesystemName("image");
+		try {
+			if (filename != null && !filename.equals("")) {
+			    // 파일 업로드 수정
+			    UserBean bean = myInfo(userId);
+			    String dbFile = bean.getProfile();
+			    System.out.println("파일" + dbFile);
+			    if (dbFile != null && !dbFile.equals("")) {
+			        // 기존에 업로드 파일이 존재
+			        File f = new File(UserMgr.SAVEFOLDER + dbFile);
+			        
+			        // 파일이 존재하는지 확인하고 삭제
+			        if (f.exists()) {
+			            boolean deleted = f.delete();
+			            if (deleted) {
+			                System.out.println("파일이 성공적으로 삭제되었습니다: " + dbFile);
+			            } else {
+			                System.out.println("파일 삭제에 실패했습니다: " + dbFile);
+			            }
+			        }
+			    }
+			}
+			con = pool.getConnection();
+			sql = "update tbluser set profile=null where userId= ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+	}
+	
+	//내 정보 수정
+	public boolean myinfoUpdate(UserBean bean) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update tbluser set name = ?, phone=?, address=?, birth = ? where userId =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setString(2, bean.getPhone());
+			pstmt.setString(3, bean.getAddress());
+			pstmt.setString(4, bean.getBirth());
+			pstmt.setString(5, bean.getUserId());
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	public boolean myinfoDelete(String userId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "delete from tbluser where userId= ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			if(pstmt.executeUpdate()==1) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
 
 }
