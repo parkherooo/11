@@ -65,15 +65,12 @@
     }
 
     // 회원가입 버튼 클릭 시 중복 확인 여부 확인
-    
 	function validateForm() {
-		// 중복 확인 여부 먼저 확인
 		if (!isIdChecked) {
 			alert("아이디 중복 확인을 해주세요.");
 			return false;
 		}
 
-		// 이메일 형식이 잘못된 경우만 체크
 		var userId = document.getElementById("userId").value;
 		if (!validateEmail(userId)) {
 			alert("유효한 이메일 형식이 아닙니다.");
@@ -88,14 +85,14 @@
 <%@ include file="../main/header.jsp" %>
 	<section class="normal-signup-section">
         <h1>회원가입</h1>
-        <form action="normalSignUpProc.jsp" accept-charset="UTF-8" method="post" class="normal-signup-form" onsubmit="return validateForm()">
+        <form action="normalSignUp" accept-charset="UTF-8" method="post" class="normal-signup-form" onsubmit="return validateForm()">
             <!-- 이름 -->
             <div class="full-width">
                 <label for="name">이름:</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <!-- 아이디와 비밀번호 -->
-            <div class = "email-field">
+            <div class="email-field">
                 <label for="userId">아이디(이메일):</label>
                 <button type="button" class="idchk-btn" onclick="checkDuplicate()">중복 확인</button>
                 <input type="text" id="userId" name="userId" required>
@@ -106,8 +103,8 @@
             </div>
             <!-- 생일과 전화번호 -->
             <div>
-                <label for="birthDate">생일:</label>
-                <input type="date" id="birthDate" name="birthDate" required>
+                <label for="birth">생일:</label>
+                <input type="date" id="birth" name="birth" required>
             </div>
             <div>
                 <label for="phone">전화번호:</label>
@@ -120,8 +117,8 @@
             </div>
             <!-- 알러지와 성별 -->
             <div>
-                <label for="allergies">알러지:</label>
-                <input type="text" id="allergies" name="allergies" placeholder="알러지가 없다면 '없음'으로 입력">
+                <label for="allergy">알러지:</label>
+                <input type="text" id="allergy" name="allergy" placeholder="알러지가 없다면 '없음'으로 입력">
             </div>
             <div>
                 <label for="gender">성별:</label>

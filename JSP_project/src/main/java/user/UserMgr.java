@@ -216,9 +216,55 @@ public class UserMgr {
         return isSuccess;
     }
 
+    ////////////// 소셜 로그인 //////////////////
+    // 카카오 사용자 확인
+    public boolean isKakaoUserExist(String userId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = null;
+        boolean isExist = false;
+        try {
+            con = pool.getConnection();
+            sql = "SELECT userId FROM tbluser WHERE userId = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                isExist = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            pool.freeConnection(con, pstmt, rs);
+        }
+        return isExist;
+    }
+
+    // 카카오 사용자 저장
+    public boolean insertKakaoUser(UserBean bean) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        String sql = null; 
+        boolean flag = false;
+        try {
+            con = pool.getConnection();
+            // 카카오 로그인으로 받은 사용자 데이터 저장 (패스워드는 null로 처리)
+            sql = "INSERT INTO tbluser (userId, name) VALUES (?, ?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, bean.getUserId());
+            pstmt.setString(2, bean.getName());
+            if(pstmt.executeUpdate() == 1)
+                flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            pool.freeConnection(con, pstmt);
+        }
+        return flag;
+    }
 
 
-	//마이페이지 유저 정보
+	// 마이페이지 유저 정보
 	public UserBean myInfo(String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -252,7 +298,8 @@ public class UserMgr {
 		}
 		return bean;
 	}
-	//알러지 수정
+	
+	// 알러지 수정
 	public boolean updateAllergy(String userId, String Allergy) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -273,7 +320,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	//친구아이디 존재 확인 후 이름 반환
+	// 친구아이디 존재 확인 후 이름 반환
 	public String frChk(String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -296,7 +343,7 @@ public class UserMgr {
 		return frname;
 	}
 	
-	//친구 추가
+	// 친구 추가
 	public boolean frPlus(String userId, String frId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -316,7 +363,8 @@ public class UserMgr {
 		}
 		return flag;
 	}
-	//친구 요청여부 확인
+	
+	// 친구 요청여부 확인
 	public boolean frplusChk(String userId){
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -340,8 +388,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	
-	//친구 요청 리스트
+	// 친구 요청 리스트
 	public Vector<String> frState (String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -366,8 +413,7 @@ public class UserMgr {
 		return vlist;
 	}
 	
-	
-	//친구 수락
+	// 친구 수락
 	public boolean frOk(String userId, String frId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -388,7 +434,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	//친구 요청 삭제
+	// 친구 요청 삭제
 	public boolean frDelete(String userId, String frId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -409,7 +455,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	//수락한 친구 리스트
+	// 수락한 친구 리스트
 	public Vector<freindBean> myFriend (String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -435,7 +481,8 @@ public class UserMgr {
 		}
 		return vlist;
 	}
-	//수락받은 친구 리스트
+	
+	// 수락받은 친구 리스트
 	public Vector<freindBean> toMyfriend (String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -461,7 +508,8 @@ public class UserMgr {
 		}
 		return vlist;
 	}
-	//친구삭제
+	
+	// 친구삭제
 	public boolean freindDelete(int num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -481,7 +529,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	//내 프로필 수정
+	// 내 프로필 수정
 	public boolean myprofileUpdate(MultipartRequest multi) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -513,7 +561,7 @@ public class UserMgr {
 		return flag;
 	}
 	
-	//프로필삭제
+	// 프로필 삭제
 	public void deleteProfile(MultipartRequest multi) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -544,7 +592,7 @@ public class UserMgr {
 		}
 	}
 	
-	//내 정보 수정
+	// 내 정보 수정
 	public boolean myinfoUpdate(UserBean bean) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -567,6 +615,8 @@ public class UserMgr {
 		}
 		return flag;
 	}
+	
+	// 내 정보 삭제
 	public boolean myinfoDelete(String userId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
