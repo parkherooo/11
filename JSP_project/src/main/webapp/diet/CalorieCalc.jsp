@@ -8,8 +8,13 @@
 <title>Fit Time - 하루 권장 칼로리</title>
 <link rel="stylesheet" href="../css/main.css">
 <style>
+body {
+	background-color: #ffffff;
+}
+
 main.diet-page {
-	margin-top: 170px;
+	background-color: #ffffff;
+	padding-top: 200px;
 }
 
 .diet-page {
@@ -46,6 +51,7 @@ main.diet-page {
 	align-items: flex-start;
 	margin-top: 20px;
 	gap: 2rem;
+	background-color: #ffffff;
 }
 
 .human-figure {
@@ -59,7 +65,7 @@ main.diet-page {
 	padding: 20px;
 	border: 1px solid #000;
 	border-radius: 8px;
-	background-color: #fff;
+	background-color: #ffffff;
 }
 
 .form-row {
@@ -93,6 +99,7 @@ main.diet-page {
 /* 라디오 버튼 스타일 */
 .radio-group input[type="radio"] {
 	margin-left: 5px;
+	 margin-top: 20px;
 	vertical-align: middle;
 }
 
@@ -126,8 +133,8 @@ input[type="text"], input[type="number"] {
 .radio-group {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
-	margin-bottom: 15px;
+	gap: 15px;
+
 }
 
 .gender-group, .goal-group {

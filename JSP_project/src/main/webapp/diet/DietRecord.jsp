@@ -233,6 +233,10 @@ body {
     #searchButton:hover {
         background-color: #45a049;
     }
+    .form-actions button[type="reset"] {
+	background-color: #f44336;
+	color: white;
+}
     
     @media (max-width: 768px) {
     .content-wrapper {
@@ -303,7 +307,7 @@ body {
 					<input type="text" id="foodSearchInput" placeholder="검색어를 입력하세요.">
 					<button id="searchButton">검색</button>
 					</div>
-					<h3>	식품영양분석 API 검색기록</h3>
+					<h3>식품영양분석 API 검색기록(성분은 모두 1회 제공량 기준입니다.)</h3>
 					<div id="searchResults"></div>
 				</div>
 	</main>
@@ -336,6 +340,7 @@ body {
 	</script> --%>
 	<%@ include file="/chatbot/chatbot.jsp" %>
 	<%@ include file="../main/footer.jsp" %>
-	<script src="../diet/calendar-script.js"></script>
+	<script src="../diet/common-calendar.js"></script>
+	<script src="../diet/diet-calendar.js"></script>
 </body>
 </html>

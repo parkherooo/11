@@ -12,7 +12,7 @@ function searchFood() {
         return;
     }
 
-    const url = `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/I2790/json/1/25/DESC_KOR=${encodeURIComponent(searchTerm)}`;
+    const url = `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/I2790/json/1/40/DESC_KOR=${encodeURIComponent(searchTerm)}`;
     console.log('요청 URL:', url);
 
     fetch(url)

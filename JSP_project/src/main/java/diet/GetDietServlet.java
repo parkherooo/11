@@ -29,9 +29,7 @@ public class GetDietServlet extends HttpServlet {
             StringBuilder jsonBuilder = new StringBuilder();
             jsonBuilder.append("{");
             if(rs.next()) {
-                jsonBuilder.append("\"breakfast\":\"").append(escapeJson(rs.getString("breakfast"))).append("\",");
-                jsonBuilder.append("\"lunch\":\"").append(escapeJson(rs.getString("lunch"))).append("\",");
-                jsonBuilder.append("\"dinner\":\"").append(escapeJson(rs.getString("dinner"))).append("\",");
+                jsonBuilder.append("\"diet\":\"").append(escapeJson(rs.getString("diet"))).append("\",");
                 jsonBuilder.append("\"calories\":").append(rs.getInt("calorie"));
             }
             jsonBuilder.append("}");
