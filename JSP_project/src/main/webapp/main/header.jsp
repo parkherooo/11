@@ -67,17 +67,22 @@
                 <li><a href="community.jsp">Community</a></li>
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
-            <div class="login-container">
-                <% if (userId != null) { %>
-                    <!-- 로그인 상태라면 MyPage 버튼 -->
-                    <button class="mypage-btn" onclick="goToMyPage()">MyPage</button>&nbsp;&nbsp;
-                    <button class="logout-btn" onclick="goToLogout()">Logout</button>
-                <% } else { %>
-                    <!-- 로그아웃 상태라면 Login 버튼 -->
-                    <button class="login-btn1" onclick="goToLogin()">Login</button>
-                <% } %>
-            </div>
-        </nav>
+            <!-- 로그인 상태 -->
+        	<% if (userId != null) { %>
+        	<div class="notification-container">
+            	<img src="../img/bell.png" alt="Notification Bell" class="notification-bell">
+        	</div>
+        	<div class="login-container">
+            	<button class="mypage-btn" onclick="goToMyPage()">MyPage</button>&nbsp;&nbsp;
+            	<button class="logout-btn" onclick="goToLogout()">Logout</button>
+        	</div>
+        	<!-- 로그아웃 상태 -->
+        	<% } else { %>
+        	<div class="login-container">
+            	<button class="login-btn1" onclick="goToLogin()">Login</button>
+        	</div>
+        	<% } %>
+        	</nav> 
     </div>
 	</header>
 </body>

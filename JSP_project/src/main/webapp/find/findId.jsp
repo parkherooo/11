@@ -25,7 +25,7 @@
 <%@ include file="../main/header.jsp" %>
 	<section class="find-id-section">
     <h1>아이디 찾기</h1>
-    <form id="findIdForm" action="findIdProc.jsp" method="post" class="find-id-form">
+    <form id="findIdForm" action="findId" method="post" class="find-id-form">
         <input type="text" id="name" name="name" placeholder="이름 입력" required><br>
         <input type="text" id="phone" name="phone" placeholder="전화번호 입력 (예: 01012345678)" required><br>
         <button type="button" class="find-id-btn" onclick="findId()">아이디 찾기</button>
