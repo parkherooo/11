@@ -65,7 +65,7 @@
         <% 
             }
         } 
-        %>
+        %>	
         <br>
         <div><b>재료:</b> <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "" %></div>
         <br>
@@ -74,6 +74,9 @@
         
     </div>
     <br><a class="recipe-a" href="recipeList.jsp">[목록]</a>
+    <div>
+    <br>
+    </div>
     <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
