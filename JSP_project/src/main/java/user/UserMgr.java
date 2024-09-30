@@ -493,15 +493,6 @@ public class UserMgr {
 			String introduce = multi.getParameter("introduce");
 			String filename = multi.getFilesystemName("image");
 			if(filename!=null&&!filename.equals("")) {
-				//파일 업로드 수정
-				UserBean bean = myInfo(userId);
-				String dbFile = bean.getProfile();
-				if(dbFile!=null&&!dbFile.equals("")) {
-					//기존에 업로드 파일이 존재
-					File f = new File(SAVEFOLDER+dbFile);
-					if(f.exists())
-						f.delete();
-			}
 			sql = "update tbluser set profile=?, msg=? where userId = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, filename);
@@ -532,23 +523,14 @@ public class UserMgr {
 		try {
 			if (filename != null && !filename.equals("")) {
 			    // 파일 업로드 수정
-			    UserBean bean = myInfo(userId);
-			    String dbFile = bean.getProfile();
-			    System.out.println("파일" + dbFile);
-			    if (dbFile != null && !dbFile.equals("")) {
-			        // 기존에 업로드 파일이 존재
-			        File f = new File(UserMgr.SAVEFOLDER + dbFile);
-			        
-			        // 파일이 존재하는지 확인하고 삭제
-			        if (f.exists()) {
-			            boolean deleted = f.delete();
-			            if (deleted) {
-			                System.out.println("파일이 성공적으로 삭제되었습니다: " + dbFile);
-			            } else {
-			                System.out.println("파일 삭제에 실패했습니다: " + dbFile);
-			            }
-			        }
-			    }
+				UserBean bean = myInfo(userId);
+				String dbFile = bean.getProfile();
+				if(dbFile!=null&&!dbFile.equals("")) {
+					//기존에 업로드 파일이 존재
+					File f = new File(SAVEFOLDER+dbFile);
+					if(f.exists())
+						f.delete();
+				}
 			}
 			con = pool.getConnection();
 			sql = "update tbluser set profile=null where userId= ?";

@@ -41,11 +41,16 @@
     <div class="myprofile">
         <table class="profile-table">
             <tr>
-                <%if(bean.getProfile()==null||bean.getProfile().equals("")) {%>
-                <th><img class="profile" alt="빈프로필" src="../img/profile/null_Profile.png"></th>
-                <%} else {%>
-                <th><img class="profile" alt="프로필" src="../img/profile/<%=bean.getProfile()%>"></th>
-                <%} %>
+                <% if(bean.getProfile() == null || bean.getProfile().equals("")) { %>
+			    <th>
+			        <img class="profile" alt="빈프로필" src="../img/profile/null_Profile.png?t=<%= System.currentTimeMillis() %>">
+			    </th>
+				<% } else { %>
+				    <th>
+				        <img class="profile" alt="프로필" src="../img/profile/<%= bean.getProfile() %>?t=<%= System.currentTimeMillis() %>">
+				    </th>
+				<% } %>
+
             </tr>
             <tr>
                 <th><h3><%=bean.getName() %>님</h3></th>
@@ -233,8 +238,9 @@
 </script>
 
             <% } else if (category.equals("커뮤니티관리")) { %>
-           		
-                <p>여기에서 커뮤니티 관리 기능을 구현하세요.</p>
+           		<form action="">
+           			내 게시글 자리
+           		</form>
             <% } else if (category.equals("친구관리")) { %>
                 <h2>친구 관리</h2>
                	<div>
@@ -298,9 +304,9 @@
 					   			%>
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
-						   			<button class="mypage-button" onclick="">식단관리</button>
-						   			<button class="mypage-button" onclick="">운동관리</button>
-						   			<button class="mypage-button" type="submit" style="background-color: red;">삭제</button>
+						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
+						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
+						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
 					   			<%} for(int i=0; i<tofrlist.size();i++){
@@ -308,9 +314,9 @@
 					   			%>
 					   			<td><%=frbean.getFriendId() %></td>
 					   			<td>
-						   			<button class="mypage-button" onclick="">식단관리</button>
-						   			<button class="mypage-button" onclick="">운동관리</button>
-						   			<button class="mypage-button" type="submit" style="background-color: red;">삭제</button>
+						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
+						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
+						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
 					   			<%} %>

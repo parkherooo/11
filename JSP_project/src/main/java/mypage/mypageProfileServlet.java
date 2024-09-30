@@ -21,7 +21,12 @@ public class mypageProfileServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
 
+		
 		MultipartRequest multi = new MultipartRequest(request, UserMgr.SAVEFOLDER, UserMgr.MAXSIZE, UserMgr.ENCODING, new DefaultFileRenamePolicy());
 		String action = multi.getParameter("action");
 		UserMgr mgr = new UserMgr();
