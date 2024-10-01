@@ -1,68 +1,47 @@
 package diet;
-
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
 import java.sql.*;
+import org.json.simple.JSONObject;
 
+@WebServlet("/diet/GetDietServlet")
 public class GetDietServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String selectedDate = request.getParameter("selectedDate");
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        JSONObject jsonResult = new JSONObject();
         
-        try {
-            // 데이터베이스 연결
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime", "root", "1234");
+        if (userId == null || selectedDate == null) {
+            jsonResult.put("error", "Invalid parameters");
+            sendJsonResponse(response, jsonResult);
+            return;
+        }
 
-            String sql = "SELECT diet FROM tblDietaryRecords WHERE userId = ? AND drDate = ?";
-            pstmt = conn.prepareStatement(sql);
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useSSL=false&serverTimezone=UTC", "root", "1234");
+             PreparedStatement pstmt = conn.prepareStatement("SELECT diet, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate = ?")) {
+            
             pstmt.setString(1, userId);
             pstmt.setDate(2, java.sql.Date.valueOf(selectedDate));
-
-            rs = pstmt.executeQuery();
-
-            StringBuilder jsonBuilder = new StringBuilder();
-            jsonBuilder.append("{");
-            if(rs.next()) {
-                jsonBuilder.append("\"diet\":\"").append(escapeJson(rs.getString("diet"))).append("\",");
-                jsonBuilder.append("\"calories\":").append(rs.getInt("calorie"));
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    jsonResult.put("diet", rs.getString("diet"));
+                    jsonResult.put("calories", rs.getInt("calorie"));
+                }
             }
-            jsonBuilder.append("}");
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(jsonBuilder.toString());
-
-        } catch(Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\":\"데이터를 불러오는 중 오류가 발생했습니다.\"}");
-        } finally {
-            try {
-                if(rs != null) rs.close();
-                if(pstmt != null) pstmt.close();
-                if(conn != null) conn.close();
-            } catch(SQLException se) {
-                se.printStackTrace();
-            }
+            jsonResult.put("error", "데이터를 불러오는 중 오류가 발생했습니다.");
         }
+        
+        sendJsonResponse(response, jsonResult);
     }
 
-    private String escapeJson(String input) {
-        if (input == null) {
-            return "";
-        }
-        return input.replace("\\", "\\\\")
-                    .replace("\"", "\\\"")
-                    .replace("\b", "\\b")
-                    .replace("\f", "\\f")
-                    .replace("\n", "\\n")
-                    .replace("\r", "\\r")
-                    .replace("\t", "\\t");
+    private void sendJsonResponse(HttpServletResponse response, JSONObject jsonResult) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResult.toJSONString());
     }
 }

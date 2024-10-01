@@ -2,10 +2,12 @@ package diet;
 
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.sql.*;
 import org.json.simple.JSONObject;
 
+@WebServlet("/diet/SaveDietServlet")
 public class SaveDietServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 세션 확인

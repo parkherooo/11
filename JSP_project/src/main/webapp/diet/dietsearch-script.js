@@ -71,10 +71,40 @@ function displayResults(items) {
         ].forEach(value => {
             const cell = row.insertCell();
             cell.textContent = value || '-';
+			if(index === 0) {
+				cell.style.cursor = 'pointer';
+				cell.style.color = 'blue';
+				cell.style.textDecoration = 'underline';
+				cell.onclick = () => addFoodToDiet(item);
+			}
         });
-    });
 
+	});
     resultsDiv.appendChild(table);
+}
+
+// 선택한 식품을 식단에 추가하는 함수
+function addFoodToDiet(food) {
+    const dietTextarea = document.getElementById('diet');
+    const currentDate = new Date().toLocaleDateString(); // 현재 날짜
+    const newEntry = `${currentDate} - ${food.DESC_KOR} (${food.NUTR_CONT1}kcal)\n`;
+    
+    // 기존 내용의 맨 앞에 새 항목 추가
+    dietTextarea.value = newEntry + dietTextarea.value;
+    
+    // 칼로리 업데이트
+    updateTotalCalories(parseFloat(food.NUTR_CONT1));
+	
+	//선택시 알림
+	alert(`'${food.DESC_KOR}'가 식단에 추가되었습니다.`);
+}
+
+// 총 칼로리 업데이트 함수
+function updateTotalCalories(additionalCalories) {
+    const caloriesInput = document.getElementById('calories');
+    let currentCalories = parseFloat(caloriesInput.value) || 0;
+    currentCalories += additionalCalories;
+    caloriesInput.value = currentCalories.toFixed(1); // 소수점 첫째 자리까지 표시
 }
 
 // 이벤트 리스너 등록

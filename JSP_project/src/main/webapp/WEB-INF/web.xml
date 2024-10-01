@@ -21,19 +21,19 @@
     <servlet-name>SaveDietServlet</servlet-name>
     <servlet-class>diet.SaveDietServlet</servlet-class>
 </servlet>
-<servlet-mapping>
+<!-- <servlet-mapping>
     <servlet-name>SaveDietServlet</servlet-name>
     <url-pattern>/SaveDietServlet</url-pattern>
-</servlet-mapping>
+</servlet-mapping> -->
 
 <servlet>
     <servlet-name>GetDietServlet</servlet-name>
     <servlet-class>diet.GetDietServlet</servlet-class>
 </servlet>
-<servlet-mapping>
+<!-- <servlet-mapping>
     <servlet-name>GetDietServlet</servlet-name>
     <url-pattern>/GetDietServlet</url-pattern>
-</servlet-mapping>
+</servlet-mapping> -->
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
