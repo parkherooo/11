@@ -136,7 +136,6 @@ public class UserMgr {
 		return flag;
 	}
 
-	
 	// 전화번호 중복 체크
     public boolean phoneChk(String phone) {
         Connection con = null;
@@ -217,30 +216,7 @@ public class UserMgr {
     }
 
     ////////////// 소셜 로그인 //////////////////
-    // 카카오 사용자 확인
-    public boolean isKakaoUserExist(String userId) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String sql = null;
-        boolean isExist = false;
-        try {
-            con = pool.getConnection();
-            sql = "SELECT userId FROM tbluser WHERE userId = ?";
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userId);
-            rs = pstmt.executeQuery();
-            if (rs.next())
-                isExist = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            pool.freeConnection(con, pstmt, rs);
-        }
-        return isExist;
-    }
-
-    // 카카오 사용자 저장
+    // 카카오 사용자 최초 가입 (기본 정보만 저장)
     public boolean insertKakaoUser(UserBean bean) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -248,13 +224,15 @@ public class UserMgr {
         boolean flag = false;
         try {
             con = pool.getConnection();
-            // 카카오 로그인으로 받은 사용자 데이터 저장 (패스워드는 null로 처리)
+            // 카카오 로그인 전용 삽입 쿼리
             sql = "INSERT INTO tbluser (userId, name) VALUES (?, ?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, bean.getUserId());
             pstmt.setString(2, bean.getName());
-            if(pstmt.executeUpdate() == 1)
-                flag = true;
+
+            if (pstmt.executeUpdate() == 1) {
+                flag = true; // 사용자 추가 성공
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -263,6 +241,60 @@ public class UserMgr {
         return flag;
     }
 
+    // 추가 정보 입력
+    public boolean updateKakaoUser(UserBean bean) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        String sql = null;
+        boolean flag = false;
+        try {
+            con = pool.getConnection();
+            // 추가 정보를 업데이트하는 쿼리
+            sql = "UPDATE tbluser SET birth = ?, phone = ?, address = ?, allergy = ?, height = ?, weight = ?, gender = ? WHERE userId = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, bean.getBirth());
+            pstmt.setString(2, bean.getPhone());
+            pstmt.setString(3, bean.getAddress());
+            pstmt.setString(4, bean.getAllergy());
+            pstmt.setFloat(5, bean.getHeight());
+            pstmt.setFloat(6, bean.getWeight());
+            pstmt.setInt(7, bean.getGender());
+            pstmt.setString(8, bean.getUserId());
+            
+            if (pstmt.executeUpdate() == 1) {
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            pool.freeConnection(con, pstmt);
+        }
+        return flag;
+    }
+
+    // 소셜 사용자 정보 존재 확인
+    public boolean isSocialUserExist(String userId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = null;
+        boolean flag = false;
+        try {
+            con = pool.getConnection();
+            sql = "SELECT userId FROM tbluser WHERE userId = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                flag = true; // 이미 존재하는 사용자
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            pool.freeConnection(con, pstmt, rs);
+        }
+        return flag;
+    }
 
 	// 마이페이지 유저 정보
 	public UserBean myInfo(String userId) {
