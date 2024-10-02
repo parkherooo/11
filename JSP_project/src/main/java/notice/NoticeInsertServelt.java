@@ -23,7 +23,7 @@ public class NoticeInsertServelt extends HttpServlet {
 			 response.setContentType("text/html; charset=UTF-8");
 			 PrintWriter out = response.getWriter();
 			 out.println("<script>");
-			 out.println("alert('작성 실패했씁니다.')");
+			 out.println("alert('작성 실패했습니다.')");
 			 out.println("history.back()");
 			 out.println("</script>");
 		}
