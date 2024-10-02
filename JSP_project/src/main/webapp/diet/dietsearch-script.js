@@ -38,11 +38,14 @@ function searchFood() {
 
 // 검색 결과 표시 함수
 function displayResults(items) {
-    console.log('displayResults 함수 실행', items);
+    console.log('displayResults: ', items);
     const resultsDiv = document.getElementById('searchResults');
     resultsDiv.innerHTML = '';
+	
+	const filteredItems = items.filter(item => item.NUTR_CONT1 != null && item.NUTR_CONT1 !== '-');
+	
 
-    if (items.length === 0) {
+    if (filteredItems.length === 0) {
         resultsDiv.innerHTML = '<p>검색 결과가 없습니다.</p>';
         return;
     }
@@ -59,7 +62,7 @@ function displayResults(items) {
     });
 
     // 데이터 행 생성
-    items.forEach(item => {
+    items.forEach((item, index) => {
         const row = table.insertRow();
         [
             item.DESC_KOR,
@@ -68,10 +71,10 @@ function displayResults(items) {
             item.NUTR_CONT3,
             item.NUTR_CONT4,
             item.NUTR_CONT5
-        ].forEach(value => {
+        ].forEach((value, cellIndex) => {
             const cell = row.insertCell();
             cell.textContent = value || '-';
-			if(index === 0) {
+			if(cellIndex === 0) {
 				cell.style.cursor = 'pointer';
 				cell.style.color = 'blue';
 				cell.style.textDecoration = 'underline';
@@ -85,18 +88,22 @@ function displayResults(items) {
 
 // 선택한 식품을 식단에 추가하는 함수
 function addFoodToDiet(food) {
+    console.log('Selected Food Item: ', food);
     const dietTextarea = document.getElementById('diet');
-    const currentDate = new Date().toLocaleDateString(); // 현재 날짜
-    const newEntry = `${currentDate} - ${food.DESC_KOR} (${food.NUTR_CONT1}kcal)\n`;
+
+    let foodName = food.DESC_KOR || '알 수 없는 식품';
+    let calories = food.NUTR_CONT1 || '알 수 없음';
     
-    // 기존 내용의 맨 앞에 새 항목 추가
+    const newEntry = `${foodName} (${calories}kcal)\n`;
+    
     dietTextarea.value = newEntry + dietTextarea.value;
     
-    // 칼로리 업데이트
-    updateTotalCalories(parseFloat(food.NUTR_CONT1));
-	
-	//선택시 알림
-	alert(`'${food.DESC_KOR}'가 식단에 추가되었습니다.`);
+    let calorieValue = parseFloat(calories);
+    if(!isNaN(calorieValue)) {
+        updateTotalCalories(calorieValue);
+    }
+    
+    alert(`'${foodName}'가 식단에 추가되었습니다.`);
 }
 
 // 총 칼로리 업데이트 함수

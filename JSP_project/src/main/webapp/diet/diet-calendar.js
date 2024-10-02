@@ -47,31 +47,26 @@ document.getElementById('dietForm').addEventListener('submit', function(e) {
     });
 });
 
-/*// 칼로리 계산 기능 (선택적)
+// 칼로리 계산 기능 (선택적)
 function calculateTotalCalories() {
     const dietText = document.getElementById('diet').value;
     // 여기에 칼로리 계산 로직 구현
     // 예: 특정 키워드를 기반으로 대략적인 칼로리 계산
     let totalCalories = 0;
     // ... 계산 로직 ...
-    document.getElementById('calories').value = totalCalories;
+	const calorieMatches = dietText.match(/\((\d+(?:\.\d+)?)kcal\)/g);
+	if(calorieMatches) {
+		totalCalories = calorieMatches.reduce((sum, match) => {
+			const calories = parseFloat(match.replace(/[^\d.]/g, ''));
+			return sum + (isNaN(calories) ? 0 : calories);
+		}, 0);
+	}
+	
+    document.getElementById('calories').value = totalCalories.toFixed(1);
 }
 
-// 식품 검색 기능 (선택적)
-function searchFood() {
-    const searchTerm = document.getElementById('foodSearchInput').value;
-    fetch(`FoodSearchServlet?term=${searchTerm}`)
-        .then(response => response.json())
-        .then(data => {
-            displaySearchResults(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('식품 검색 중 오류가 발생했습니다.');
-        });
-}*/
 
-function displaySearchResults(results) {
+/*function displaySearchResults(results) {
     const resultsContainer = document.getElementById('searchResults');
     resultsContainer.innerHTML = '';
     results.forEach(food => {
@@ -86,8 +81,8 @@ function addFoodToDiet(food) {
     const dietTextarea = document.getElementById('diet');
     dietTextarea.value += `${food.name} (${food.calories}kcal)\n`;
     calculateTotalCalories();
-}
+}*/
 
 // 이벤트 리스너 추가
-document.getElementById('calories').addEventListener('input', calculateTotalCalories);
-document.getElementById('searchButton').addEventListener('click', searchFood);
+/*document.getElementById('calories').addEventListener('input', calculateTotalCalories);
+document.getElementById('searchButton').addEventListener('click', searchFood);*/
