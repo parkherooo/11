@@ -26,9 +26,7 @@
     <link rel="stylesheet" href="../css/notice.css">
     
 </head>
-
 <body class="noticebody">
-
 <div class="noticeheader">
     <div class="noticecategories">
 	    <a class="notice-a <%= (category == null || category.equals("전체")) ? "active" : "" %>" href="noticeList.jsp?category=전체">전체</a>

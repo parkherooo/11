@@ -39,6 +39,7 @@
     <title><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피 상세" %></title>
 </head>
 <body class="recipe-body">
+
     <h1 class="recipe-h1">Recipe</h1><br>
     
     <div class="recipe-detail">
