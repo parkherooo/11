@@ -103,6 +103,7 @@
         table td:nth-child(1) {
             font-weight: bold;
         }
+
         a {
             color: black; /* 검은색 글자 */
             text-decoration: none; /* 밑줄 제거 */

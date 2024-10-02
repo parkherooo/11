@@ -27,8 +27,10 @@ public class ChallengeParticipantsServlet extends HttpServlet {
 		int num = Integer.parseInt(challengeId);
 		boolean result = mgr.challengeParticpants(multi);
 		if(result) {
+			out.println("<script>");
 			out.println("window.opener.location.reload();");
 			out.println("window.close();");
+			out.println("</script>");
 		} else {
 			
 			out.println("<script>");
