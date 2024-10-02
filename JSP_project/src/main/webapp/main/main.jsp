@@ -39,9 +39,10 @@
         showSlide(currentSlide);
     });
 </script>
+<%@ include file="header.jsp" %>
 </head>
 <body class="main-body">
-	<%@ include file="header.jsp" %>
+	
     <!-- 메인 콘텐츠 섹션 -->
     <section class="main-content">
         <!-- 왼쪽 화살표 -->

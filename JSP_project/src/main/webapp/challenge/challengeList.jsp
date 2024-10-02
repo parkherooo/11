@@ -35,6 +35,8 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
+            position: relative;
+			top:200px;
         }
 		h1 {
             text-align: center; /* h1 태그 가운데 정렬 */

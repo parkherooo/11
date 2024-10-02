@@ -25,7 +25,6 @@ body {
     top: 0; /* 상단 고정 */
     left: 0;
     right: 0;
-    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
 }
 
 .welcome-message {

@@ -233,7 +233,7 @@ public class ChallengeMgr {
 		Vector<ChallengeParticipantBean> vlist = new Vector<ChallengeParticipantBean>();
 		try {
 			con = pool.getConnection();
-			sql = "select * from tblchallengeparticipants where challengeId = ?";
+			sql = "select * from tblchallengeparticipants where challengeId = ? order by heart desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, challengeId);
 			rs = pstmt.executeQuery();
