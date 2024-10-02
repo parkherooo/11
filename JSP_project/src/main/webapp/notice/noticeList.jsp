@@ -27,8 +27,10 @@
 
 </head>
 
+
 <body class="noticebody" style="position: relative; /* 상대 위치 설정 */
     top: 200px;">
+
 
 <div class="noticeheader">
     <div class="noticecategories">

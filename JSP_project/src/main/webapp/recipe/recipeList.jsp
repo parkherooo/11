@@ -2,11 +2,11 @@
 <%@ page import="java.io.BufferedReader, java.io.InputStreamReader, java.net.HttpURLConnection, java.net.URL, org.json.JSONArray, org.json.JSONObject" %>
 <%@ page import="recipe.UserAllergyMgr" %>
 <%@ include file="/main/header.jsp" %>
-<%	
+<%   
 
-	UserAllergyMgr allergyMgr = new UserAllergyMgr();
-	String[] userAllergies = allergyMgr.selectAllergy(userId); // 사용자 알러지 목록 가져오기
-	
+   UserAllergyMgr allergyMgr = new UserAllergyMgr();
+   String[] userAllergies = allergyMgr.selectAllergy(userId); // 사용자 알러지 목록 가져오기
+   
     String searchQuery = request.getParameter("search");
     String pageParam = request.getParameter("page");
     int currentPage = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
@@ -44,7 +44,7 @@
         e.printStackTrace();
     }
     
- 	// 필터링된 레시피 목록
+    // 필터링된 레시피 목록
     JSONArray filteredRecipes = new JSONArray();
     if (recipes != null) {
         for (int i = 0; i < recipes.length(); i++) {
@@ -72,23 +72,32 @@
 
 <!DOCTYPE html>
 <html>
-<head>	
+<head>   
     <title>레시피 목록</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/recipe.css">
 </head>
 <body class="recipe-body">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
     <div class="recipe-list"> <!-- 레시피 리스트를 감싸는 div 추가 -->
-    	<h1 class="recipe-h1">Recipe</h1>
-    	<h3 class="recipe-h3">레시피 목록</h3>
-    	
-    	<form method="GET" action="recipeList.jsp">
+       <h1 class="recipe-h1">Recipe</h1>
+       <h3 class="recipe-h3">레시피 목록</h3>
+       
+       <form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
         <button type="submit" class="search">
             <i class="fas fa-search"></i>
         </button>
-    	</form>
-    	<hr>
+       </form>
+       <hr>
     
         <%
             if (filteredRecipes != null && filteredRecipes.length() > 0) {
@@ -96,7 +105,7 @@
                     JSONObject recipe = filteredRecipes.getJSONObject(i);
                     String title = recipe.getString("RCP_NM");
                     String id = recipe.getString("RCP_SEQ");
-        %>			
+        %>         
                 <a href="recipeDetail.jsp?id=<%= id %>&title=<%= title %>" class="recipe-item"><%= title %></a>
         <%
                 }
@@ -143,7 +152,7 @@
     <%
         }
     %>
-	</div>
+   </div>
     <a href="recipeList.jsp" class="recipe-item">[목록]</a>
      <%@ include file="/chatbot/chatbot.jsp" %>
 </body>

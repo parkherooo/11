@@ -52,7 +52,7 @@
         
         <!-- 슬라이드 내용 -->
         <div class="slide-content active">
-        	<img src="../img/양배추롤.jpg" alt="양배추롤">
+        	<img src="../img/훈제오리가슴살샐러드.png" alt="양배추롤">
             <h2>양배추롤</h2>
             <p>부드러운 아보카도와 신선한 토마토가 어우러진 상큼한 샐러드</p>
         </div>
