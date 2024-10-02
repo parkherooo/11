@@ -42,13 +42,14 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
+            position: relative;
+			top:200px;
         }
 
         a {
             color: green;
             text-align: right;
             text-decoration: none;
-            font-weight: bold; /* 참가 단어를 굵게 */
         }
 
         .challenge-detail-container {
