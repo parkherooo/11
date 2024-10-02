@@ -78,19 +78,18 @@
     <link rel="stylesheet" href="../css/recipe.css">
 </head>
 <body class="recipe-body">
-	<h1 class="recipe-h1">Recipe</h1>
-    <h3 class="recipe-h3">레시피 목록</h3>
-
-    <form method="GET" action="recipeList.jsp">
+    <div class="recipe-list"> <!-- 레시피 리스트를 감싸는 div 추가 -->
+    	<h1 class="recipe-h1">Recipe</h1>
+    	<h3 class="recipe-h3">레시피 목록</h3>
+    	
+    	<form method="GET" action="recipeList.jsp">
         <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
         <button type="submit" class="search">
             <i class="fas fa-search"></i>
         </button>
-    </form>
+    	</form>
+    	<hr>
     
-    <hr>
-
-    <div class="recipe-list"> <!-- 레시피 리스트를 감싸는 div 추가 -->
         <%
             if (filteredRecipes != null && filteredRecipes.length() > 0) {
                 for (int i = 0; i < filteredRecipes.length(); i++) {
