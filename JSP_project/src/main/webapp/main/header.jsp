@@ -64,7 +64,14 @@
                         <li><a href="diet2.jsp">오늘의 루틴 추천</a></li>
                     </ul>
                 </li>
-                <li><a href="community.jsp">Community</a></li>
+                <li>
+                
+                <a href="">Community</a>
+                	<ul class="dropdown-menu">
+                	<li><a href="community.jsp">커뮤니티</a></li>
+                	<li><a href="../challenge/challengeList.jsp">챌린지</a></li>
+                	</ul>
+                </li>
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <!-- 로그인 상태 -->
