@@ -11,7 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Fit Time</title>
-<link rel="stylesheet" href="../css/main.css?after">
+
+<link rel="stylesheet" href="../css/main.css">
+
 <script>
 	// 로그인 페이지로 이동하는 함수
 	function goToLogin() {
@@ -65,12 +67,14 @@
                     </ul>
                 </li>
                 <li>
+
                 	<a href="community.jsp">Community</a>
                 	<ul class="dropdown-menu">
                         <li><a href="Community_Main.jsp">나의 게시글</a></li>
                         <li><a href="Heart.jsp">인기글</a></li>
                         <li><a href="post_create.jsp">게시물 작성</a></li>
                     </ul>
+
                 </li>
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
