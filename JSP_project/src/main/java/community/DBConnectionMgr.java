@@ -1,4 +1,4 @@
-package DB;
+package community;
 
 /**
  * Copyright(c) 2001 iSavvix Corporation (http://www.isavvix.com/)
@@ -308,7 +308,6 @@ public class DBConnectionMgr {
         if (_traceOn)
             System.err.println(s);
     }
-
 
 }
 
