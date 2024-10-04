@@ -377,24 +377,41 @@ public class UserMgr {
 	
 	// 친구 추가
 	public boolean frPlus(String userId, String frId) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		boolean flag = false;
-		try {
-			con = pool.getConnection();
-			sql = "insert tblfriend values(null,?,?,0)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, frId);
-			if(pstmt.executeUpdate()==1) flag = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt);
-		}
-		return flag;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null; // 기존 요청이 있는지 확인하기 위한 ResultSet
+	    String sql = null;
+	    boolean flag = false;
+	    try {
+	        con = pool.getConnection();
+	        
+	        // 이미 친구 추가 요청이 있는지 확인
+	        sql = "SELECT COUNT(*) FROM tblfriend WHERE userId = ? AND frId = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, userId);
+	        pstmt.setString(2, frId);
+	        rs = pstmt.executeQuery();
+	        
+	        if (rs.next() && rs.getInt(1) == 0) {
+	            // 친구 추가 요청이 없는 경우에만 insert 실행
+	            sql = "INSERT INTO tblfriend VALUES (null,?,?,0)";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setString(1, userId);
+	            pstmt.setString(2, frId);
+	            if (pstmt.executeUpdate() == 1) {
+	                flag = true;
+	            }
+	        } else {
+	            System.out.println("이미 친구 추가 요청을 보냈습니다.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        pool.freeConnection(con, pstmt, rs); // ResultSet도 해제
+	    }
+	    return flag;
 	}
+
 	
 	// 친구 요청여부 확인
 	public boolean frplusChk(String userId){

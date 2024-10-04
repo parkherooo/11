@@ -77,9 +77,10 @@
     	</div>
 	</section>
 	<%@ include file="../chatbot/chatbot.jsp" %>
-	<footer>
-		<%@ include file="footer.jsp" %>
-	</footer>
+	
 
 </body>
+<footer>
+		<%@ include file="footer.jsp" %>
+	</footer>
 </html>
