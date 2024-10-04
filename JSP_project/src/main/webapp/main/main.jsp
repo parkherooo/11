@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/main.css">
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         let currentSlide = 0;
@@ -45,12 +46,14 @@
 	
     <!-- 메인 콘텐츠 섹션 -->
     <section class="main-content">
+
         <!-- 왼쪽 화살표 -->
         <div class="arrow left-arrow">
             <img src="../img/arrow.png" alt="Left Arrow">
         </div>
         
         <!-- 슬라이드 내용 -->
+
         <div class="slide-content active">
         	<img src="../img/훈제오리가슴살샐러드.png" alt="양배추롤">
             <h2>양배추롤</h2>
@@ -60,10 +63,12 @@
         	<h2>그린 샐러드</h2>
         	<p>신선한 야채가 가득한 그린 샐러드</p>
     	</div>
+
         <!-- 오른쪽 화살표 -->
         <div class="arrow right-arrow">
             <img src="../img/arrow.png" alt="Right Arrow">
         </div>
+
         <!-- 슬라이드 네비게이션 -->
     	<div class="slider-nav">
         	<span class="current-slide">1</span>
@@ -75,5 +80,6 @@
 	<footer>
 		<%@ include file="footer.jsp" %>
 	</footer>
+
 </body>
 </html>
