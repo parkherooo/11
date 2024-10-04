@@ -8,42 +8,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Fit Time</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        .container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .exercise-container {
-            margin: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 300px; /* Adjust width as needed */
-        }
-        h1{
-			text-align: center;
-			margin-bottom: 50px;
-		}
-		.button {
-			background-color: black;
-			color: white;
-			padding: 10px 10px;
-			margin: 0 10px 20px 10px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-		.button:hover{
-		background-color: darkgrey;
-		}
-    </style>
+<meta charset="UTF-8">
+<title>Fit Time</title>
+<link rel="stylesheet" href="../css/routineResult.css">
 <script>
 function reloadPage() {
     location.reload(); // 페이지 새로고침
@@ -53,7 +20,7 @@ function goBack() {
 }
 </script>
 </head>
-<body>
+<body class="result-body">
     <h1>오늘의 추천 루틴!</h1>
     <button class="button" type="button" onclick="goBack()">이전으로</button>
     <button class="button" type="button" onclick="reloadPage()">다른 루틴</button>
@@ -74,5 +41,6 @@ function goBack() {
                 }//--for
             }%>
     </div>
+<%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 </html>
