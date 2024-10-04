@@ -291,8 +291,7 @@
 					   	<tr>
 					   		<td>친구 목록</td>
 					   	</tr>
-					   		<tr>
-					   			<%
+					 		  	<%
 					   				Vector<freindBean>frlist = new Vector<freindBean>();
 					   				frlist = mgr.myFriend(userId);
 					   				
@@ -302,6 +301,8 @@
 					   				for(int i=0; i<frlist.size();i++){
 					   					freindBean frbean = frlist.get(i);
 					   			%>
+					   		<tr>
+					   			
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
 						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
@@ -309,9 +310,11 @@
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
+					   			</tr>	
 					   			<%} for(int i=0; i<tofrlist.size();i++){
 					   				freindBean frbean = tofrlist.get(i);
 					   			%>
+					   			<tr>
 					   			<td><%=frbean.getFriendId() %></td>
 					   			<td>
 						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
@@ -319,8 +322,9 @@
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
+					   			</tr>
 					   			<%} %>
-					   		</tr>
+					   		
 					   	</table>
 					   	
 					   	</form>
