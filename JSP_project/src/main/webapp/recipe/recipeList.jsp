@@ -78,15 +78,6 @@
     <link rel="stylesheet" href="../css/recipe.css">
 </head>
 <body class="recipe-body">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
     <div class="recipe-list"> <!-- 레시피 리스트를 감싸는 div 추가 -->
        <h1 class="recipe-h1">Recipe</h1>
        <h3 class="recipe-h3">레시피 목록</h3>
