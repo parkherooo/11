@@ -83,6 +83,7 @@ public class UserMgr {
 	
 	// 로그인
 	public boolean loginUser(String userId, String pwd, HttpSession session) {
+		System.out.println("Login attempt for userId: " + userId);
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
@@ -92,6 +93,7 @@ public class UserMgr {
 	        con = pool.getConnection();
 	        // 입력된 비밀번호를 해싱
 	        String hashedPassword = hashPassword(pwd);
+	        System.out.println("Hashed password: " + hashedPassword);
 	        // 이름과 사용자 ID를 가져옴
 	        sql = "SELECT name FROM tbluser WHERE userId = ? AND pwd = ?";
 	        pstmt = con.prepareStatement(sql);
@@ -99,11 +101,14 @@ public class UserMgr {
 	        pstmt.setString(2, hashedPassword);
 	        rs = pstmt.executeQuery();
 	        if (rs.next()) {
+	        	System.out.println("Login successful for userId: " + userId);
 	            String name = rs.getString("name");
 	            // 로그인 성공 시 세션에 이름 저장
 	            session.setAttribute("userId", userId);
 	            session.setAttribute("name", name);
 	            flag = true; // 로그인 성공
+	        } else {
+	        	System.out.println("Login failed for userId: " + userId);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

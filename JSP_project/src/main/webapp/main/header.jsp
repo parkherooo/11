@@ -47,6 +47,7 @@ String userId = (String) session.getAttribute("userId");
                 	<ul class="dropdown-menu">
                         <li><a href="../diet/DietRecord.jsp">식단 기록</a></li>
                         <li><a href="../diet/CalorieCalc.jsp">하루 권장 칼로리</a></li>
+                        <li><a href="../diet/dietChart.jsp">주간/월간 리포트</a></li>
                     </ul>
                 </li>
                 <li>

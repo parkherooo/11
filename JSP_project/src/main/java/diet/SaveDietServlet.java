@@ -35,7 +35,7 @@ public class SaveDietServlet extends HttpServlet {
         try {
             // 데이터베이스 연결
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime", "root", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
 
             String sql = "INSERT INTO tblDietaryRecords (userId, diet, calorie, drDate) VALUES (?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);

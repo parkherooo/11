@@ -294,7 +294,7 @@ body {
 			<div class="diet-form-wrapper">
 				<form class="diet-record" action="SaveDietServlet" method="post">
 					<h4>오늘의 식단</h4>
-					<input type="hidden" id="userId" name="userId" value=""> <input
+					<input type="hidden" id="userId" name="userId" value="<%= session.getAttribute("userId") %>"> <input
 						type="hidden" id="selectedDate" name="selectedDate" value="">
 					<div class="meal-input">
 						<label for="diet">오늘의 식단:</label>

@@ -19,7 +19,7 @@ public class GetDietServlet extends HttpServlet {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useSSL=false&serverTimezone=UTC", "root", "1234");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
              PreparedStatement pstmt = conn.prepareStatement("SELECT diet, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate = ?")) {
             
             pstmt.setString(1, userId);
