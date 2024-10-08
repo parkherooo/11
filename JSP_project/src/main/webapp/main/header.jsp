@@ -31,6 +31,36 @@
 			window.location.href = "../login/logOut.jsp"; 
 		}
 	}
+	
+	// 배너 스크롤 이벤트
+	document.addEventListener('DOMContentLoaded', () => {
+	    const banner = document.querySelector('.banner');
+
+	    // 배너의 초기 배경색을 투명으로 설정
+	    banner.style.backgroundColor = 'transparent';
+
+		// 배너에 마우스를 올렸을 때
+        banner.addEventListener('mouseenter', () => {
+            banner.style.backgroundColor = 'white';
+        });
+
+        // 배너에서 마우스를 내렸을 때
+        banner.addEventListener('mouseleave', () => {
+            if (window.scrollY > 50) {
+                banner.style.backgroundColor = 'white'; // 스크롤이 50px 이상일 때
+            } else {
+                banner.style.backgroundColor = 'transparent'; // 스크롤이 50px 미만일 때
+            }
+        });
+     	
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { // 스크롤 위치가 50px 이상일 때
+                banner.style.backgroundColor = 'white';
+            } else {
+                banner.style.backgroundColor = 'transparent'; // 원래 배경 투명
+            }
+        });
+	});	
 </script>
 </head>
 <body>
