@@ -49,7 +49,7 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h3 {
+        h2 {
             text-align: center;
             font-size: 2rem;
             margin-bottom: 20px;
@@ -173,7 +173,7 @@
     }
 </script>
 <div class="challenge-container">
-    <h3><%= challenge.getChallengeName() %></h3>
+    <h2><%= challenge.getChallengeName() %></h2>
 
     <div class="participant-count">
         참가 인원: <%= count %>명

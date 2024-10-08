@@ -8,8 +8,8 @@
 body {
     display: flex; /* 삭제 금지 */
     flex-direction: column;
-    min-height: 100vh; /* 화면의 전체 높이 */
     margin: 0;
+    height: 100%;
 }
 
 
@@ -163,13 +163,11 @@ nav ul li:hover .dropdown-menu {
 /* ---- main CSS ---- */
 
 .main-body {
-	
     color: black; /* 기본 글자 색상 검정색 */
 }
 
 .main-content {
     display: flex; /* 플렉스 레이아웃 사용 */
-    margin-top: 160px; /* 헤더 높이만큼 상단 여백 */
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -192,10 +190,7 @@ nav ul li:hover .dropdown-menu {
 .slide-content {
 	display: none;
 	position: relative; /* 이미지와 텍스트를 겹치기 위해 상대 위치 지정 */
-    text-align: center; /* 텍스트를 중앙 정렬 */
-    max-width: 100%; /* 이미지가 부모의 너비를 넘지 않도록 */
-    max-height: 80vh; /* 화면의 70% 높이로 제한 */
-    overflow: hidden; /* 컨텐츠가 영역을 넘지 않도록 숨김 */ 
+    text-align: center; /* 텍스트를 중앙 정렬 */ 
 }
 
 .slide-content img {
