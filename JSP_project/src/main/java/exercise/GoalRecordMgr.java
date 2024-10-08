@@ -81,13 +81,7 @@ public class GoalRecordMgr {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (rs != null) rs.close();
-	            if (pstmt != null) pstmt.close();
-	            if (con != null) con.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	    	pool.freeConnection(con, pstmt, rs);
 	    }
 	    return records; // ArrayList 반환
 	}
