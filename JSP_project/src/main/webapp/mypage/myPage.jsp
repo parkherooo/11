@@ -246,7 +246,7 @@
                	<div>
 				    <form action="" method="post">
 				        <input type="text" name="friendId" placeholder="친구추가할 사용자의 ID를 입력하세요" style="width: 300px;">
-				        <button class="mypage-button" type="submit" class="search">
+				        <button class="mypage-button" type="submit" class="search" style="color: black; background-color: white;">
 				            <i class="fas fa-search"></i>
 				        </button>
 				    </form>
@@ -284,6 +284,8 @@
 							<input type="hidden" name="userId" value="<%= userId %>">
 				            <button class="mypage-button" type="submit" name="action" value="accept">수락</button>
 				            <button class="mypage-button" type="submit" name="action" value="delete" style="background-color: red;">삭제</button>
+					   		<br>
+					   		<br>
 					   		<%} %>
 					   	</form>
 					   	<form action="friendDelete" method="post">

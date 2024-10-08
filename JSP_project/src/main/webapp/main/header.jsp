@@ -68,14 +68,15 @@
                 </li>
                 <li>
 
-                	<a href="community.jsp">Community</a>
+                	<a href="">Community</a>
                 	<ul class="dropdown-menu">
-                        <li><a href="Community_Main.jsp">나의 게시글</a></li>
-                        <li><a href="Heart.jsp">인기글</a></li>
-                        <li><a href="post_create.jsp">게시물 작성</a></li>
+                        <li><a href="../community/Community_Main.jsp">나의 게시글</a></li>
+                        <li><a href="../community/Heart.jsp">인기글</a></li>
+                        <li><a href="../community/post_create.jsp">게시물 작성</a></li>	
                     </ul>
 
                 </li>
+                 <li><a href="../challenge/challengeList.jsp">Challenge</a></li>
                 <li><a href="../notice/noticeList.jsp">Notice</a></li>
             </ul>
             <!-- 로그인 상태 -->

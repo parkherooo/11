@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 		.chatbot-body {
-            font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
@@ -12,6 +11,7 @@
             bottom: 80px;
             right: 20px;
             width: 400px;
+            border: 1px solid #ddd;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
