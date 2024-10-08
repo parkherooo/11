@@ -1,8 +1,14 @@
 @charset "UTF-8";
 
-* {
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: 600;
+     font-style: normal;
+}
 
-	font-family: 'Arial', sans-serif;
+* {	
+   font-family: 'S-CoreDream-3Light';
 }
 
 body {
@@ -22,12 +28,11 @@ body {
     align-items: center;
     padding: 30px 50px;
     border-bottom: 1px solid #000;
-    height: 100px;
+    height: 120px;
     position: fixed; /* 고정 위치 설정 */
     top: 0; /* 상단 고정 */
     left: 0;
     right: 0;
-
     z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
 
 
@@ -43,7 +48,7 @@ body {
 }
 
 .logo img {
-    width: 210px;
+    width: 230px;
     height: auto;
     margin-bottom: 10px;
 }
@@ -63,12 +68,9 @@ nav ul {
     padding: 0;
 }
 
-nav ul li {
-    margin-right: 70px;
-    position: relative;
-}
 
 nav ul li a {
+	margin-right: 70px;
     text-decoration: none;
     font-size: 18px;
     color: #000;
@@ -81,10 +83,12 @@ nav ul li a:hover {
 
 /* 드롭다운 메뉴 숨기기 */
 nav ul li .dropdown-menu {
+	justify-content: center;
     visibility: hidden; /* 처음에는 보이지 않음 */
     position: absolute;
     top: 180%;
-    left: 0;
+    left: 0; /* 화면의 왼쪽 끝에 맞추기 */
+    right: 0; /* 화면의 오른쪽 끝에 맞추기 */
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 10px 20px; /* 간격을 조절 */
@@ -94,8 +98,8 @@ nav ul li .dropdown-menu {
     opacity: 0; /* 투명하게 시작 */
     transform: translateY(-10px); /* 메뉴가 위에서 내려오는 효과 */
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; /* 애니메이션 효과 */
-    width: 110vw;
     margin-left: calc(-50vw + 50%); 
+    width: 100vw; 
 }
 
 /* 마우스를 올렸을 때 드롭다운 메뉴 보이기 */
@@ -106,15 +110,15 @@ nav ul li:hover .dropdown-menu {
 }
 
 .dropdown-menu li {
-
+	justify-content: center;
 	text-align: center;
-
     width: 100%;
     padding: 10px 0; /* 상하 여백 추가 */
     margin: 0; /* 간격 제거 */
 }
 
 .dropdown-menu li a {
+	justify-content: center;
     font-size: 16px;
     color: #000;
     padding: 5px 10px;
