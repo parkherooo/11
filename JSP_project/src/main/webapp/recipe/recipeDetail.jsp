@@ -1,9 +1,18 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.io.BufferedReader, java.io.InputStreamReader, java.net.HttpURLConnection, java.net.URL, org.json.JSONObject" %>
 
 <%	
     String title = request.getParameter("title");
     String recipeId = request.getParameter("id");
+    if(title==null||recipeId==null){
+    	response.setContentType("text/html; charset=UTF-8");
+		PrintWriter outPrintWriter = response.getWriter();
+		outPrintWriter.println("<script>");
+		outPrintWriter.println("alert('선택하신 레시피가 없습니다.')");
+		outPrintWriter.println("history.back()");
+		outPrintWriter.println("</script>");
+    }
     String apiUrl = "https://openapi.foodsafetykorea.go.kr/api/12cb932ee6ff42828803/COOKRCP01/json/1/100/RCP_SEQ=" + recipeId + "&RCP_NM=" +java.net.URLEncoder.encode(title, "UTF-8");
     StringBuilder result = new StringBuilder();
 
@@ -44,31 +53,37 @@
     
     <div class="recipe-detail">
         <h2><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피를 찾을 수 없습니다." %></h2>	<br>
+        <hr>
         <div class="ingredients">
             <img class="recipe-image" src="<%= recipeDetail != null ? recipeDetail.getString("ATT_FILE_NO_MK") : "" %>" alt="조리 이미지" />
-            <div>
-                <h3 class="recipe-h3">성분</h3>
-                탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %>g<br>
+            <div class="ingredient">
+                <h3 class="recipe-h3">영양성분</h3>
+                <b>탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %>g<br>
                 단백질: <%= recipeDetail != null ? recipeDetail.getString("INFO_PRO") : "" %>g<br>
                 지방: <%= recipeDetail != null ? recipeDetail.getString("INFO_FAT") : "" %>g<br>
-                나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %>g<br>
-                열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %>cal<br>
+                나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %>g<br><br>
+                열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %>cal</b><br>
             </div>
         </div>
-		
-        <h3>조리방법</h3><br>
-        <% 
-        for (int i = 1; i <= 20; i++) {
+    <h3>조리방법</h3>
+    <div class="recipe-method">
+        <% for (int i = 1; i <= 20; i++) {
             String manualKey = "MANUAL0" + i;
             if (recipeDetail != null && recipeDetail.has(manualKey) && !recipeDetail.getString(manualKey).isEmpty()) {
         %>
-                <div><%= recipeDetail.getString(manualKey) %></div>
+            <div class="method-step">
+                <%= recipeDetail.getString(manualKey) %>
+            </div>
         <% 
             }
-        } 
-        %>	
-        <br>
-        <div><b>재료:</b> <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "" %></div>
+        } %>
+    </div>
+
+    <h3>재료</h3>
+	    <div class="recipe-ingredient">
+	            <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "재료 정보를 찾을 수 없습니다." %>
+	    </div>
+
         <br>
         <h3>저감 조리법 Tip</h3>
         <div><%= recipeDetail != null ? recipeDetail.getString("RCP_NA_TIP") : "" %></div>

@@ -1,15 +1,17 @@
 @charset "UTF-8";
 
 * {
+
 	font-family: 'Arial', sans-serif;
 }
 
 body {
     display: flex; /* 삭제 금지 */
     flex-direction: column;
-    min-height: 100vh; /* 화면의 전체 높이 */
     margin: 0;
+    height: 100%;
 }
+
 
 /* ---- header CSS ---- */
 .banner {
@@ -25,7 +27,11 @@ body {
     top: 0; /* 상단 고정 */
     left: 0;
     right: 0;
-    z-index: 1000; /* 배너가 항상 위에 표시되도록 설정 */
+
+
+    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+
+
 }
 
 .welcome-message {
@@ -101,7 +107,9 @@ nav ul li:hover .dropdown-menu {
 }
 
 .dropdown-menu li {
+
 	text-align: center;
+
     width: 100%;
     padding: 10px 0; /* 상하 여백 추가 */
     margin: 0; /* 간격 제거 */
@@ -114,6 +122,16 @@ nav ul li:hover .dropdown-menu {
     text-align: center;
     display: block;
 }
+
+
+.dropdown-menu {
+    width: fit-content;
+    margin: 0 auto; /* 좌우 자동 마진으로 가운대로 배치 */
+    list-style: none;
+    padding: 0;
+}
+
+
 
 .notification-container {
     position: absolute;
@@ -144,15 +162,20 @@ nav ul li:hover .dropdown-menu {
 }
 
 /* ---- main CSS ---- */
+
 .main-body {
+
 	text-align: center;
     position: relative;
+
     color: black; /* 기본 글자 색상 검정색 */
     margin: 0; 
 }
 
 .main-content {
+
     display: flex;
+
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -163,8 +186,10 @@ nav ul li:hover .dropdown-menu {
 
 .main-content2 {
     width: 100%;
+
     height: 800px;
     margin-top: 0; /* main-content 바로 아래에 배치 */
+
 }
 
 .arrow img {
@@ -176,6 +201,7 @@ nav ul li:hover .dropdown-menu {
 .right-arrow img {
     transform: rotate(180deg); /* 이미지를 180도 회전 */
 }
+
 
 .left-arrow, .right-arrow {
     position: absolute; /* 절대 위치 설정 */
@@ -203,6 +229,7 @@ nav ul li:hover .dropdown-menu {
     overflow: hidden; /* 컨텐츠가 영역을 넘지 않도록 숨김 */
     visibility: hidden;
     transition: opacity 0.5s ease-in-out, visibility 0s 0.5s; /* 페이드 전환 */
+
 }
 
 .slide-content img {
@@ -252,9 +279,11 @@ nav ul li:hover .dropdown-menu {
     color: white; /* 글자 색상 설정 */
     z-index: 10; /* 이미지 위에 표시되도록 설정 */
     padding: 10px; /* 텍스트 주변 여백 */
+
     opacity: 0;
     transform: translateX(-100px); /* 왼쪽에서 시작 */
     transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* 부드러운 전환 효과 */
+
 }
 
 .slider-nav {
@@ -291,6 +320,7 @@ nav ul li:hover .dropdown-menu {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     margin: 210px auto; /* 상단 여백, 좌우 여백 */
+
 }
 
 /* 로그인 폼 타이틀 */
@@ -340,6 +370,7 @@ nav ul li:hover .dropdown-menu {
     text-decoration: underline;
 }
 
+
 .additional-info-section {
     width: 90%; /* 화면 양쪽에 여백이 생기도록 */
     max-width: 800px; /* 최대 너비 제한 */
@@ -353,15 +384,18 @@ nav ul li:hover .dropdown-menu {
     margin-bottom: 15px; /* 각 폼 요소 간 간격 */
 }
 
+
 /* ---- signup CSS ---- */
 .signup-section {
     background-color: white;
     width: 400px;
     padding: 40px;
     border-radius: 10px;
+
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     margin: 210px auto; /* 중앙 정렬 */
+
 }
 
 /* 회원가입 폼 타이틀 */
@@ -397,7 +431,9 @@ nav ul li:hover .dropdown-menu {
 }
 
 /* ---- normalSignup CSS ---- */
+
 .normal-signup-section, .additional-info-section {
+
     background-color: white;
     width: 100%;
     max-width: 700px;
@@ -410,6 +446,7 @@ nav ul li:hover .dropdown-menu {
 
 /* 회원가입 폼 타이틀 */
 .normal-signup-section h1, .additional-info-section h1 {
+
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
@@ -444,20 +481,26 @@ nav ul li:hover .dropdown-menu {
     background-color: #28710d;
 }
 
+
 /* 입력 필드 그리드 */
 .normal-signup-form, .additional-info-form {
+
     display: grid;
     grid-template-columns: 1fr 1fr; /* 두 개의 칸 */
     gap: 20px; /* 필드 사이 간격 */
 }
 
 /* 전체 너비가 필요한 필드 (아이디, 비밀번호 등) */
+
 .normal-signup-form .full-width, .additional-info-form .full-width {
+
     grid-column: 1 / 3; /* 두 칸 차지 */
 }
 
 /* 입력 필드 스타일 */
+
 .normal-signup-form label, .additional-info-form label {
+
     display: block;
     text-align: left;
     font-size: 16px;
@@ -465,7 +508,9 @@ nav ul li:hover .dropdown-menu {
     color: #333;
 }
 
+
 .normal-signup-form input, .normal-signup-form select, .additional-info-form input, .additional-info-form select {
+
     width: 95%;
     padding: 12px;
     margin-bottom: 15px;
@@ -475,7 +520,9 @@ nav ul li:hover .dropdown-menu {
     background-color: #f9f9f9;
 }
 
+
 .normal-signup-form input:focus, .normal-signup-form select:focus, .additional-info-form input:focus, .additional-info-form select:focus {
+
     border-color: #319815;
     background-color: white;
     outline: none;
@@ -504,9 +551,11 @@ nav ul li:hover .dropdown-menu {
 	width: 500px;
 	padding: 40px;
 	border-radius: 10px;
+
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 	text-align: center;
 	margin: 270px auto; /* 중앙 정렬 */
+
 }
 
 .find-id-section h1 {
@@ -548,6 +597,7 @@ nav ul li:hover .dropdown-menu {
 /* 비밀번호 찾기 섹션 */
 .find-pwd-section {
     background-color: white;
+
     width: 400px;
     padding: 40px;
     border-radius: 10px;
@@ -574,6 +624,7 @@ nav ul li:hover .dropdown-menu {
 
 /* 버튼 스타일 */
 .find-pwd-section button {
+
     background-color: #319815;
     color: white;
     border: none;
@@ -587,6 +638,7 @@ nav ul li:hover .dropdown-menu {
 
 .find-pwd-section button:hover {
     background-color: #28710d;
+
 }
 
 /* ---- footer CSS ---- */
@@ -627,6 +679,7 @@ nav ul li:hover .dropdown-menu {
 .logo-container {
     text-align: center; /* 로고와 텍스트를 중앙 정렬 */
     margin: 10px; /* 각 로고 그룹 주변의 여백 */
+
 }
 
 .footer-bottom {

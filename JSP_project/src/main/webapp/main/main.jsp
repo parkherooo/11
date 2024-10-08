@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/main.css">
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         let currentSlide = 0;
@@ -77,6 +78,7 @@
 	
     <!-- 메인 콘텐츠 섹션 -->
     <section class="main-content">
+
         <div class="arrow left-arrow">
             <img src="../img/arrow.png" alt="Left Arrow">
         </div>
@@ -116,9 +118,11 @@
         	<h2>조개 크림 파스타</h2>
         	<p>신선한 조개와 부드러운 크림 소스가 어우러진 고소하고 진한 맛의 파스타</p>
     	</div>
+
         <div class="arrow right-arrow">
             <img src="../img/arrow.png" alt="Right Arrow">
         </div>
+
         <!-- 슬라이드 네비게이션 -->
     	<div class="slider-nav">
         	<span class="current-slide">1</span>
@@ -136,8 +140,10 @@
 	
 	
 	<%@ include file="../chatbot/chatbot.jsp" %>
-	<footer>
+	
+
+</body>
+<footer>
 		<%@ include file="footer.jsp" %>
 	</footer>
-</body>
 </html>

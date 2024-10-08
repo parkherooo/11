@@ -33,8 +33,6 @@
     <title>Challenge List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
             position: relative;
 			top:200px;
         }
@@ -68,17 +66,15 @@
             width: 300px;
             padding: 10px;
             font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: none;
         }
 
         .noticesearch-container button {
-            background-color: black;
             border: none;
+            background-color:white;
             padding: 10px 15px;
-            color: white;
+            color: black;
             font-size: 1rem;
-            border-radius: 5px;
             cursor: pointer;
         }
 
@@ -149,7 +145,9 @@
         <button class="notice-btn" type="submit">
             <i class="fas fa-search"></i>
         </button>
+       	<b><a href="challengeInsert.jsp" style="margin-left: 30%; color: green;">작성</a></b>
     </form>
+  
 </div>
 <table>
 	<tr>
