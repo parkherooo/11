@@ -573,6 +573,11 @@ public class UserMgr {
 		boolean flag = false;
 		try {
 			con = pool.getConnection();
+			sql = "DELETE FROM tblalarm WHERE userId = (SELECT friendId FROM tblfriend WHERE num = ?)";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setInt(1, num);
+	        pstmt.executeUpdate();
+	        
 			sql = "delete from tblfriend where num =?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
