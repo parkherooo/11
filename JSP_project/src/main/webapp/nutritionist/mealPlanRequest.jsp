@@ -1,3 +1,4 @@
+<%@page import="notice.NoticeMgr"%>
 <%@page import="nutritionist.nutritionistBean"%>
 <%@page import="nutritionist.nutritionistMgr"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -73,10 +74,7 @@ function send() {
 
   	<div class="form-group" style="text-align: right;">
   	<div class="form-buttons">
-  	<% if(userId=="root"){ %>
-    <input type="button" value="리스트" onclick="location.href='mealPlanList.jsp'">
-    <%}%>
-    <input type="button" value="제출" onclick="send()">
+  	<input type="button" value="제출" onclick="send()">
 	</div>
 
   	</div>

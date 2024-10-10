@@ -1,3 +1,4 @@
+<%@page import="notice.NoticeMgr"%>
 <%@ page language="java"  pageEncoding="UTF-8"%>
 
 <%
@@ -89,8 +90,13 @@
                     </ul>
                 </li>
                  <li>
-
+					<% NoticeMgr noticeMgr = new NoticeMgr();
+					int manger = noticeMgr.mangerChk(userId);
+				  	if(manger==1){ %>
+                	<a href="../nutritionist/mealPlanList.jsp">Meal Plan</a>
+                	<%} else{%>
                 	<a href="">Meal Plan</a>
+                	<%}%>
                 	<ul class="dropdown-menu">
                         <li><a href="../nutritionist/mealPlanRequest.jsp">식단 신청</a></li>
                         <li><a href="../nutritionist/mealPlanResult.jsp">식단표</a></li>	
