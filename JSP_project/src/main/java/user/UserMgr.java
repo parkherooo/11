@@ -216,15 +216,14 @@ public class UserMgr {
     }
 
     ////////////// 소셜 로그인 //////////////////
-    // 카카오 사용자 최초 가입 (기본 정보만 저장)
-    public boolean insertKakaoUser(UserBean bean) {
+    // 소셜 사용자 최초 가입 (기본 정보만 저장)
+    public boolean insertSocialUser(UserBean bean) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String sql = null; 
         boolean flag = false;
         try {
             con = pool.getConnection();
-            // 카카오 로그인 전용 삽입 쿼리
             sql = "INSERT INTO tbluser (userId, name) VALUES (?, ?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, bean.getUserId());
@@ -242,7 +241,7 @@ public class UserMgr {
     }
 
     // 추가 정보 입력
-    public boolean updateKakaoUser(UserBean bean) {
+    public boolean updateSocialUser(UserBean bean) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String sql = null;
