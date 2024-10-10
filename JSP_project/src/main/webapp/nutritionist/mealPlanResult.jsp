@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/mealplanresult.css">
@@ -15,10 +16,8 @@
 	}
 </script>
 </head>
-<body>
+<body class="result-body">
 	<%
-		// 사용자 ID를 세션에서 가져오기
-		String userId = (String) request.getSession().getAttribute("userId");
 		
 		nutritionistMgr nMgr = new nutritionistMgr();
 		String mealImage = nMgr.getMealImage(userId); // 이미지 경로 가져오기
@@ -29,7 +28,7 @@
 		<%
 		if (mealImage != null) {
 		%>
-		<p>새로운 식단을 신청하려면 기존의 식단을 삭제 후 재신청 가능합니다.</p>
+		<p class="result-p">새로운 식단을 신청하려면 기존의 식단을 삭제 후 재신청 가능합니다.</p>
 		<img src="/JSP_project/nutritionist/images/<%=mealImage%>" alt="이미지" style="max-width: 100%; height: auto;">
 		<div class="form-buttons">
 			<input type="button" value="삭제" onclick="send()">
@@ -37,11 +36,13 @@
 		<%
 		} else {
 		%>
-		<p class="no-image">아직 식단이 등록되지 않았습니다.</p>
+		<p class="result-p">아직 식단이 등록되지 않았습니다.</p>
 		<%
 		}
 		%>
 
 	</form>
+<%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

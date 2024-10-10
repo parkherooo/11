@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/routineResult.css">
@@ -24,7 +25,7 @@ function goBack() {
     <h1>오늘의 추천 루틴!</h1>
     <button class="button" type="button" onclick="goBack()">이전으로</button>
     <button class="button" type="button" onclick="reloadPage()">다른 루틴</button>
-    <div class="container">
+    <div class="r-container">
         <%
             if (routineList != null && !routineList.isEmpty()) {
                 for (ExerciseRoutineBean routine : routineList) {
@@ -43,4 +44,5 @@ function goBack() {
     </div>
 <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>
