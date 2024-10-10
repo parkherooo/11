@@ -111,7 +111,7 @@ function updateTotalCalories(additionalCalories) {
     const caloriesInput = document.getElementById('calories');
     let currentCalories = parseFloat(caloriesInput.value) || 0;
     currentCalories += additionalCalories;
-    caloriesInput.value = currentCalories.toFixed(1); // 소수점 첫째 자리까지 표시
+    caloriesInput.value = currentCalories.toFixed(0); // 소수점 첫째 자리까지 표시
 }
 
 // 이벤트 리스너 등록

@@ -9,6 +9,9 @@ import org.json.simple.JSONObject;
 @WebServlet("/diet/GetDietServlet")
 public class GetDietServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	 request.setCharacterEncoding("UTF-8");  // 요청 인코딩 설정
+         response.setCharacterEncoding("UTF-8"); // 응답 인코딩 설정
+         
         String userId = request.getParameter("userId");
         String selectedDate = request.getParameter("selectedDate");
         JSONObject jsonResult = new JSONObject();

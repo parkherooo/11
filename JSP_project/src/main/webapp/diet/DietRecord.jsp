@@ -263,7 +263,7 @@ body {
 		<h2>Diet</h2>
 		<div class="content-wrapper">
 			<div class="calendar-wrapper">
-				<div class="calendar">
+				<div class="calendar"> 
 					<div class="calendar-header">
 						<button id="prevMonth">&lt;</button>
 						<h3 id="calendarTitle"></h3>
@@ -292,7 +292,7 @@ body {
 				</div>
 			</div>
 			<div class="diet-form-wrapper">
-				<form class="diet-record" action="SaveDietServlet" method="post">
+				<form class="diet-record" id="dietForm" method="post">
 					<h4>오늘의 식단</h4>
 					<input type="hidden" id="userId" name="userId" value="<%= session.getAttribute("userId") %>"> <input
 						type="hidden" id="selectedDate" name="selectedDate" value="">
@@ -303,7 +303,7 @@ body {
 					</div>
 					<div class="total-calories">
 						<label for="calories">총 칼로리:</label> <input type="number"
-							id="calories" name="calories"> <span>kcal</span>
+							id="calories" name="calories" step="1" required> <span>kcal</span>
 					</div>
 					<div class="form-actions">
 						<button type="reset">취소</button>
@@ -323,32 +323,6 @@ body {
 		</div>
 	</main>
 
-
-	<%-- <script>
-	// 페이지 로드 시 로그인 상태 확인
-	window.onload = function() {
-	    if (!isLoggedIn()) {
-	        alert("로그인을 먼저 실행해주세요.");
-	        window.location.href = 'login.jsp';
-	    }
-	}
-
-	// 로그인 상태 확인 함수 (서버에서 세션 정보를 확인하는 API가 필요함)
-	function isLoggedIn() {
-	    // 여기에 서버에 로그인 상태를 확인하는 AJAX 요청을 구현
-	    // 예시: return 서버응답;
-	    return <%= session.getAttribute("userId") != null %>;
-	}
-
-	// 폼 제출 전 로그인 상태 재확인
-	document.querySelector('.diet-record').addEventListener('submit', function(e) {
-	    if (!isLoggedIn()) {
-	        e.preventDefault();
-	        alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-	        window.location.href = 'login.jsp';
-	    }
-	});
-	</script> --%>
 	<%@ include file="/chatbot/chatbot.jsp"%>
 	<%@ include file="../main/footer.jsp"%>
 	<script src="../diet/common-calendar.js"></script>

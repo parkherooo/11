@@ -1,5 +1,4 @@
 package diet;
-
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -10,33 +9,56 @@ import org.json.simple.JSONObject;
 @WebServlet("/diet/SaveDietServlet")
 public class SaveDietServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/plain;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
+    	System.out.println("SaveDietServlet: doPost method started"); // 디버깅 로그
+        System.out.println("Received parameters:");
+        System.out.println("diet: " + request.getParameter("diet"));
+        System.out.println("selectedDate: " + request.getParameter("selectedDate"));
+        System.out.println("calories: " + request.getParameter("calories"));
+
+         
         // 세션 확인
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            sendJsonResponse(response, false, "로그인을 먼저 실행해주세요.");
+            System.out.println("SaveDietServlet: User not logged in"); // 디버깅 로그
+            response.getWriter().write("로그인을 먼저 실행해주세요.");
             return;
         }
 
         String userId = (String) session.getAttribute("userId");
         String diet = request.getParameter("diet");
         String selectedDate = request.getParameter("selectedDate");
-        int calorie; 
+        String caloriesParam = request.getParameter("calories");
 
+        System.out.println("SaveDietServlet: Received parameters:"); // 디버깅 로그
+        System.out.println("userId: " + userId);
+        System.out.println("diet: " + diet);
+        System.out.println("selectedDate: " + selectedDate);
+        System.out.println("calories: " + caloriesParam);
+
+        int calorie; 
         try {
-            calorie = Integer.parseInt(request.getParameter("calories"));
+            if (caloriesParam == null || caloriesParam.trim().isEmpty()) {
+                System.out.println("SaveDietServlet: Calories parameter is null or empty"); // 디버깅 로그
+                response.getWriter().write("칼로리 값이 입력되지 않았습니다.");
+                return;
+            }
+            calorie = Integer.parseInt(caloriesParam);
         } catch (NumberFormatException e) {
-            sendJsonResponse(response, false, "칼로리는 숫자여야 합니다.");
+            System.out.println("SaveDietServlet: Invalid calorie format: " + caloriesParam); // 디버깅 로그
+            response.getWriter().write("칼로리는 숫자로 입력해주세요.");
             return;
         }
 
         Connection conn = null;
         PreparedStatement pstmt = null;
-
         try {
             // 데이터베이스 연결
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
-
             String sql = "INSERT INTO tblDietaryRecords (userId, diet, calorie, drDate) VALUES (?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
@@ -44,15 +66,21 @@ public class SaveDietServlet extends HttpServlet {
             pstmt.setInt(3, calorie);
             pstmt.setString(4, selectedDate);
 
+            System.out.println("SaveDietServlet: Executing SQL: " + sql); // 디버깅 로그
+            System.out.println("SaveDietServlet: SQL parameters: " + userId + ", " + diet + ", " + calorie + ", " + selectedDate);
+
             int result = pstmt.executeUpdate();
             if(result > 0) {
-                sendJsonResponse(response, true, "식단이 성공적으로 저장되었습니다.");
+                System.out.println("SaveDietServlet: Diet saved successfully"); // 디버깅 로그
+                response.getWriter().write("식단이 성공적으로 저장되었습니다.");
             } else {
-                sendJsonResponse(response, false, "식단 저장에 실패했습니다.");
+                System.out.println("SaveDietServlet: Failed to save diet"); // 디버깅 로그
+                response.getWriter().write("식단 저장에 실패하였습니다.");
             }
         } catch(Exception e) {
+            System.out.println("SaveDietServlet: Exception occurred: " + e.getMessage()); // 디버깅 로그
             e.printStackTrace();
-            sendJsonResponse(response, false, "오류가 발생했습니다: " + e.getMessage());
+            response.getWriter().write("오류가 발생했습니다: " + e.getMessage());
         } finally {
             try {
                 if(pstmt != null) pstmt.close();
@@ -61,14 +89,6 @@ public class SaveDietServlet extends HttpServlet {
                 se.printStackTrace();
             }
         }
-    }
-
-    private void sendJsonResponse(HttpServletResponse response, boolean success, String message) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("success", success);
-        jsonObject.put("message", message);
-        response.getWriter().write(jsonObject.toJSONString());
+        System.out.println("SaveDietServlet: doPost method ended"); // 디버깅 로그
     }
 }
