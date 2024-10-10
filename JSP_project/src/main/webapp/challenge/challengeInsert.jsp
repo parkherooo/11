@@ -31,6 +31,7 @@
     }
 
     label {
+    	margin:10px;
         display: block;
         font-weight: bold;
         margin-bottom: 10px;
@@ -39,7 +40,6 @@
     input[type="text"], input[type="date"], textarea {
         width: 100%;
         padding: 10px;
-        margin-bottom: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
@@ -50,6 +50,7 @@
     }
 
     .c-btn {
+        margin-top:20px;
         width: 100%;
         padding: 10px;
         background-color: black;
@@ -61,6 +62,7 @@
     }
 
     .c-btn:hover {
+
         background-color: gray;
     }
 
@@ -112,6 +114,7 @@
 
         <button class="c-btn" type="submit">작성</button>
     </form>
+ <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

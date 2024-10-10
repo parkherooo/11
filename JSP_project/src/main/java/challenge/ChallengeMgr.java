@@ -256,21 +256,91 @@ public class ChallengeMgr {
 		return vlist;
 	}
 	
-	public void heartPlus(int participantId) {
+	public boolean heartPlus(String userId, int participantId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
+		ResultSet rs = null;
+		boolean heartOn = false;
 		try {
 			con = pool.getConnection();
-			sql = "update tblchallengeparticipants set heart = heart+1 where "
-					+ "participantId = ?";
+			sql = "select heartId, liked from tblheart where userId = ? and participantId= ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, participantId);
-			pstmt.executeUpdate();
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, participantId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int heartId = rs.getInt("heartId");
+				int like = rs.getInt("liked");
+				
+				if(like ==1) {
+					sql = "update tblchallengeparticipants set heart = heart-1 where "
+							+ "participantId = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, participantId);
+					pstmt.executeUpdate();
+					
+					sql = "update tblheart set liked = 0 where heartId = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, heartId);
+					pstmt.executeUpdate();
+
+				} else {
+					sql = "update tblchallengeparticipants set heart = heart+1 where "
+							+ "participantId = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, participantId);
+					pstmt.executeUpdate();
+					
+					sql = "update tblheart set liked = 1 where heartId = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, heartId);
+					if(pstmt.executeUpdate()==1) heartOn = true;
+				}
+			} else {
+				sql = "update tblchallengeparticipants set heart = heart+1 where "
+						+ "participantId = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, participantId);
+				pstmt.executeUpdate();
+				
+				sql = "insert tblheart values(null,?,?,1)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, participantId);
+				pstmt.setString(2, userId);
+				if(pstmt.executeUpdate()==1) heartOn = true;
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return heartOn;
 	}
+	public boolean heartChk(String userId, int participantId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "select liked from tblheart where userId = ? and participantId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, participantId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { 
+				if(rs.getInt("liked")==1) flag = true;
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return flag;
+	}
+	
+	
 }
