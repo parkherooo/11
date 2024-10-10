@@ -16,7 +16,8 @@ public class ChatServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String question = request.getParameter("question");
+    	request.setCharacterEncoding("UTF-8");
+    	String question = request.getParameter("question");
 
         // OpenAI GPT API 호출
         String gptResponse = callOpenAIGPTAPI(question);
@@ -43,7 +44,7 @@ public class ChatServlet extends HttpServlet {
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("model", "gpt-3.5-turbo");
             jsonRequest.put("messages", new JSONObject[]{ new JSONObject().put("role", "user").put("content", question) });
-            jsonRequest.put("max_tokens", 100);
+            jsonRequest.put("max_tokens", 500);
 
             conn.setDoOutput(true);
             OutputStream os = conn.getOutputStream();
