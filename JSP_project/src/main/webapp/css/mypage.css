@@ -2,7 +2,7 @@
 .mypage-body{
 	display: grid;
    	grid-template-columns: 30% 70%;
-    margin-top: 160px;
+    margin-top: 180px;
 }
 .myprofile {
 	grid-column: 1;

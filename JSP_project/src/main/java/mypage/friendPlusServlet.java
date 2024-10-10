@@ -23,7 +23,7 @@ public class friendPlusServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String friendId = request.getParameter("friendId");
 		String redirectUrl = "myPage.jsp?category=" + URLEncoder.encode("친구관리", "UTF-8"); // 인코딩 처리
-		if(!mgr.frplusChk(userId)){
+		if(mgr.frplusChk(userId)==true){
 			if(mgr.frPlus(userId, friendId)) {
 				response.sendRedirect(redirectUrl);
 			} else {

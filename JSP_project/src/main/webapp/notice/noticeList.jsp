@@ -29,9 +29,8 @@
 </head>
 
 
-<body class="noticebody" style="position: relative; /* 상대 위치 설정 */
-    top: 200px;">
-
+<body class="noticebody" style="position: relative; top: 200px;">
+<h1>Notice</h1>
 <div class="noticeheader">
     <div class="noticecategories">
 	    <a class="notice-a <%= (category == null || category.equals("전체")) ? "active" : "" %>" href="noticeList.jsp?category=전체">전체</a>

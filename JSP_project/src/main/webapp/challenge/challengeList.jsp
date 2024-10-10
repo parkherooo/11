@@ -38,7 +38,6 @@
         }
 		h1 {
             text-align: center; /* h1 태그 가운데 정렬 */
-            font-size: 2.5rem; /* 필요시 폰트 크기 조정 가능 */
         }
         .challenge-container {
             width: 80%;
@@ -119,6 +118,9 @@
             border-radius: 5px;
             margin: 0 5px;
         }
+         .pagination a.active{
+          text-decoration: underline;
+         }
         .status-waiting {
             color: #f0ad4e;
             font-weight: bold;
@@ -133,6 +135,10 @@
             color: #d9534f;
             font-weight: bold;
         }
+        form{
+			width: 80%;
+            margin: 20px auto;
+        }
     </style>
 </head>
 
@@ -145,7 +151,9 @@
         <button class="notice-btn" type="submit">
             <i class="fas fa-search"></i>
         </button>
+        <%if(userId!=null) {%>
        	<b><a href="challengeInsert.jsp" style="margin-left: 30%; color: green;">작성</a></b>
+       	<%} %>
     </form>
   
 </div>
@@ -193,8 +201,10 @@
         <a href="?page=<%= currentPage - 1 %>&search=<%= search %>">이전</a>
     <% } %>
     
-    <% for (int i = 1; i <= totalPages; i++) { %>
-        <a href="?page=<%= i %>&search=<%= search %>"><%= i %></a>
+    <% for (int i = 1; i <= totalPages; i++) {
+    	 String linkStyle = (i == currentPage) ? "text-decoration: underline;" : "";  	%>
+    	
+        <a href="?page=<%= i %>&search=<%= search %>" style="<%= linkStyle %>"><%= i %></a>
     <% } %>
     
     <% if (currentPage < totalPages) { %>
