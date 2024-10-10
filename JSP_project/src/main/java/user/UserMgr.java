@@ -386,7 +386,7 @@ public class UserMgr {
 	        con = pool.getConnection();
 	        
 	        // 이미 친구 추가 요청이 있는지 확인
-	        sql = "SELECT COUNT(*) FROM tblfriend WHERE userId = ? AND frId = ?";
+	        sql = "SELECT COUNT(*) FROM tblfriend WHERE userId = ? AND friendId = ?";
 	        pstmt = con.prepareStatement(sql);
 	        pstmt.setString(1, userId);
 	        pstmt.setString(2, frId);
@@ -402,7 +402,6 @@ public class UserMgr {
 	                flag = true;
 	            }
 	        } else {
-	            System.out.println("이미 친구 추가 요청을 보냈습니다.");
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

@@ -7,7 +7,7 @@
    <link rel="stylesheet" href="../css/notice.css">
    <%@ include file="/main/header.jsp" %>
 </head>
-<body class="noticebody">
+<body class="noticebody" style="position: relative; top: 200px;">
 <div class="notice-container" >
     <h1 class="notice-h1">공지사항 작성</h1>
     <form action="noticePost" method="post" enctype="multipart/form-data" class="notice-form">

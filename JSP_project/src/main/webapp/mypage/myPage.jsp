@@ -69,7 +69,7 @@
         <div class="mypage-ca">
             <a class="mypage-a <%= (category == null || category.equals("프로필관리")) ? "active" : "" %>" href="myPage.jsp?category=프로필관리">프로필 관리</a>
             <a class="mypage-a <%= (category != null && category.equals("알러지관리")) ? "active" : "" %>" href="myPage.jsp?category=알러지관리">알러지 관리</a>
-            <a class="mypage-a <%= (category != null && category.equals("커뮤니티관리")) ? "active" : "" %>" href="myPage.jsp?category=커뮤니티관리">커뮤니티 관리</a>
+            <a class="mypage-a <%= (category != null && category.equals("커뮤니티관리")) ? "active" : "" %>" href="../community/Community_Main.jsp">커뮤니티 관리</a>
             <a class="mypage-a <%= (category != null && category.equals("친구관리")) ? "active" : "" %>" href="myPage.jsp?category=친구관리">친구 관리</a>
         </div>
         

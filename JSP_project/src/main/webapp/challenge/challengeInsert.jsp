@@ -49,7 +49,7 @@
         resize: none;
     }
 
-    button {
+    .c-btn {
         width: 100%;
         padding: 10px;
         background-color: black;
@@ -60,14 +60,11 @@
         cursor: pointer;
     }
 
-    button:hover {
+    .c-btn:hover {
         background-color: gray;
     }
 
-    .error {
-        color: red;
-        margin-bottom: 10px;
-    }
+
 </style>
 <script>
     function validateDates() {
@@ -113,7 +110,7 @@
         <label>챌린지 목표</label>
         <input type="text" name="goal" required>
 
-        <button type="submit">작성</button>
+        <button class="c-btn" type="submit">작성</button>
     </form>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
