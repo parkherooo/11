@@ -3,11 +3,11 @@
 <%@ page import="notice.NoticeMgr, notice.NoticeBean" %>
 <%
     // NoticeMgr 인스턴스 생성
-    NoticeMgr noticeMgr = new NoticeMgr();
+    NoticeMgr nMgr = new NoticeMgr();
 
     // 공지사항 번호 가져오기
     int nNum = Integer.parseInt(request.getParameter("nNum"));
-    NoticeBean notice = noticeMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
+    NoticeBean notice = nMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
 %>
 <html>
 <head>
