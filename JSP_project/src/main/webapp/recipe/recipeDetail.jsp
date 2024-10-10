@@ -1,9 +1,18 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.io.BufferedReader, java.io.InputStreamReader, java.net.HttpURLConnection, java.net.URL, org.json.JSONObject" %>
 
 <%	
     String title = request.getParameter("title");
     String recipeId = request.getParameter("id");
+    if(title==null||recipeId==null){
+    	response.setContentType("text/html; charset=UTF-8");
+		PrintWriter outPrintWriter = response.getWriter();
+		outPrintWriter.println("<script>");
+		outPrintWriter.println("alert('선택하신 레시피가 없습니다.')");
+		outPrintWriter.println("history.back()");
+		outPrintWriter.println("</script>");
+    }
     String apiUrl = "https://openapi.foodsafetykorea.go.kr/api/12cb932ee6ff42828803/COOKRCP01/json/1/100/RCP_SEQ=" + recipeId + "&RCP_NM=" +java.net.URLEncoder.encode(title, "UTF-8");
     StringBuilder result = new StringBuilder();
 
@@ -34,64 +43,57 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%@ include file="/main/header.jsp" %>
+	<link rel="stylesheet" href="../css/recipe.css">
     <title><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피 상세" %></title>
-    <style>
-        body {
-            text-align: center; /* 전체 내용 가운데 정렬 */
-        }
-        .recipe-detail {
-            text-align: left; /* 레시피 상세 정보 왼쪽 정렬 */
-            margin-left: 20%; /* 왼쪽 마진 30% */
-            margin-right: 20%; /* 오른쪽 마진 30% */
-        }
-        .recipe-detail div {
-            margin-bottom: 10px; /* 각 div 요소에 여백 추가 */
-        }
-        img {
-            display: block;
-            margin: 30px auto; /* 이미지를 가운데 정렬 */
-        }
-        a {	
-        	margin-top: 30px;
-            text-decoration: none; /* 밑줄 제거 */
-            padding: 10px 20px; /* 여백 추가 */
-            color: black; /* 글자 색상 검정색 */
-        }
-    </style>
 </head>
-<body>
-	<h1>Recipe</h1>
+<body class="recipe-body">
+
+    <h1 class="recipe-h1">Recipe</h1><br>
     
     <div class="recipe-detail">
-    	<h2><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피를 찾을 수 없습니다." %></h2>	
-        <h3>조리방법</h3>
-        <% 
-        for (int i = 1; i <= 20; i++) {
+        <h2><%= recipeDetail != null ? recipeDetail.getString("RCP_NM") : "레시피를 찾을 수 없습니다." %></h2>	<br>
+        <hr>
+        <div class="ingredients">
+            <img class="recipe-image" src="<%= recipeDetail != null ? recipeDetail.getString("ATT_FILE_NO_MK") : "" %>" alt="조리 이미지" />
+            <div class="ingredient">
+                <h3 class="recipe-h3">영양성분</h3>
+                <b>탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %>g<br>
+                단백질: <%= recipeDetail != null ? recipeDetail.getString("INFO_PRO") : "" %>g<br>
+                지방: <%= recipeDetail != null ? recipeDetail.getString("INFO_FAT") : "" %>g<br>
+                나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %>g<br><br>
+                열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %>cal</b><br>
+            </div>
+        </div>
+    <h3>조리방법</h3>
+    <div class="recipe-method">
+        <% for (int i = 1; i <= 20; i++) {
             String manualKey = "MANUAL0" + i;
             if (recipeDetail != null && recipeDetail.has(manualKey) && !recipeDetail.getString(manualKey).isEmpty()) {
         %>
-                <div><%= recipeDetail.getString(manualKey) %></div>
+            <div class="method-step">
+                <%= recipeDetail.getString(manualKey) %>
+            </div>
         <% 
             }
-        } 
-        %>
-        <div>재료: <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "" %></div>
-        <h3>성분</h3>
-        <div>탄수화물: <%= recipeDetail != null ? recipeDetail.getString("INFO_CAR") : "" %>g</div>
-        <div>단백질: <%= recipeDetail != null ? recipeDetail.getString("INFO_PRO") : "" %>g</div>
-        <div>지방: <%= recipeDetail != null ? recipeDetail.getString("INFO_FAT") : "" %>g</div>
-        <div>나트륨: <%= recipeDetail != null ? recipeDetail.getString("INFO_NA") : "" %>g</div>
-        <div>열량: <%= recipeDetail != null ? recipeDetail.getString("INFO_ENG") : "" %>cal</div>
+        } %>
+    </div>
+
+    <h3>재료</h3>
+	    <div class="recipe-ingredient">
+	            <%= recipeDetail != null ? recipeDetail.getString("RCP_PARTS_DTLS") : "재료 정보를 찾을 수 없습니다." %>
+	    </div>
+
+        <br>
         <h3>저감 조리법 Tip</h3>
         <div><%= recipeDetail != null ? recipeDetail.getString("RCP_NA_TIP") : "" %></div>
-        <div>
-            <img src="<%= recipeDetail != null ? recipeDetail.getString("ATT_FILE_NO_MK") : "" %>" 
-                 alt="조리 이미지" 
-                 style="width: 300px; height: auto;" />
-        </div>
+        
     </div>
-    <a href="recipeList.jsp">[목록]</a>
+    <br><a class="recipe-a" href="recipeList.jsp">[목록]</a>
+    <div>
+    <br>
+    </div>
     <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>
-
