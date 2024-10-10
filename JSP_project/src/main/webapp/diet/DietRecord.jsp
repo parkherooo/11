@@ -263,7 +263,7 @@ body {
 		<h2>Diet</h2>
 		<div class="content-wrapper">
 			<div class="calendar-wrapper">
-				<div class="calendar"> 
+				<div class="calendar">
 					<div class="calendar-header">
 						<button id="prevMonth">&lt;</button>
 						<h3 id="calendarTitle"></h3>
@@ -294,8 +294,13 @@ body {
 			<div class="diet-form-wrapper">
 				<form class="diet-record" id="dietForm" method="post">
 					<h4>오늘의 식단</h4>
-					<input type="hidden" id="userId" name="userId" value="<%= session.getAttribute("userId") %>"> <input
+					<input type="hidden" id="userId" name="userId"
+						value="<%=session.getAttribute("userId")%>"> <input
 						type="hidden" id="selectedDate" name="selectedDate" value="">
+					<input type="hidden" id="sugar" name="sugar" value="0"> 		
+					<input type="hidden" id="carbohydrate" name="carbohydrate" value="0">
+					<input type="hidden" id="protein" name="protein" value="0">
+					<input type="hidden" id="fat" name="fat" value="0">
 					<div class="meal-input">
 						<label for="diet">오늘의 식단:</label>
 						<textarea id="diet" name="diet" rows="6"

@@ -1,5 +1,6 @@
 function selectDate(day) {
 	const selectedDate = new Date(currentYear, currentMonth, day);
+	selectedDate.setHours(0, 0, 0, 0);
 	const formattedDate = selectedDate.toISOString().split('T')[0];
 	document.getElementById('selectedDate').value = formattedDate;
 	document.querySelector('.diet-record h4').textContent = `${currentYear}년 ${currentMonth + 1}월 ${day}일의 식단`;

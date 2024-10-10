@@ -6,6 +6,10 @@ import javax.servlet.http.*;
 import java.sql.*;
 import org.json.simple.JSONObject;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+
 @WebServlet("/diet/SaveDietServlet")
 public class SaveDietServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,8 +34,65 @@ public class SaveDietServlet extends HttpServlet {
 
         String userId = (String) session.getAttribute("userId");
         String diet = request.getParameter("diet");
+        if (diet != null) {
+            diet = diet.trim();
+        } else {
+            diet = ""; // 빈 문자열로 설정
+        }
+
         String selectedDate = request.getParameter("selectedDate");
+        if (selectedDate != null) {
+            selectedDate = selectedDate.trim();
+        } else {
+            selectedDate = LocalDate.now().format(DateTimeFormatter.ISO_DATE); // 현재 날짜로 설정
+        }
+
         String caloriesParam = request.getParameter("calories");
+        if (caloriesParam != null) {
+            caloriesParam = caloriesParam.trim();
+        } else {
+            caloriesParam = "0"; // 기본값 0으로 설정
+        }
+
+        String sugarParam = request.getParameter("sugar");
+        if (sugarParam != null) {
+            sugarParam = sugarParam.trim();
+        } else {
+            sugarParam = "0"; // 기본값 0으로 설정
+        }
+
+        String carbohydrateParam = request.getParameter("carbohydrate");
+        if (carbohydrateParam != null) {
+            carbohydrateParam = carbohydrateParam.trim();
+        } else {
+            carbohydrateParam = "0"; // 기본값 0으로 설정
+        }
+
+        String proteinParam = request.getParameter("protein");
+        if (proteinParam != null) {
+            proteinParam = proteinParam.trim();
+        } else {
+            proteinParam = "0"; // 기본값 0으로 설정
+        }
+
+        String fatParam = request.getParameter("fat");
+        if (fatParam != null) {
+            fatParam = fatParam.trim();
+        } else {
+            fatParam = "0"; // 기본값 0으로 설정
+        }
+        
+        float sugar, carbohydrate, protein, fat;
+        try {
+            sugar = Float.parseFloat(sugarParam);
+            carbohydrate = Float.parseFloat(carbohydrateParam);
+            protein = Float.parseFloat(proteinParam);
+            fat = Float.parseFloat(fatParam);
+        } catch (NumberFormatException e) {
+            System.out.println("SaveDietServlet: Invalid nutrient format");
+            response.getWriter().write("영양 정보는 숫자로 입력해주세요.");
+            return;
+        }
 
         System.out.println("SaveDietServlet: Received parameters:"); // 디버깅 로그
         System.out.println("userId: " + userId);
@@ -59,12 +120,16 @@ public class SaveDietServlet extends HttpServlet {
             // 데이터베이스 연결
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
-            String sql = "INSERT INTO tblDietaryRecords (userId, diet, calorie, drDate) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO tblDietaryRecords (userId, diet, calorie, drDate, sugar, carbohydrate, protein, fat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
             pstmt.setString(2, diet);
             pstmt.setInt(3, calorie);
             pstmt.setString(4, selectedDate);
+            pstmt.setFloat(5, sugar);
+            pstmt.setFloat(6, carbohydrate);
+            pstmt.setFloat(7, protein);
+            pstmt.setFloat(8, fat);
 
             System.out.println("SaveDietServlet: Executing SQL: " + sql); // 디버깅 로그
             System.out.println("SaveDietServlet: SQL parameters: " + userId + ", " + diet + ", " + calorie + ", " + selectedDate);

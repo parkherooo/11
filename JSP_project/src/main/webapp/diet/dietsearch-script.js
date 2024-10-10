@@ -102,6 +102,11 @@ function addFoodToDiet(food) {
     if(!isNaN(calorieValue)) {
         updateTotalCalories(calorieValue);
     }
+	
+	updateNutrientValue('sugar', food.NUTR_CONT5);
+	updateNutrientValue('carbohydrate', food.NUTR_CONT2);
+	updateNutrientValue('protein', food.NUTR_CONT3);
+	updateNutrientValue('fat', food.NUTR_CONT4);
     
     alert(`'${foodName}'가 식단에 추가되었습니다.`);
 }
@@ -111,7 +116,14 @@ function updateTotalCalories(additionalCalories) {
     const caloriesInput = document.getElementById('calories');
     let currentCalories = parseFloat(caloriesInput.value) || 0;
     currentCalories += additionalCalories;
-    caloriesInput.value = currentCalories.toFixed(0); // 소수점 첫째 자리까지 표시
+    caloriesInput.value = currentCalories.toFixed(0); //정수
+}
+
+// 영양소 값 업데이트 함수
+function updateNutrientValue(nutrientId, value) {
+    let currentValue = parseFloat(document.getElementById(nutrientId).value) || 0;
+    let newValue = currentValue + parseFloat(value);
+    document.getElementById(nutrientId).value = newValue.toFixed(2);
 }
 
 // 이벤트 리스너 등록
@@ -137,4 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Search input not found');
     }
+	
+	
 });

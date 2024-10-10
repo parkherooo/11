@@ -2,6 +2,7 @@ let currentYear, currentMonth;
 
 function initCalendar() {
     const today = new Date();
+	today.setHours(0, 0, 0, 0);
     currentYear = today.getFullYear();
     currentMonth = today.getMonth();
     updateCalendar();
