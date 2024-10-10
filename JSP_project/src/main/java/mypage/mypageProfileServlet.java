@@ -14,45 +14,60 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import user.UserMgr;
 
+
 @WebServlet("/mypage/mypageProfile")
 public class mypageProfileServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
 
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter(); // 스트림 호출
+		
+		MultipartRequest multi = new MultipartRequest(request, UserMgr.SAVEFOLDER, UserMgr.MAXSIZE, UserMgr.ENCODING, new DefaultFileRenamePolicy());
+		String action = multi.getParameter("action");
+		UserMgr mgr = new UserMgr();
+		PrintWriter out = response.getWriter();
+		
+		
+		if ("update".equals(action)) {
+			boolean result = mgr.myprofileUpdate(multi);
+			if(result) {
+				response.setContentType("text/html; charset=UTF-8");
+				out.println("<script>");
+				out.println("alert('수정 되었습니다.')");
+				out.println("</script>");
+				response.sendRedirect("myPage.jsp");
+				 return;
+			} else {
+				response.setContentType("text/html; charset=UTF-8");
+				out.println("<script>");
+				out.println("alert('수정 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				 return;
+			}
+		} else if("delete".equals(action)) {
+			boolean res = mgr.deleteProfile(multi);
+			if(res) {
+			response.setContentType("text/html; charset=UTF-8");
+			out.println("<script>");
+			out.println("alert('탈퇴 되었습니다.')");
+			out.println("</script>");
+			response.sendRedirect("myPage.jsp");
+			 return;
+			} else {
+				response.setContentType("text/html; charset=UTF-8");
+				out.println("<script>");
+				out.println("alert('탈퇴 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			
+		}
+	}
 
-        MultipartRequest multi = new MultipartRequest(request, UserMgr.SAVEFOLDER, UserMgr.MAXSIZE, UserMgr.ENCODING, new DefaultFileRenamePolicy());
-        String action = multi.getParameter("action");
-        UserMgr mgr = new UserMgr();
-        
-        if ("update".equals(action)) {
-            boolean result = mgr.myprofileUpdate(multi);
-            out.println("<script>");
-            if(result) {
-                out.println("alert('수정 되었습니다.');");
-                out.println("location.href='../mypage/myPage.jsp';");
-            } else {
-                out.println("alert('수정 실패했습니다.');");
-                out.println("history.back();");
-            }
-            out.println("</script>");
-            out.close(); // 출력 스트림을 닫아줍니다.
-            return;
-        } else if ("delete".equals(action)) {
-            boolean res = mgr.deleteProfile(multi);
-            out.println("<script>");
-            if(res) {
-                out.println("alert('프로필 삭제 되었습니다.');");
-                out.println("location.href='../mypage/myPage.jsp';");
-            } else {
-                out.println("alert('프로필 삭제 실패했습니다.');");
-                out.println("history.back();");
-            }
-            out.println("</script>");
-            out.close(); // 출력 스트림을 닫아줍니다.
-            return;
-        }
-    }
 }
