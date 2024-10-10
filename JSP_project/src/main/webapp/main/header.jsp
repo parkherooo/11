@@ -37,9 +37,7 @@
 	    const banner = document.querySelector('.banner');
 
 	    // 배너의 초기 배경색을 흰색으로 설정
-        banner.style.backgroundColor = 'white';
-
-		
+        banner.style.backgroundColor = 'white';		
         
 	});	
 </script>
@@ -73,8 +71,8 @@
                 	<a href="">Exercise</a>
                 	<ul class="dropdown-menu">
                         <li><a href="diet1.jsp">운동 기록</a></li>
-                        <li><a href="diet2.jsp">목표 설정</a></li>
-                        <li><a href="diet2.jsp">오늘의 루틴 추천</a></li>
+                        <li><a href="../exercise/setGoal.jsp">목표 설정</a></li>
+                        <li><a href="../exercise/Exroutine.jsp">오늘의 루틴 추천</a></li>
                     </ul>
                 </li>
                 <li>

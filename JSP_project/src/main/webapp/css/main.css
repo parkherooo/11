@@ -161,12 +161,9 @@ nav ul li:hover .dropdown-menu {
 }
 
 /* ---- main CSS ---- */
-
 .main-body {
-
 	text-align: center;
     position: relative;
-
     color: black; /* 기본 글자 색상 검정색 */
     margin: 0; 
 }
@@ -266,6 +263,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .slide-content p {
+	text-align: left;
 	font-size: 30px;
     position: absolute; /* 절대 위치 지정 */
     top: 60%; /* 이미지의 수직 중앙에 배치 */
@@ -273,7 +271,6 @@ nav ul li:hover .dropdown-menu {
     color: white; /* 글자 색상 설정 */
     z-index: 10; /* 이미지 위에 표시되도록 설정 */
     padding: 10px; /* 텍스트 주변 여백 */
-
     opacity: 0;
     transform: translateX(-100px); /* 왼쪽에서 시작 */
     transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* 부드러운 전환 효과 */
@@ -286,7 +283,7 @@ nav ul li:hover .dropdown-menu {
     margin-top: 20px;
     /* 슬라이드 번호를 이미지 위에 표시 */
     position: absolute; /* 부모 요소를 기준으로 절대 위치 */
-    bottom: 65%; /* 이미지 아래에서부터의 거리 */
+    bottom: 63%; /* 이미지 아래에서부터의 거리 */
     left: 20%; /* 가로 중앙에 배치 */
     z-index: 10; /* 이미지 위에 표시되도록 z-index 설정 */
     color: white; /* 텍스트 색상 */
@@ -434,10 +431,10 @@ nav ul li:hover .dropdown-menu {
     color: #777;
 }
 
+
 /* ---- normalSignup CSS ---- */
 
 .normal-signup-section, .additional-info-section {
-
     background-color: white;
     width: 100%;
     max-width: 700px;
