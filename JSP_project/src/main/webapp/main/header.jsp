@@ -88,6 +88,15 @@
                         <li><a href="diet2.jsp">하루 권장 칼로리</a></li>
                     </ul>
                 </li>
+                 <li>
+
+                	<a href="">Meal Plan</a>
+                	<ul class="dropdown-menu">
+                        <li><a href="../nutritionist/mealPlanRequest.jsp">식단 신청</a></li>
+                        <li><a href="../nutritionist/mealPlanResult.jsp">식단표</a></li>	
+                    </ul>
+
+                </li>
                 <li>
                 	<a href="">Exercise</a>
                 	<ul class="dropdown-menu">
@@ -103,15 +112,6 @@
                         <li><a href="../community/Community_Main.jsp">나의 게시글</a></li>
                         <li><a href="../community/Heart.jsp">인기글</a></li>
                         <li><a href="../community/post_create.jsp">게시물 작성</a></li>	
-                    </ul>
-
-                </li>
-                <li>
-
-                	<a href="">Nutritionist</a>
-                	<ul class="dropdown-menu">
-                        <li><a href="../nutritionist/mealPlanRequest.jsp">식단 신청</a></li>
-                        <li><a href="../nutritionist/mealPlanResult.jsp">식단표</a></li>	
                     </ul>
 
                 </li>
