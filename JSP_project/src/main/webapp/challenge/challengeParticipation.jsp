@@ -223,10 +223,23 @@
                 <td>
                     <form action="heartPlus" method="post">
                         <input type="hidden" name="challengeId" value="<%= request.getParameter("num") %>">
+                        <input type="hidden" name="userId" value="<%=userId%>">
                         <input type="hidden" name="participantId" value="<%= bean.getParticipantId() %>">
+                        
+                        <%
+                        	Boolean heartStatus = (Boolean) request.getAttribute("heartStatus");
+                        	boolean	chk = challmgr.heartChk(userId, bean.getParticipantId());
+                        
+                        	if((heartStatus!=null&&heartStatus)||chk){
+                        %>
                         <button type="submit" class="heart-button">
                             ♥<%= bean.getHeart() %>
                         </button>
+                        <%} else{ %>
+                        <button type="submit" class="heart-button">
+                            ♡<%= bean.getHeart() %>
+                        </button>
+                        <%} %>
                     </form>
                 </td>
             </tr>
@@ -264,7 +277,7 @@
         </div>
     </div>
 </div>
-
+<%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

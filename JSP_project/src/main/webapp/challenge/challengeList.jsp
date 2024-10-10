@@ -213,6 +213,7 @@
     <div><br><a href="challengeList.jsp">[목록]</a></div>
 
 </div>
+<%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>
