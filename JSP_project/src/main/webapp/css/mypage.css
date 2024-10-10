@@ -5,12 +5,13 @@
     margin-top: 180px;
 }
 .myprofile {
+	height:1000px;
 	grid-column: 1;
   	background-color: #dcf8c6; /* 프로필 배경색 */
     padding: 20px;
 }
 .mypage-div {
-	height:700px;
+	height:900px;
 	margin-top:50px;
 	grid-column: 2; /* 두 번째 열에 배치 */
 

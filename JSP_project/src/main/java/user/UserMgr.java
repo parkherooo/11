@@ -316,7 +316,12 @@ public class UserMgr {
 				bean.setBirth(rs.getString("birth"));
 				bean.setPhone(rs.getString("phone"));
 				bean.setAddress(rs.getString("address"));
-				bean.setAllergy(rs.getString("allergy"));
+				String allergy = rs.getString("allergy");
+	            if (allergy == null || allergy.equals("")) {
+	                bean.setAllergy("없음");
+	            } else {
+	                bean.setAllergy(allergy);
+	            }
 				bean.setHeight(rs.getFloat("height"));
 				bean.setWeight(rs.getFloat("weight"));
 				bean.setProfile(rs.getString("profile"));
@@ -341,7 +346,11 @@ public class UserMgr {
 			con = pool.getConnection();
 			sql = "update tbluser set allergy = ? where userId = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, Allergy);
+			if(Allergy == null || Allergy.equals("")) {
+				pstmt.setString(1, "없음");
+			} else {
+				pstmt.setString(1, Allergy);
+			}
 			pstmt.setString(2, userId);
 			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {

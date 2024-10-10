@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="notice.NoticeMgr, notice.NoticeBean" %>
-<%
-    // NoticeMgr 인스턴스 생성
-    NoticeMgr noticeMgr = new NoticeMgr();
 
-    // 공지사항 번호 가져오기
-    int nNum = Integer.parseInt(request.getParameter("nNum"));
-    NoticeBean notice = noticeMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
-%>
 <html>
 <head>
     <title>공지사항 수정</title>
@@ -16,6 +9,10 @@
 	<link rel="stylesheet" href="../css/notice.css">
 	
 </head>
+<%
+    int nNum = Integer.parseInt(request.getParameter("nNum"));
+    NoticeBean notice = noticeMgr.getNotice(nNum); // 공지사항 상세 정보 가져오기
+%>
 <body class="noicebody">
 <div class="notice-container" >
     <h1 class="notice-h1">공지사항 수정</h1>

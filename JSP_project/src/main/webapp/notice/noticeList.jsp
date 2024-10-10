@@ -3,8 +3,6 @@
 <%@ page import="notice.NoticeMgr, java.util.Vector, notice.NoticeBean" %>
 <%@ include file="../main/header.jsp" %>
 <%
-    // NoticeMgr 인스턴스 생성
-    NoticeMgr noticeMgr = new NoticeMgr();
     
     // 전체 공지사항 리스트
     Vector<NoticeBean> allList = noticeMgr.AllList();
@@ -16,8 +14,6 @@
     
     String category = request.getParameter("category");
     
-    //관리자 확인
-    int manger = noticeMgr.mangerChk(userId);
 %>
 <html>
 <head>
