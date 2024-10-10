@@ -610,12 +610,13 @@ public class UserMgr {
 	}
 	
 	// 프로필 삭제
-	public void deleteProfile(MultipartRequest multi) {
+	public boolean deleteProfile(MultipartRequest multi) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		String userId = multi.getParameter("userId");
 		String filename = multi.getFilesystemName("image");
+		boolean flag = false;
 		try {
 			if (filename != null && !filename.equals("")) {
 			    // 파일 업로드 수정
@@ -632,12 +633,13 @@ public class UserMgr {
 			sql = "update tbluser set profile=null where userId= ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, userId);
-			pstmt.executeUpdate();
+			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return flag;
 	}
 	
 	// 내 정보 수정
