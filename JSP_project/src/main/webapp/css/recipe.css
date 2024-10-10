@@ -3,7 +3,9 @@
             text-align: center; /* 전체 내용 가운데 정렬 */
             color: black; /* 기본 글자 색상 검정색 */
             position: relative;
+
          	top:200px;
+
         }
         .recipe-h1 {
              text-align: center;
