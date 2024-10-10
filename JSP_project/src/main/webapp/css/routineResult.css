@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 .result-body {
+	display: block;
 	text-align: center;
 	background-color: white;
 	position: relative;
