@@ -1,16 +1,16 @@
 @charset "UTF-8";
 
 .exroutine-body {
-	font-family: Arial, sans-serif;
 	text-align: center;
-	margin: 50px;
 	background-color: white;
+	position: relative;
+	margin-top: 180px;
 }
+
 
 .container {
 	width: 60%;
 	margin: 0 auto;
-	padding: 20px;
 	background-color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	border-radius: 8px;
@@ -18,11 +18,12 @@
     flex-direction: column; /* 세로 방향으로 정렬 */
 } 
 
-p{
-	text-align: center;
-	font-size: 24px;
-	margin-bottom: 50px;
+.exroutine-p {
+    text-align: center;
+    font-size: 24px; /* 글자 크기 조정 */
+    margin-bottom: 30px; /* 아래쪽 여백 조정 */
 }
+
 
 .checkbox-group {
 	display: flex;

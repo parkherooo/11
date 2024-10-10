@@ -92,8 +92,8 @@
                 	<a href="">Exercise</a>
                 	<ul class="dropdown-menu">
                         <li><a href="diet1.jsp">운동 기록</a></li>
-                        <li><a href="diet2.jsp">목표 설정</a></li>
-                        <li><a href="diet2.jsp">오늘의 루틴 추천</a></li>
+                        <li><a href="../exercise/setGoal.jsp">목표 설정</a></li>
+                        <li><a href="../exercise/Exroutine.jsp">오늘의 루틴 추천</a></li>
                     </ul>
                 </li>
                 <li>
@@ -103,6 +103,15 @@
                         <li><a href="../community/Community_Main.jsp">나의 게시글</a></li>
                         <li><a href="../community/Heart.jsp">인기글</a></li>
                         <li><a href="../community/post_create.jsp">게시물 작성</a></li>	
+                    </ul>
+
+                </li>
+                <li>
+
+                	<a href="">Nutritionist</a>
+                	<ul class="dropdown-menu">
+                        <li><a href="../nutritionist/mealPlanRequest.jsp">식단 신청</a></li>
+                        <li><a href="../nutritionist/mealPlanResult.jsp">식단표</a></li>	
                     </ul>
 
                 </li>

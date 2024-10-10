@@ -9,16 +9,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/setgoal.css">
 <script type="text/javascript">
 function send() {
-	document.frm.submit();
+	// 로그인 상태 확인
+    var isLoggedIn = <%= session.getAttribute("userId") != null ? "true" : "false" %>; // 세션에 로그인 정보가 있으면 true
+
+    if (!isLoggedIn) {
+        alert("로그인 후 이용 가능합니다.");
+        window.location.href = "/JSP_project/login/logIn.jsp";
+    } else {
+        document.frm.submit();
+    }
 }
+
 function send2() {
-	document.frm2.submit();
+    // 로그인 상태 확인
+    var isLoggedIn = <%= session.getAttribute("userId") != null ? "true" : "false" %>;
+
+    if (!isLoggedIn) {
+        alert("로그인 후 이용 가능합니다.");
+        window.location.href = "/JSP_project/login/logIn.jsp"; // 로그인 페이지로 이동
+    } else {
+        document.frm2.submit();
+    }
 }
 function send3() {
     // form의 action을 동적으로 설정
@@ -45,10 +62,8 @@ function closeModal() {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="setgoal-body">
-	<% 
-    String userId = (String) request.getSession().getAttribute("userId");
-	%>
-	<p>오늘의 운동 목표를 설정해보세요.</p>
+
+	<p class="setgoal-p">오늘의 운동 목표를 설정해보세요.</p>
 	<form id="goalForm" action="/JSP_project/ExGoalInsertServlet" method="post" name="frm" class="container">
 		<input type="hidden" name="userId" value="<%= userId %>">
 		<%
@@ -292,4 +307,5 @@ function closeModal() {
 	</form>
 <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

@@ -646,7 +646,7 @@ nav ul li:hover .dropdown-menu {
 
 /* ---- footer CSS ---- */
 .footer {
-
+	margin-top:50px;
     background-color: #333; /* 푸터 배경색 */
     color: white; /* 푸터 텍스트 색상 */
     padding: 30px 0; /* 위아래 여백 */
@@ -669,6 +669,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .footer-info p {
+	font-size: 14px !important;
     margin: 5px 0;
 }
 

@@ -5,30 +5,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/mealplanrequest.css">
 <script type="text/javascript">
 function send() {
-	document.frm.submit();
+	// 로그인 상태 확인
+    var isLoggedIn = <%= session.getAttribute("userId") != null ? "true" : "false" %>; // 세션에 로그인 정보가 있으면 true
+
+    if (!isLoggedIn) {
+        alert("로그인 후 이용 가능합니다.");
+        window.location.href = "/JSP_project/login/logIn.jsp";
+    } else {
+        document.frm.submit();
+    }
 }
 </script>
 </head>
-<body>
+<body class="request-body">
 	<% 
-		String userId = (String) request.getSession().getAttribute("userId");
-	
     	nutritionistMgr nMgr = new nutritionistMgr();
     	nutritionistBean bean = nMgr.isRequestExists(userId);
         if (bean != null) {
     %>
-        <div>
-            <p>이미 신청된 식단이 존재합니다.</p>
+        <div class="already">
+            <p class="request-p">이미 신청된 식단이 존재합니다.</p>
         </div>
     <%
         } else {
     %>
-    <p>식단 신청</p> 
+    <p class="request-p">식단 신청</p> 
 	<form action="/JSP_project/RequestInsertServlet" method="post" name="frm" class="container">
 	<input type="hidden" name="userId" value="<%= userId %>">
 	<div class="form-group">
@@ -75,5 +82,7 @@ function send() {
   	</div>
 </form>
 <% } %>
+<%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

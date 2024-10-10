@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.list-body{
+	position: relative;
+	top: 200px;
+}
+
 /* 전체 컨테이너 */
 .container {
     width: 80%;
@@ -12,7 +17,7 @@
 }
 
 /* 페이지 제목 */
-p {
+.list-p {
     text-align: center;
     font-size: 24px;
     font-weight: bold;

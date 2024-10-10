@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/mealplanlist.css">
@@ -17,8 +18,8 @@ function send(index) {
 
 </script>
 </head>
-<body>
-	<p>식단 신청 리스트</p>
+<body class="list-body">
+	<p class="list-p">식단 신청 리스트</p>
 
 	<div class="container">
 		<table>
@@ -76,5 +77,7 @@ function send(index) {
 			<input type="button" value="돌아가기" onclick="window.location.href='mealPlanRequest.jsp'">
 		</div>
 	</div>
+<%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

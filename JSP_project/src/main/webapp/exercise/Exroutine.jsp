@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/main/header.jsp" %>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fit Time</title>
@@ -50,7 +51,7 @@ function sendData() {
 </script>
 </head>
 <body class="exroutine-body">
-    <p>하루의 운동 루틴을 랜덤으로 추천해드려요.</p>
+    <p class="exroutine-p">하루의 운동 루틴을 랜덤으로 추천해드려요.</p>
     <div class="container">
         <div class="checkbox-group">
             <label for="strength"><input type="radio" id="strength" name="routine" onclick="strength()"> 근력</label>
@@ -68,4 +69,5 @@ function sendData() {
     </div>
 <%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>
