@@ -38,9 +38,7 @@
 	    const banner = document.querySelector('.banner');
 
 	    // 배너의 초기 배경색을 흰색으로 설정
-        banner.style.backgroundColor = 'white';
-
-		
+        banner.style.backgroundColor = 'white';		
         
 	});	
 </script>

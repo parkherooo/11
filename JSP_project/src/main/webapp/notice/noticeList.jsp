@@ -3,6 +3,7 @@
 <%@ page import="notice.NoticeMgr, java.util.Vector, notice.NoticeBean" %>
 <%@ include file="../main/header.jsp" %>
 <%
+
     
     // 전체 공지사항 리스트
     Vector<NoticeBean> allList = noticeMgr.AllList();
@@ -14,6 +15,7 @@
     
     String category = request.getParameter("category");
     
+
 %>
 <html>
 <head>
