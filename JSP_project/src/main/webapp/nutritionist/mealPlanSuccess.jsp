@@ -9,12 +9,14 @@
 <link rel="stylesheet" href="../css/mealplanrequest.css">
 </head>
 <body class="request-body">
+	<div class="success">
 	<p class="request-p" style="font-size: 30px; margin-bottom: 70px;">식단 신청 완료</p>
 
 	<p class="request-p">식단이 준비될 때까지 기다려주세요!</p>
 
 	<div class="button-container">
 		<input type="button" value="돌아가기" onclick="window.location.href = 'mealPlanResult.jsp'">
+	</div>
 	</div>
 <%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
