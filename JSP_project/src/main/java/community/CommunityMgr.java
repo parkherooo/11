@@ -58,7 +58,7 @@ public class CommunityMgr {
 	        pstmt = conn.prepareStatement(sql);
 
 	        // userId를 root로 임시 설정
-	        pstmt.setString(1, "root"); 
+	        pstmt.setString(1, bean.getUserId()); 
 	        pstmt.setString(2, bean.getTitle());
 	        pstmt.setString(3, bean.getContent());
 	        pstmt.setString(4, bean.getCuImg());
@@ -341,7 +341,7 @@ public class CommunityMgr {
 
 	        try {
 	            // 임시로 userId를 root로 고정
-	            userId = "root"; 
+	          
 	            System.out.println("임시 userId 설정: " + userId);
 
 	            conn = pool.getConnection();

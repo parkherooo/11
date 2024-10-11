@@ -1,11 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="../main/header.jsp" %>
+<%@ page import="community.CommunityMgr" %>
+<%@ page import="community.CommentsBean" %>
+<%@ page import="community.CommentMgr" %>
+<%@ page import="community.CommunityBean" %>
 
-<%
-  
+<% 
+    // 로그인이 되어 있지 않으면 알림 메시지 후 로그인 페이지로 리다이렉트
+    if (userId == null || userId.isEmpty()) {
 %>
-
+        <script>
+            alert("로그인이 필요합니다.");
+            window.location.href = "/JSP_project/login/logIn.jsp";  // 로그인 페이지로 이동
+        </script>
+<%
+        return; // 더 이상 실행되지 않도록 리턴
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +74,7 @@
 
         <!-- 게시물 작성 폼 -->
 		<form id="postForm" action="community/uploadServlet" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="userId" value="<%= userId %>">
             <div class="input_box">
                 <input type="text" class="title_input" name="title" placeholder="제목을 입력해주세요" required>
                 <textarea name="content" placeholder="내용을 입력해주세요.." required></textarea>

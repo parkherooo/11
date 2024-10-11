@@ -2,6 +2,7 @@
 <%@page import="java.security.SecureRandom"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,6 +61,7 @@
 </head>
 <%@ include file="../main/header.jsp" %>
 <body>
+
 	<% 
         // 네이버 로그인 URL 생성 부분
         String clientId = "w345Zx3BXiwPQv_AAe9S"; // 애플리케이션 클라이언트 아이디값

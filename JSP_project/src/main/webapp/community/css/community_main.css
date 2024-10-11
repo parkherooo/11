@@ -33,17 +33,30 @@ body {
     border-bottom-right-radius: 0;
 }
 .middle_Top .my_photo{
+	width: 30px;
+    position: absolute; /* 절대 위치 */
+    top: 7px; /* 위에서 10px 내려온 위치 */
+    left: 10px; /* 오른쪽에서 10px 떨어진 위치 */
     width: 40px;
     height: 40px;
     margin: 0.2rem 0.2rem 0;
     border-radius: 3rem;
+    margin-left: 0;
     float: left;
+    
+   
 }
+
+
 .middle_Top .my_account{
+	position: absolute; /* 절대 위치 */
+    top: 10px; /* 위에서 10px 내려온 위치 */
+    left: 60px; /* 오른쪽에서 10px 떨어진 위치 */
     width: 90px;
     padding: 0.5rem 0;
     display: inline-block;
     font-weight: bold;
+    float: left; /* 왼쪽으로 배치 */
 }
 .middle_Top .my_account a{
     color: black;
@@ -92,8 +105,17 @@ body {
     margin-left: 20rem;
     background: white;
     border: 0.5px solid rgb(213, 213, 213);
+    position: relative;
 }
+
+.review_icon{
+	position: relative;
+}
+
+
 .review_icon .heartBtn{
+	position: absolute; /* 절대 위치 */  
+    left: 5px; /* 오른쪽에서 10px 떨어진 위치 */
     width: 3rem;
     float: left;
     border: none;
@@ -148,6 +170,19 @@ body {
     float: right;
 }
 .middle_review .like_count{
+	position: absolute; /* 절대 위치 */  
+   	top:45px;
+    left: 10px;
+    display: block;
+    text-indent: 0.5rem;
+    font-size: small;
+    font-weight: bold;
+
+}
+.middle_review .like_count2{
+	position: absolute; /* 절대 위치 */  
+   	top:55px;
+    left: 10px;
     display: block;
     text-indent: 0.5rem;
     font-size: small;
@@ -197,7 +232,15 @@ body {
     max-height: 90px; 
     font-size: small;
 }
-.user{
+.user1{
+	position: absolute; /* 절대 위치 */  
+	top:75px;
+    left: 10px; /* 오른쪽에서 10px 떨어진 위치 */
+    margin-left: 0.5rem;
+    font-weight: bold;    
+}
+.user2{
+	
     margin-left: 0.5rem;
     font-weight: bold;    
 }
@@ -206,23 +249,40 @@ body {
     font-size: small;
 }
 .before{
+	position: absolute; /* 절대 위치 */  
+	top:90px;
+    left: 10px; /* 오른쪽에서 10px 떨어진 위치 */
     margin-left: 0.5rem;
     font-size: x-small;
     color: #949393;
     
 }
+
+.middle_add_review{
+	position: relative;
+}
+
 .middle_add_review .smile{
+	position: absolute; /* 절대 위치 */  
+	bottom:10px;
+    left: 10px; /* 오른쪽에서 10px 떨어진 위치 */
     width: 1.8rem;
     height: 1.8rem;
     margin: 0.6rem;
     float: left;
 }
 .middle_add_review .input_review{
+	position: absolute; /* 절대 위치 */  
+	bottom:8px;
+    left: 60px; /* 오른쪽에서 10px 떨어진 위치 */
     margin: 1rem 0.5rem;
     border: none;
     outline: none;
 }
 .review_upload{
+	position: absolute; /* 절대 위치 */  
+	bottom:10px;
+    right: 10px;
     width: 40px;
     height: 40px;
     border: none;
@@ -261,6 +321,7 @@ body {
     color: #949393;
     display: inline;
 }
+
 
 .allView{
     border: none;
@@ -304,13 +365,30 @@ float 속성 적용시 이후에 오는 다른 요소들까지같은 속성이 �
             color: red;
         }
         .commentList {
+            position: absolute; /* 절대 위치 */  
+			top:110px;
+    		left: -70px; /* 오른쪽에서 10px 떨어진 위치 */
             max-height: 90px; /* 스크롤이 적용될 최대 높이 설정 */
             overflow-y: auto; /* 스크롤 생성 */
+            width:620px
+        }
+          .commentList2 {
+            position: absolute; /* 절대 위치 */  
+			top:110px;
+    		left: -35px; /* 오른쪽에서 10px 떨어진 위치 */
+            max-height: 90px; /* 스크롤이 적용될 최대 높이 설정 */
+            overflow-y: auto; /* 스크롤 생성 */
+            width:580px
         }
         .commentList li {
             font-size: small; 
         }
+          .commentList2 li {
+            font-size: small; 
+        }
         .deleteBtn {
+            position: absolute; /* 절대 위치 */  
+    		right: 1px; /* 오른쪽에서 10px 떨어진 위치 */
             cursor: pointer;
             float: right;
             margin-left: -0.9rem;
@@ -322,12 +400,12 @@ float 속성 적용시 이후에 오는 다른 요소들까지같은 속성이 �
         }        
 
         
-        .main_container {
-    
+    .main_container {
 	margin: 30px auto;
     padding: 20px;
     width: 80%; /* 너비를 80%로 설정하여 더 넓게 확장 */
     height: auto; /* 자동 높이 설정, 내용에 따라 확장되도록 */
+    
 }
 
 /* main_container 안에 있는 다른 박스들의 크기도 함께 조정 */
@@ -360,6 +438,4 @@ float 속성 적용시 이후에 오는 다른 요소들까지같은 속성이 �
 .comment_part .comment {
     width: 590px; /* 댓글 부분도 크기에 맞춰서 확장 */
 }
-
-
 
