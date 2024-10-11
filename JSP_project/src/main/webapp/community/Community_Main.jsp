@@ -66,7 +66,8 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 
 </head>
 <body>
-	<h1 style="text-align: center; margin-top: 100px;">My Community</h1>
+<div class="min">
+	<h1 style="text-align: center;">My Community</h1>
 	<!-- 게시물 목록 출력 -->
 	<%
 	if (postList != null && !postList.isEmpty()) {
@@ -218,7 +219,7 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 
     </script>
 	<%@ include file="/chatbot/chatbot.jsp"%>
-
+</div>
 </body>
 <footer>
 	<%@ include file="../main/footer.jsp"%></footer>
