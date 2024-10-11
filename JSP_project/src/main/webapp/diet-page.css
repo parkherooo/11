@@ -1,0 +1,239 @@
+/* 모든 요소에 대한 기본 스타일 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 기본 body 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: White;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 헤더 내 h1 스타일 */
+header h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* 헤더 내 h1의 span 스타일 (서브 텍스트) */
+header h1 span {
+    font-size: 0.8rem;
+    font-weight: normal;
+    display: block;
+}
+
+/* 헤더 내 네비게이션 메뉴 스타일 */
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav > ul > li > a {
+    text-decoration: none;
+    color: #333;
+    padding: 0 1rem;
+}
+
+/* 활성화된 네비게이션 메뉴 아이템 스타일 */
+header nav > ul > li > a.active {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* 로그인 버튼 스타일 */
+.login-btn {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* 메인 컨텐츠 영역 스타일 */
+.diet-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background-color: #ffffff;
+}
+
+/* 메인 제목 스타일 */
+.diet-page h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* 다이어트 네비게이션 스타일 */
+.diet-nav {
+    margin-bottom: 1rem;
+}
+
+.diet-nav a {
+    text-decoration: none;
+    color: #333;
+    margin-right: 1rem;
+}
+
+/* 활성화된 다이어트 네비게이션 아이템 스타일 */
+.diet-nav a.active {
+    color: #4CAF50;
+    font-weight: bold;
+    border-bottom: 2px solid #4CAF50;
+}
+
+/* 다이어트 설명 스타일 */
+.diet-instruction {
+    margin-bottom: 1rem;
+}
+
+/* 컨텐츠 래퍼 스타일 (캘린더와 폼을 감싸는 컨테이너) */
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+/* 캘린더와 다이어트 폼 공통 스타일 */
+.calendar-wrapper, .diet-form-wrapper {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #000; /* 검정색 테두리 추가 */
+    box-shadow: none; /* 그림자 제거 */
+}
+
+/* 캘린더 헤더 스타일 */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* 캘린더 헤더 버튼 스타일 */
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 캘린더 테이블 스타일 */
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 캘린더 셀 스타일 */
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+/* 활성화된 캘린더 셀 스타일 */
+.calendar td.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 다이어트 기록 제목 스타일 */
+.diet-record h4 {
+    margin-bottom: 1rem;
+}
+
+/* 식사 입력 영역 스타일 */
+.meal-input {
+    margin-bottom: 1rem;
+}
+
+.meal-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.meal-input textarea {
+    width: 100%;
+    height: 60px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+/* 총 칼로리 입력 영역 스타일 */
+.total-calories {
+    margin-bottom: 1rem;
+}
+
+.total-calories input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 폼 액션 버튼 영역 스타일 */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* 폼 액션 버튼 공통 스타일 */
+.form-actions button {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 제출 버튼 스타일 */
+.form-actions button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 리셋 버튼 스타일 */
+.form-actions button[type="reset"] {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* 선택 가능한 캘린더 셀 스타일 */
+.calendar td.selectable {
+    cursor: pointer;
+}
+
+/* 선택 가능한 캘린더 셀 호버 스타일 */
+.calendar td.selectable:hover {
+    background-color: #f0f0f0;
+}
+
+/* 선택된 캘린더 셀 스타일 */
+.calendar td.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 반응형 디자인: 화면 너비가 768px 이하일 때 */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+}
