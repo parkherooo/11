@@ -66,8 +66,9 @@
                 <li>
                 	<a href="">Diet</a>
                 	<ul class="dropdown-menu">
-                        <li><a href="diet1.jsp">식단 기록</a></li>
-                        <li><a href="diet2.jsp">하루 권장 칼로리</a></li>
+                        <li><a href="../diet/DietRecord.jsp">식단 기록</a></li>
+                        <li><a href="../diet/dietChart.jsp">주간 식단 차트</a></li>
+                        <li><a href="../diet/CalorieCalc.jsp">하루 권장 칼로리</a></li>
                     </ul>
                 </li>
                  <li>
@@ -87,7 +88,7 @@
                 <li>
                 	<a href="">Exercise</a>
                 	<ul class="dropdown-menu">
-                        <li><a href="diet1.jsp">운동 기록</a></li>
+                        <li><a href="../exercise/ExerciseRecord.jsp">운동 기록</a></li>
                         <li><a href="../exercise/setGoal.jsp">목표 설정</a></li>
                         <li><a href="../exercise/Exroutine.jsp">오늘의 루틴 추천</a></li>
                     </ul>
