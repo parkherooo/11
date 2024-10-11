@@ -1,2 +1,10 @@
 eclipse.preferences.version=1
+
+encoding//src/main/java/community/UploadServlet.java=UTF-8
+encoding//src/main/webapp/alarm/alarm.jsp=UTF-8
+encoding//src/main/webapp/community/post_create.jsp=UTF-8
+
+encoding//src/main/webapp/chatbot/chatbot.jsp=UTF-8
+encoding//src/main/webapp/recipe/recipeList.jsp=UTF-8
+
 encoding/<project>=UTF-8

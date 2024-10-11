@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+.list-body{
+	position: relative;
+	top: 200px;
+}
+
+/* 전체 컨테이너 */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* 페이지 제목 */
+.list-p {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* 테이블 스타일링 */
+table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 테이블, 테이블 헤더 및 데이터 셀 */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* input 요소 */
+input[type="file"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+td input[type="file"] {
+    width: auto; /* 테이블 내부에서는 너비를 자동으로 */
+}
+
+/* 버튼 스타일링 */
+input[type="button"] {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: darkgrey;
+}
+
+/* 뒤로가기 버튼 스타일링 */
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* 테이블 내 업로드 버튼 컬러와 텍스트 맞춤 */
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
