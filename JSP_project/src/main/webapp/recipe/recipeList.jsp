@@ -83,7 +83,7 @@
        <h3 class="recipe-h3">레시피 목록</h3>
        
        <form method="GET" action="recipeList.jsp">
-        <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
+        <input type="text" name="search" placeholder="레시피명을 입력하세요." value="<%= searchQuery != null ? searchQuery : "" %>" required>
         <button type="submit" class="search">
             <i class="fas fa-search"></i>
         </button>

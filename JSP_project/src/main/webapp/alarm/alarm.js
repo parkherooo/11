@@ -35,10 +35,14 @@ function updateNotificationList(alarms) {
     alarms.forEach(alarm => {
         const li = document.createElement('li');
         li.innerHTML = `
+			<a href="../mypage/myPage.jsp?category=친구관리" class="alarm-a">
             <div class="notification-message">${alarm.content}</div>
-            <div class="notification-date">${new Date(alarm.a_date).toLocaleString()}</div>
+			
+			    <div class="notification-date">${new Date(alarm.a_date).toLocaleString()}</div>
+		
             <div class="notification-close" onclick="removeNotification(${alarm.alarm_num}, this)">X</div>
-        `;
+			</a>
+			 `;
         notificationList.appendChild(li);  // 새로운 알림 추가
     });
 
