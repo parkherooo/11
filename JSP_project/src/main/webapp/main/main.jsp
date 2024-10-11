@@ -1,4 +1,12 @@
+<%@page import="java.util.Collections"%>
+<%@ page import="java.util.List" %>
+<%@ page import="exercise.ExerciseRoutineMgr"%>
+<%@ page import="exercise.ExerciseRoutineBean" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    ExerciseRoutineMgr routineMgr = new ExerciseRoutineMgr();
+    List<ExerciseRoutineBean> routineList = routineMgr.noPart();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,119 +16,121 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-	    let currentSlide = 0;
-	    const slides = document.querySelectorAll('.slide-content');
-	    const totalSlides = slides.length;
-	    const banner = document.querySelector('.banner');
-	    const pauseButton = document.querySelector('#play-pause-button');
-	    const pauseIcon = pauseButton.querySelector('i');
-	
-	    let isPaused = false;
-	    let slideInterval;
-	
-	    // 배너의 초기 배경색을 투명으로 설정
-	    banner.style.backgroundColor = 'transparent';
-	
-	    // 배너에 마우스를 올렸을 때
-	    banner.addEventListener('mouseenter', () => {
-	        banner.style.backgroundColor = 'white';
-	    });
-	
-	    // 배너에서 마우스를 내렸을 때
-	    banner.addEventListener('mouseleave', () => {
-	        if (window.scrollY > 50) {
-	            banner.style.backgroundColor = 'white';
-	        } else {
-	            banner.style.backgroundColor = 'transparent';
-	        }
-	    });
-	
-	    // 스크롤 시 배너 이벤트
-	    window.addEventListener('scroll', () => {
-	        if (window.scrollY > 50) {
-	            banner.style.backgroundColor = 'white';
-	            banner.style.transition = 'background-color 0.3s ease';
-	        } else {
-	            banner.style.backgroundColor = 'transparent';
-	        }
-	    });
-	
-	    function showSlide(index) {
-	        slides.forEach((slide, i) => {
-	            if (i === index) {
-	                slide.classList.add('active');
-	            } else {
-	                slide.classList.remove('active');
-	            }
-	        });
-	
-	        document.querySelector('.current-slide').textContent = index + 1;
-	        document.querySelector('.total-slides').textContent = totalSlides;
-	    }
-	
-	    function nextSlide() {
-	        currentSlide = (currentSlide + 1) % totalSlides;
-	        showSlide(currentSlide);
-	    }
-	
-	    function prevSlide() {
-	        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-	        showSlide(currentSlide);
-	    }
-	
-	    function startAutoSlide() {
-	        stopAutoSlide(); // 기존 타이머를 초기화
-	        slideInterval = setInterval(nextSlide, 5000); // 5초마다 슬라이드 전환
-	        isPaused = false;
-	        updatePauseButton();
-	    }
-	
-	    function stopAutoSlide() {
-	        clearInterval(slideInterval);
-	        isPaused = true;
-	        updatePauseButton();
-	    }
-	
-	    function toggleAutoSlide() {
-	        if (isPaused) {
-	            startAutoSlide();
-	        } else {
-	            stopAutoSlide();
-	        }
-	    }
-	
-	    function updatePauseButton() {
-	        if (isPaused) {
-	            pauseIcon.classList.remove('fa-pause');
-	            pauseIcon.classList.add('fa-play');
-	        } else {
-	            pauseIcon.classList.remove('fa-play');
-	            pauseIcon.classList.add('fa-pause');
-	        }
-	    }
-	
-	    // 이벤트 리스너 추가
-	    document.querySelector('.left-arrow').addEventListener('click', () => {
-	        prevSlide();
-	        startAutoSlide(); // 슬라이드를 수동으로 변경했을 때 타이머를 초기화
-	    });
-	    document.querySelector('.right-arrow').addEventListener('click', () => {
-	        nextSlide();
-	        startAutoSlide(); // 슬라이드를 수동으로 변경했을 때 타이머를 초기화
-	    });
-	    pauseButton.addEventListener('click', toggleAutoSlide);
-	
-	    // 처음에 첫 슬라이드와 슬라이드 번호 표시
-	    showSlide(currentSlide);
-	    startAutoSlide(); // 자동 슬라이드 시작
-	});
+document.addEventListener('DOMContentLoaded', () => {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide-content');
+    const totalSlides = slides.length;
+    const banner = document.querySelector('.banner');
+    const pauseButton = document.querySelector('#play-pause-button');
+    const pauseIcon = pauseButton.querySelector('i');
+    const progressBar = document.querySelector('.progress-bar');
+
+    let isPaused = false;
+    let slideInterval;
+
+    banner.style.backgroundColor = 'transparent';
+
+    banner.addEventListener('mouseenter', () => {
+        banner.style.backgroundColor = 'white';
+    });
+
+    banner.addEventListener('mouseleave', () => {
+        if (window.scrollY > 50) {
+            banner.style.backgroundColor = 'white';
+        } else {
+            banner.style.backgroundColor = 'transparent';
+        }
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            banner.style.backgroundColor = 'white';
+            banner.style.transition = 'background-color 0.3s ease';
+        } else {
+            banner.style.backgroundColor = 'transparent';
+        }
+    });
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        document.querySelector('.current-slide').textContent = index + 1;
+        document.querySelector('.total-slides').textContent = totalSlides;
+        resetProgressBar();
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        slideInterval = setInterval(nextSlide, 5000);
+        isPaused = false;
+        updatePauseButton();
+        resetProgressBar();
+    }
+
+    function stopAutoSlide() {
+        clearInterval(slideInterval);
+        isPaused = true;
+        updatePauseButton();
+        progressBar.style.width = '0%';
+    }
+
+    function toggleAutoSlide() {
+        if (isPaused) {
+            startAutoSlide();
+        } else {
+            stopAutoSlide();
+        }
+    }
+
+    function updatePauseButton() {
+        if (isPaused) {
+            pauseIcon.classList.remove('fa-pause');
+            pauseIcon.classList.add('fa-play');
+        } else {
+            pauseIcon.classList.remove('fa-play');
+            pauseIcon.classList.add('fa-pause');
+        }
+    }
+
+    function resetProgressBar() {
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        setTimeout(() => {
+            progressBar.style.transition = 'width 5s linear';
+            progressBar.style.width = '100%';
+        }, 10);
+    }
+
+    document.querySelector('.left-arrow').addEventListener('click', () => {
+        prevSlide();
+        startAutoSlide();
+    });
+    document.querySelector('.right-arrow').addEventListener('click', () => {
+        nextSlide();
+        startAutoSlide();
+    });
+    pauseButton.addEventListener('click', toggleAutoSlide);
+
+    showSlide(currentSlide);
+    startAutoSlide();
+});
 
 </script>
 <%@ include file="header.jsp" %>
 </head>
 <body class="main-body">
-    <!-- 메인 콘텐츠 섹션 -->
+    <!-- 메인 콘텐츠1 -->
     <section class="main-content">
         <div class="arrow left-arrow">
     		<i class="fas fa-chevron-left"></i>
@@ -200,21 +210,101 @@
 		</div>
         <!-- 슬라이드 네비게이션 -->
     	<div class="slider-nav">
-        	<span class="current-slide">1</span>
-        	<div class="line"></div>
-        	<span class="total-slides">8</span>&nbsp;
-        	<button id="play-pause-button">
-    			<i class="fas fa-pause"></i> <!-- 일시정지 아이콘 -->
-			</button>
-    	</div>
+		    <span class="current-slide">1</span>
+		    <div class="line">
+		        <div class="progress-bar"></div>
+		    </div>
+		    <span class="total-slides">8</span>&nbsp;
+		    <button id="play-pause-button">
+		        <i class="fas fa-pause"></i>
+		    </button>
+		</div>
+
 	</section>
+	<!-- 메인 콘텐츠2 -->
 	<section class="main-content2">
-    	<div class="content-wrapper">
-        	<h2>두 번째 메인 콘텐츠 영역</h2>
-        	<p>이곳은 다른 요소들로 구성된 메인 콘텐츠2 영역입니다.</p>
-        <!-- 원하는 다른 요소를 여기에 추가하세요 -->
-    	</div>
+	    <div class="content-wrapper">
+	        <div class="intro-section">
+	            <!-- 식단 기록 소개 -->
+	            <div class="promo-card">
+	                <div class="promo-icon">
+	                    <i class="fas fa-utensils"></i> <!-- 식단 기록 아이콘 -->
+	                </div>
+	                <div class="promo-content">
+	                    <h3>오늘의 식단 기록</h3>
+	                    <p>매일 먹은 음식을 간편하게 기록하고 나만의 식단을 관리해보세요.</p>
+	                    <a href="../diet/DietRecord.jsp" class="promo-button">식단 기록하기</a>
+	                </div>
+	            </div>
+	            
+	            <!-- 하루 권장 칼로리 계산 소개 -->
+	            <div class="promo-card">
+	                <div class="promo-icon">
+	                    <i class="fas fa-calculator"></i> <!-- 칼로리 계산 아이콘 -->
+	                </div>
+	                <div class="promo-content">
+	                    <h3>하루 권장 칼로리 계산</h3>
+	                    <p>나의 신체 조건에 맞는 권장 칼로리를 알아보고 목표를 이루어 보세요.</p>
+	                    <a href="../diet/CalorieCalc.jsp" class="promo-button">칼로리 계산하기</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</section>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+	    const slideContainer = document.getElementById('exercise-slides');
+	    const slideDuration = 5000; // 슬라이드 전환 시간 (5초)
+	    let currentIndex = 0;
+	    const totalSlides = slideContainer.children.length;
+	
+	    function showNextSlides() {
+	        // 슬라이드를 숨기고, 다음 슬라이드를 보여줍니다.
+	        for (let i = 0; i < totalSlides; i++) {
+	            slideContainer.children[i].style.display = 'none';
+	        }
+	
+	        // 현재 인덱스부터 다음 4개 슬라이드를 보여줍니다.
+	        for (let i = 0; i < 4; i++) {
+	            const slideIndex = (currentIndex + i) % totalSlides;
+	            slideContainer.children[slideIndex].style.display = 'block';
+	        }
+	
+	        // 다음 인덱스를 설정하고, 자동 슬라이드를 시작합니다.
+	        currentIndex = (currentIndex + 4) % totalSlides;
+	        setTimeout(showNextSlides, slideDuration);
+	    }
+	
+	    // 초기 슬라이드 표시 시작
+	    showNextSlides();
+	});
+
+</script>
+	<!-- 메인 콘텐츠3 -->
+	<section class="main-content3">
+	    <div class="content-wrapper3">
+	        <h2>오늘, 운동 뭐하지?</h2>
+	        <p>Fit Time과 함께 나에게 딱 맞는 운동 루틴을 추천받아보세요!</p>
+	        <div class="exercise-slides" id="exercise-slides">
+	            <% 
+	                Collections.shuffle(routineList); // 리스트 랜덤 섞기
+	                for (int i = 0; i < 4 && i < routineList.size(); i++) {
+	                    ExerciseRoutineBean routine = routineList.get(i);
+	            %>
+	                <div class="exercise-slide">
+	                    <a href="<%= routine.getExerciseLink() %>" target="_blank">
+	                        <img src="https://img.youtube.com/vi/<%= routine.getExerciseLink().substring(routine.getExerciseLink().indexOf("v=") + 2) %>/0.jpg" alt="<%= routine.geteName() %>">
+	                        <div class="exercise-info">
+	                            <h3><%= routine.geteName() %></h3>
+	                            <p><%= routine.getExercise() %></p>
+	                        </div>
+	                    </a>
+	                </div>
+	            <% } %>
+	        </div>
+	    </div>
+	</section>
+
 	<%@ include file="../chatbot/chatbot.jsp" %>
 </body>
 <footer>
