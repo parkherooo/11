@@ -30,34 +30,44 @@ public class mypageProfileServlet extends HttpServlet {
 		MultipartRequest multi = new MultipartRequest(request, UserMgr.SAVEFOLDER, UserMgr.MAXSIZE, UserMgr.ENCODING, new DefaultFileRenamePolicy());
 		String action = multi.getParameter("action");
 		UserMgr mgr = new UserMgr();
-		
+		PrintWriter out = response.getWriter();
 		
 		
 		if ("update".equals(action)) {
 			boolean result = mgr.myprofileUpdate(multi);
 			if(result) {
+				response.setContentType("text/html; charset=UTF-8");
+				out.println("<script>");
+				out.println("alert('수정 되었습니다.')");
+				out.println("</script>");
 				response.sendRedirect("myPage.jsp");
 				 return;
 			} else {
 				response.setContentType("text/html; charset=UTF-8");
-				 PrintWriter out = response.getWriter();
-				 out.println("<script>");
-				 out.println("alert('수정 실패했습니다.')");
-				 out.println("history.back()");
-				 out.println("</script>");
+				out.println("<script>");
+				out.println("alert('수정 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
 				 return;
 			}
 		} else if("delete".equals(action)) {
-			mgr.deleteProfile(multi);
-			PrintWriter out = response.getWriter();
-			 out.println("<script>");
-			 out.println("alert('수정 성공했습니다.')");
-			 out.println("</script>");
+			boolean res = mgr.deleteProfile(multi);
+			if(res) {
+			response.setContentType("text/html; charset=UTF-8");
+			out.println("<script>");
+			out.println("alert('탈퇴 되었습니다.')");
+			out.println("</script>");
 			response.sendRedirect("myPage.jsp");
 			 return;
+			} else {
+				response.setContentType("text/html; charset=UTF-8");
+				out.println("<script>");
+				out.println("alert('탈퇴 실패했습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			
 		}
-		
-		
 	}
 
 }

@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 		.chatbot-body {
-            font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
@@ -9,9 +8,10 @@
         .chat-container {
             display: none; /* 기본적으로 숨김 */
             position: fixed;
-            bottom: 80px;
+            bottom: 100px;
             right: 20px;
             width: 400px;
+            border: 1px solid #ddd;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -73,8 +73,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             background-color: black;
             color: white;

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import user.UserBean;
 import user.UserMgr;
 
-@WebServlet("/login/updateKakaoUser")
-public class UpdateKakaoUserServlet extends HttpServlet {
+@WebServlet("/login/updateSocialUser")
+public class UpdateSocialUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserMgr userMgr = new UserMgr();
 
@@ -39,7 +39,7 @@ public class UpdateKakaoUserServlet extends HttpServlet {
         bean.setGender(gender);
 
         // DB에 추가 정보 업데이트
-        boolean isUpdated = userMgr.updateKakaoUser(bean);
+        boolean isUpdated = userMgr.updateSocialUser(bean);
 
         // 업데이트 성공 시 메인 페이지로 이동
         if (isUpdated) {

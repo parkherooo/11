@@ -1,16 +1,18 @@
 @charset "UTF-8";
-
 		.recipe-body {
             text-align: center; /* 전체 내용 가운데 정렬 */
             color: black; /* 기본 글자 색상 검정색 */
             position: relative;
-         	top:140px;
+
+         	top:200px;
+
         }
         .recipe-h1 {
              text-align: center;
          }
          .recipe-h3 {
              text-align: left; /* 왼쪽 정렬 */
+             color: black;
          }
         form {
            border: none; /* 테두리 없음 */
@@ -36,7 +38,6 @@
         }
         .recipe-list {
         	width: 60%; 
-        	margin-top: 50px;
             text-align: left; /* 왼쪽 정렬 */
             margin-left: 20%; /* 왼쪽 간격 설정 */
             margin-right: 20%;
@@ -70,20 +71,56 @@
         }
         .recipe-image {
             display: block;
-            margin-left:10%;
-            width: 400px; /* 이미지 폭 설정 */
+            width: 500px; /* 이미지 폭 설정 */
             height: auto; /* 자동 높이 조정 */
         }
         .ingredients {
             display: flex; /* 플렉스박스 사용 */
-            margin-bottom: 20px; /* 성분 정보 아래 여백 추가 */
+            margin-bottom: 50px; /* 성분 정보 아래 여백 추가 */
+            margin-top: 50px;
         }
         .ingredients div {
             margin-left: 200px; /* 성분과 이미지 사이의 여백 */
         }
         .recipe-a {   
-            margin-top: 30px;
+        	margin-bottom:50px;
+            margin-top: 50px;
             text-decoration: none; /* 밑줄 제거 */
             padding: 10px 20px; /* 여백 추가 */
             color: black; /* 글자 색상 검정색 */
         }
+        .ingredient {
+        	width:200px;
+        	height: 250px;
+        	padding-left:50px;
+
+        	border:2px solid #319815;
+		    border-radius: 50px; /* 테두리 둥글게 */
+		}
+		/* 조리방법 및 재료 강조 */
+		.recipe-method {
+		    font-size: 18px; /* 폰트 크기 증가 */
+		    font-weight: bold; /* 굵은 글씨 */
+		    line-height: 1.6; /* 줄 간격 설정으로 가독성 개선 */
+		    margin-bottom: 20px;
+		}
+		
+		.recipe-ingredient {
+		    background-color: #f9f9f9; /* 연한 배경색 추가 */
+		    padding: 15px;
+		    border-radius: 10px; /* 부드러운 모서리 */
+		    font-size: 18px;
+		    font-weight: bold; /* 굵은 글씨 */
+		    margin-bottom: 20px;
+		    line-height: 1.6; /* 줄 간격 */
+		}
+				
+		/* 조리방법 리스트 스타일 */
+		.method-step {
+		    margin-bottom: 10px; /* 각 단계 간 여백 */
+		    padding: 10px;
+		    border-left: 5px solid #319815; /* 좌측에 강조선 추가 */
+		    background-color: #f0f8ff; /* 단계별 배경색 */
+		    border-radius: 5px;
+		}
+		

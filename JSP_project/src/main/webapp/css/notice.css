@@ -4,7 +4,9 @@
     position: relative;
 	top:200px;
 }
-
+h1{
+	text-align: center;
+}
 /* 카테고리 및 검색 부분 왼쪽 정렬 */
 .noticeheader {	
 	margin-left:20%;
@@ -15,6 +17,7 @@
     align-items: center;
 }
 .noticeinsert{
+	margin-top:20px;
 	width: 80%;
 	text-align: right; /* 오른쪽 정렬 */
 }

@@ -216,15 +216,14 @@ public class UserMgr {
     }
 
     ////////////// 소셜 로그인 //////////////////
-    // 카카오 사용자 최초 가입 (기본 정보만 저장)
-    public boolean insertKakaoUser(UserBean bean) {
+    // 소셜 사용자 최초 가입 (기본 정보만 저장)
+    public boolean insertSocialUser(UserBean bean) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String sql = null; 
         boolean flag = false;
         try {
             con = pool.getConnection();
-            // 카카오 로그인 전용 삽입 쿼리
             sql = "INSERT INTO tbluser (userId, name) VALUES (?, ?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, bean.getUserId());
@@ -242,7 +241,7 @@ public class UserMgr {
     }
 
     // 추가 정보 입력
-    public boolean updateKakaoUser(UserBean bean) {
+    public boolean updateSocialUser(UserBean bean) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String sql = null;
@@ -316,7 +315,12 @@ public class UserMgr {
 				bean.setBirth(rs.getString("birth"));
 				bean.setPhone(rs.getString("phone"));
 				bean.setAddress(rs.getString("address"));
-				bean.setAllergy(rs.getString("allergy"));
+				String allergy = rs.getString("allergy");
+	            if (allergy == null || allergy.equals("")) {
+	                bean.setAllergy("없음");
+	            } else {
+	                bean.setAllergy(allergy);
+	            }
 				bean.setHeight(rs.getFloat("height"));
 				bean.setWeight(rs.getFloat("weight"));
 				bean.setProfile(rs.getString("profile"));
@@ -341,7 +345,11 @@ public class UserMgr {
 			con = pool.getConnection();
 			sql = "update tbluser set allergy = ? where userId = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, Allergy);
+			if(Allergy == null || Allergy.equals("")) {
+				pstmt.setString(1, "없음");
+			} else {
+				pstmt.setString(1, Allergy);
+			}
 			pstmt.setString(2, userId);
 			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
@@ -377,24 +385,40 @@ public class UserMgr {
 	
 	// 친구 추가
 	public boolean frPlus(String userId, String frId) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		boolean flag = false;
-		try {
-			con = pool.getConnection();
-			sql = "insert tblfriend values(null,?,?,0)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, frId);
-			if(pstmt.executeUpdate()==1) flag = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt);
-		}
-		return flag;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null; // 기존 요청이 있는지 확인하기 위한 ResultSet
+	    String sql = null;
+	    boolean flag = false;
+	    try {
+	        con = pool.getConnection();
+	        
+	        // 이미 친구 추가 요청이 있는지 확인
+	        sql = "SELECT COUNT(*) FROM tblfriend WHERE userId = ? AND friendId = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, userId);
+	        pstmt.setString(2, frId);
+	        rs = pstmt.executeQuery();
+	        
+	        if (rs.next() && rs.getInt(1) == 0) {
+	            // 친구 추가 요청이 없는 경우에만 insert 실행
+	            sql = "INSERT INTO tblfriend VALUES (null,?,?,0)";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setString(1, userId);
+	            pstmt.setString(2, frId);
+	            if (pstmt.executeUpdate() == 1) {
+	                flag = true;
+	            }
+	        } else {
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        pool.freeConnection(con, pstmt, rs); // ResultSet도 해제
+	    }
+	    return flag;
 	}
+
 	
 	// 친구 요청여부 확인
 	public boolean frplusChk(String userId){
@@ -549,6 +573,11 @@ public class UserMgr {
 		boolean flag = false;
 		try {
 			con = pool.getConnection();
+			sql = "DELETE FROM tblalarm WHERE userId = (SELECT friendId FROM tblfriend WHERE num = ?)";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setInt(1, num);
+	        pstmt.executeUpdate();
+	        
 			sql = "delete from tblfriend where num =?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -594,12 +623,13 @@ public class UserMgr {
 	}
 	
 	// 프로필 삭제
-	public void deleteProfile(MultipartRequest multi) {
+	public boolean deleteProfile(MultipartRequest multi) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		String userId = multi.getParameter("userId");
 		String filename = multi.getFilesystemName("image");
+		boolean flag = false;
 		try {
 			if (filename != null && !filename.equals("")) {
 			    // 파일 업로드 수정
@@ -616,12 +646,13 @@ public class UserMgr {
 			sql = "update tbluser set profile=null where userId= ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, userId);
-			pstmt.executeUpdate();
+			if(pstmt.executeUpdate()==1) flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pool.freeConnection(con, pstmt);
 		}
+		return flag;
 	}
 	
 	// 내 정보 수정
