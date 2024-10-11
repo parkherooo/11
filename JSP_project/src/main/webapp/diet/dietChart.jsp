@@ -156,19 +156,22 @@
         }
 
         // 7일 동안의 모든 날짜를 맵에 포함시키기 (데이터가 없는 날짜는 0으로)
-        cal.setTime(sdf.parse(startDate));
-        for (int i = 0; i < 7; i++) {
-            String date = sdf.format(cal.getTime());
-            String adjustedDate = adjustDate(date, sdf);
-            if (!calorieData.containsKey(adjustedDate)) {
-                calorieData.put(adjustedDate, 0);
-                sugarData.put(adjustedDate, 0f);
-                carbohydrateData.put(adjustedDate, 0f);
-                proteinData.put(adjustedDate, 0f);
-                fatData.put(adjustedDate, 0f);
-            }
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-        }
+       Map<String, Integer> sortedCalorieData = new LinkedHashMap<>();
+       Map<String, Float> sortedSugarData = new LinkedHashMap<>();
+       Map<String, Float> sortedCarbohydrateData = new LinkedHashMap<>();
+       Map<String, Float> sortedProteinData = new LinkedHashMap<>();
+       Map<String, Float> sortedFatData = new LinkedHashMap<>();
+    cal.setTime(sdf.parse(startDate));
+    for (int i = 0; i < 7; i++) {
+        String date = sdf.format(cal.getTime());
+        String adjustedDate = adjustDate(date, sdf);
+        sortedCalorieData.put(adjustedDate, calorieData.getOrDefault(adjustedDate, 0));
+        sortedSugarData.put(adjustedDate, sugarData.getOrDefault(adjustedDate, 0f));
+        sortedCarbohydrateData.put(adjustedDate, carbohydrateData.getOrDefault(adjustedDate, 0f));
+        sortedProteinData.put(adjustedDate, proteinData.getOrDefault(adjustedDate, 0f));
+        sortedFatData.put(adjustedDate, fatData.getOrDefault(adjustedDate, 0f));
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+    }
 
         // JSON 데이터 생성
         JSONArray labels = new JSONArray();
@@ -178,13 +181,14 @@
         JSONArray proteinValues = new JSONArray();
         JSONArray fatValues = new JSONArray();
 
-        for (String date : calorieData.keySet()) {
+        for (Map.Entry<String, Integer> entry : sortedCalorieData.entrySet()) {
+            String date = entry.getKey();
             labels.add(date);
-            calorieValues.add(calorieData.get(date));
-            sugarValues.add(sugarData.get(date));
-            carbohydrateValues.add(carbohydrateData.get(date));
-            proteinValues.add(proteinData.get(date));
-            fatValues.add(fatData.get(date));
+            calorieValues.add(entry.getValue());
+            sugarValues.add(sortedSugarData.get(date));
+            carbohydrateValues.add(sortedCarbohydrateData.get(date));
+            proteinValues.add(sortedProteinData.get(date));
+            fatValues.add(sortedFatData.get(date));
         }
     %>
 
