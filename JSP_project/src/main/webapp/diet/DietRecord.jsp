@@ -10,23 +10,18 @@
 <title>Fit Time - Diet</title>
 <link rel="stylesheet" href="../css/main.css">
 <style>
-
-/* 	main.diet-page {
-    padding: 2rem 0; /* 상하 여백 추가 */
-}
-* /
 body {
 	font-family: Arial, sans-serif;
 	line-height: 1.6;
 	color: #333;
-	background-color: #ffffff; /* 흰색으로 변경 */
+	background-color: #ffffff !important;
 }
 
 /* 메인 컨텐츠 영역 스타일 */
 .diet-page {
-	max-width: 1200px;
+	max-width: 100%;
 	margin: 2rem auto;
-	padding: 0 1rem;
+	padding: 0 2rem;
 	background-color: #ffffff;
 }
 
@@ -43,17 +38,17 @@ body {
 	justify-content: space-between;
 	gap: 2rem;
 	width: 100%;
-	max-width: 1200px; /* 전체 콘텐츠의 최대 너비 설정 */
+	max-width: 1600px; /* 전체 콘텐츠의 최대 너비 설정 */
 	margin: 0 auto; /* 중앙 정렬 */
 }
 
 .calendar-wrapper, .diet-form-wrapper {
 	background-color: #ffffff;
 	border-radius: 8px;
-	padding: 1rem;
+	padding: 2rem;
 	border: 1px solid #000;
 	box-shadow: none;
-	width: 48%; /* 캘린더와 식단 입력 폼의 너비 */
+	width: calc(50% - 2rem); /* 캘린더와 식단 입력 폼의 너비 */
 }
 
 .calendar-wrapper {
@@ -61,12 +56,14 @@ body {
 }
 
 .diet-form-wrapper {
-	flex: 1.25;
+	flex: 1.5;
+	width: 60%;
 }
 
 .food-search {
 	width: 100%; /* 식품 검색 섹션 전체 너비 사용 */
 	margin-top: 20px;
+
 }
 
 .search-container {
@@ -141,8 +138,9 @@ body {
 }
 
 .meal-input textarea {
-	width: calc(100% - 18px);
+	width: 100%;
 	height: 60px;
+	width: 600px;
 	padding: 0.5rem;
 	border: 1px solid #ddd;
 	border-radius: 4px;

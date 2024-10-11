@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../css/main.css">
 <style>
 body {
-	background-color: #ffffff;
+	background-color: #ffffff !important;
 }
 
 main.diet-page {

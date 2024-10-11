@@ -1,4 +1,5 @@
 package diet;
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,42 +10,55 @@ import org.json.simple.JSONObject;
 @WebServlet("/diet/GetDietServlet")
 public class GetDietServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	 request.setCharacterEncoding("UTF-8");  // 요청 인코딩 설정
-         response.setCharacterEncoding("UTF-8"); // 응답 인코딩 설정
-         
-        String userId = request.getParameter("userId");
-        String selectedDate = request.getParameter("selectedDate");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        
         JSONObject jsonResult = new JSONObject();
         
-        if (userId == null || selectedDate == null) {
-            jsonResult.put("error", "Invalid parameters");
-            sendJsonResponse(response, jsonResult);
-            return;
-        }
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
-             PreparedStatement pstmt = conn.prepareStatement("SELECT diet, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate = ?")) {
+        try {
             
-            pstmt.setString(1, userId);
-            pstmt.setDate(2, java.sql.Date.valueOf(selectedDate));
+        	//String userId = request.getParameter("userId");
+        	String userId = java.net.URLDecoder.decode(request.getParameter("userId"), "UTF-8");
+        	String selectedDate = request.getParameter("selectedDate");
             
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    jsonResult.put("diet", rs.getString("diet"));
-                    jsonResult.put("calories", rs.getInt("calorie"));
-                }
+            System.out.println("Received userId: " + userId);
+            System.out.println("Received selectedDate: " + selectedDate);
+            
+            if (userId == null || selectedDate == null) {
+                throw new IllegalArgumentException("Invalid parameters");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            jsonResult.put("error", "데이터를 불러오는 중 오류가 발생했습니다.");
+            
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://113.198.238.93/fittime?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC", "root", "1234");
+                 PreparedStatement pstmt = conn.prepareStatement("SELECT diet, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate = ?")) {
+                
+                pstmt.setString(1, userId);
+                pstmt.setDate(2, java.sql.Date.valueOf(selectedDate));
+                
+                System.out.println("Executing SQL: " + pstmt.toString());
+                
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        String diet = rs.getString("diet");
+                        int calorie = rs.getInt("calorie");
+                        System.out.println("Found data: diet = " + diet + ", calorie = " + calorie);
+                        jsonResult.put("diet", diet);
+                        jsonResult.put("calories", calorie);
+                    } else {
+                        System.out.println("No data found for the selected date");
+                        jsonResult.put("message", "No data found for the selected date");
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Error: " + e.getMessage());
+                throw new ServletException("Database error: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            jsonResult.put("error", e.getMessage());
         }
         
-        sendJsonResponse(response, jsonResult);
-    }
-
-    private void sendJsonResponse(HttpServletResponse response, JSONObject jsonResult) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        System.out.println("Sending response: " + jsonResult.toJSONString());
         response.getWriter().write(jsonResult.toJSONString());
     }
 }
