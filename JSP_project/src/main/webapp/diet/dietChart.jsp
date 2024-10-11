@@ -98,6 +98,10 @@
 
         // 데이터를 저장할 맵
         Map<String, Integer> calorieData = new LinkedHashMap<>();
+        Map<String, Float> sugarData = new LinkedHashMap<>();
+        Map<String, Float> carbohydrateData = new LinkedHashMap<>();
+        Map<String, Float> proteinData = new LinkedHashMap<>();
+        Map<String, Float> fatData = new LinkedHashMap<>();
 
         // 데이터베이스에서 데이터 가져오기
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -111,9 +115,12 @@
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String date = rs.getString("drDate");
-                    int calorie = rs.getInt("calorie");
                     String adjustedDate = adjustDate(date, sdf);
-                    calorieData.put(adjustedDate, calorie);
+                    calorieData.put(adjustedDate, rs.getInt("calorie"));
+                    sugarData.put(adjustedDate, rs.getFloat("sugar"));
+                    carbohydrateData.put(adjustedDate, rs.getFloat("carbohydrate"));
+                    proteinData.put(adjustedDate, rs.getFloat("protein"));
+                    fatData.put(adjustedDate, rs.getFloat("fat"));
                 }
             }
         } catch (SQLException e) {
@@ -129,17 +136,29 @@
             String adjustedDate = adjustDate(date, sdf);
             if (!calorieData.containsKey(adjustedDate)) {
                 calorieData.put(adjustedDate, 0);
+                sugarData.put(adjustedDate, 0f);
+                carbohydrateData.put(adjustedDate, 0f);
+                proteinData.put(adjustedDate, 0f);
+                fatData.put(adjustedDate, 0f);
             }
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         // JSON 데이터 생성
         JSONArray labels = new JSONArray();
-        JSONArray values = new JSONArray();
+        JSONArray calorieValues = new JSONArray();
+        JSONArray sugarValues = new JSONArray();
+        JSONArray carbohydrateValues = new JSONArray();
+        JSONArray proteinValues = new JSONArray();
+        JSONArray fatValues = new JSONArray();
 
-        for (Map.Entry<String, Integer> entry : calorieData.entrySet()) {
-            labels.add(entry.getKey());
-            values.add(entry.getValue());
+        for (String date : calorieData.keySet()) {
+            labels.add(date);
+            calorieValues.add(calorieData.get(date));
+            sugarValues.add(sugarData.get(date));
+            carbohydrateValues.add(carbohydrateData.get(date));
+            proteinValues.add(proteinData.get(date));
+            fatValues.add(fatData.get(date));
         }
     %>
 
@@ -151,20 +170,60 @@
             labels: <%= labels.toJSONString() %>,
             datasets: [{
                 label: '칼로리 섭취량',
-                data: <%= values.toJSONString() %>,
+                data: <%= calorieValues.toJSONString() %>,
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                yAxisID: 'y-calorie'
+            }, {
+                label: '당류',
+                data: <%= sugarValues.toJSONString() %>,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                yAxisID: 'y-nutrient'
+            }, {
+                label: '탄수화물',
+                data: <%= carbohydrateValues.toJSONString() %>,
+                backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1,
+                yAxisID: 'y-nutrient'
+            }, {
+                label: '단백질',
+                data: <%= proteinValues.toJSONString() %>,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                yAxisID: 'y-nutrient'
+            }, {
+                label: '지방',
+                data: <%= fatValues.toJSONString() %>,
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
+                yAxisID: 'y-nutrient'
             }]
         },
         options: {
             scales: {
-                y: {
+                'y-calorie': {
+                    type: 'linear',
+                    position: 'left',
                     beginAtZero: true,
                     max: 5000,
                     title: {
                         display: true,
                         text: '칼로리 (kcal)'
+                    }
+                },
+                'y-nutrient': {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '영양소 (g)'
                     }
                 },
                 x: {
@@ -177,7 +236,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: '최근 7일간 칼로리 섭취량'
+                    text: '최근 7일간 영양소 섭취량'
                 }
             },
             animation: {
