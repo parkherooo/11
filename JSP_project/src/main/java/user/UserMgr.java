@@ -224,10 +224,11 @@ public class UserMgr {
         boolean flag = false;
         try {
             con = pool.getConnection();
-            sql = "INSERT INTO tbluser (userId, name) VALUES (?, ?)";
+            sql = "INSERT INTO tbluser (userId, name, loginPlatform) VALUES (?, ?, ?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, bean.getUserId());
             pstmt.setString(2, bean.getName());
+            pstmt.setString(3, bean.getLoginPlatform()); // 로그인 플랫폼 추가
 
             if (pstmt.executeUpdate() == 1) {
                 flag = true; // 사용자 추가 성공
@@ -272,7 +273,7 @@ public class UserMgr {
     }
 
     // 소셜 사용자 정보 존재 확인
-    public boolean isSocialUserExist(String userId) {
+    public boolean isSocialUserExist(String userId, String loginPlatform) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -280,9 +281,11 @@ public class UserMgr {
         boolean flag = false;
         try {
             con = pool.getConnection();
-            sql = "SELECT userId FROM tbluser WHERE userId = ?";
+            sql = "SELECT * FROM tbluser WHERE userId = ? AND loginPlatform = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, userId);
+            pstmt.setString(2, loginPlatform);
+            
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 flag = true; // 이미 존재하는 사용자

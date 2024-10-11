@@ -12,15 +12,17 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 네이버 SDK 불러오기 -->
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
+<!-- 구글 SDK 불러오기 -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // 카카오 SDK 초기화
-        Kakao.init('4a2b51f05cbee79aea7fde3f2167b65a'); // 실제 JavaScript 앱 키 사용
+        Kakao.init('aa2d5cf71f060d9facac6ca2247f4086'); // 실제 JavaScript 앱 키 사용
         console.log(Kakao.isInitialized()); // true 여부 확인
         
-     	// 카카오 로그인 버튼 생성
+        // 카카오 로그인 버튼 생성
         Kakao.Auth.createLoginButton({
             container: '#kakao-login-btn',
             size: 'medium', // 버튼 크기 설정 (small, medium, large)
@@ -33,7 +35,7 @@
             }
         });
         
-     	// 네이버 로그인 버튼 초기화
+        // 네이버 로그인 버튼 초기화
         var naverLogin = new naver.LoginWithNaverId({
             clientId: "w345Zx3BXiwPQv_AAe9S",
             callbackUrl: "http://localhost/JSP_project/login/naverLogin",
@@ -41,9 +43,39 @@
             loginButton: { color: "green", type: 3, height: 50 } // 버튼 색상과 타입 설정
         });
         naverLogin.init();
+
+        // 구글 로그인 초기화
+        google.accounts.id.initialize({
+            client_id: "836482052470-id0fefcrsaem3numcbn25sjbmbju3r5j.apps.googleusercontent.com",
+            callback: handleGoogleCredentialResponse,
+            auto_select: false
+        });
+
+        // 구글 로그인 버튼 렌더링
+        google.accounts.id.renderButton(
+            document.getElementById('google-signin-button'), // 버튼이 표시될 요소의 ID
+            {
+                theme: "outline",
+                size: "large",
+                type: "standard",
+                shape: "rectangular",
+                logo_alignment: "left",
+                width: "231"
+            }
+        );
+
+        google.accounts.id.prompt(); // 자동 프롬프트를 제어
     });
 
-	// 카카오 사용자 정보 요청
+    // 구글 로그아웃 함수
+    function googleLogout() {
+        google.accounts.id.disableAutoSelect(); // 자동 선택 해제
+        google.accounts.id.revoke('user_email', done => {
+            console.log('Google session cleared');
+        });
+    }
+
+    // 카카오 사용자 정보 요청
     function getKakaoUserInfo() {
         Kakao.API.request({
             url: '/v2/user/me',
@@ -53,7 +85,7 @@
 
                 // 정확한 이메일 정보 가져오기
                 const userId = kakaoAccount.email; // 이메일을 userId로 사용
-                const name = kakaoAccount.profile.nickname; // 이름 또는 닉네임
+                const name = kakaoAccount.name; // 이름 또는 닉네임
 
                 // 로그인 후 서버로 전송하기
                 document.getElementById('kakaoUserId').value = userId;
@@ -91,6 +123,13 @@
         document.getElementById('naverAccessToken').value = token;
         document.getElementById('naverLoginForm').submit();
     }
+    
+    // 구글 로그인 성공 시 콜백 함수
+    function handleGoogleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        document.getElementById('googleIdToken').value = response.credential;
+        document.getElementById('googleLoginForm').submit();
+    }
 </script>
 </head>
 <%@ include file="../main/header.jsp" %>
@@ -114,7 +153,10 @@
             <div id="kakao-login-btn"></div>
             <!-- 네이버 로그인 버튼 -->
             <div id="naverIdLogin"></div>
+            <!-- 구글 로그인 버튼 -->
+            <div id="google-signin-button"></div>
         </div>
+
         <!-- 카카오 로그인 정보 폼 -->
         <form id="kakaoLoginForm" action="kakaoLogin" method="post">
             <input type="hidden" name="kakaoUserId" id="kakaoUserId">
@@ -122,10 +164,14 @@
         </form>
 
         <!-- 네이버 로그인 정보 폼 -->
-		<form id="naverLoginForm" action="naverLogin" method="post">
-    		<input type="hidden" name="accessToken" id="naverAccessToken">
-		</form>
-
+        <form id="naverLoginForm" action="naverLogin" method="post">
+            <input type="hidden" name="accessToken" id="naverAccessToken">
+        </form>
+        
+        <!-- 구글 로그인 정보 폼 -->
+        <form id="googleLoginForm" action="googleLogin" method="post">
+            <input type="hidden" name="idToken" id="googleIdToken">
+        </form>
     </section>
     
     <%@ include file="../chatbot/chatbot.jsp" %>
@@ -134,4 +180,3 @@
     <%@ include file="../main/footer.jsp" %>
 </footer>
 </html>
-
