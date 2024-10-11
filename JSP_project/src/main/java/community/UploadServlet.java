@@ -42,7 +42,7 @@ public class UploadServlet extends HttpServlet {
             filePart.write(UPLOAD_DIR + File.separator + fileName); 
         }
 
-        String userId = "root";  // 실제 로그인된 사용자의 ID로 변경 필요
+        String userId = request.getParameter("userId");;  // 실제 로그인된 사용자의 ID로 변경 필요
         String title = request.getParameter("title");
         String content = request.getParameter("content");
 

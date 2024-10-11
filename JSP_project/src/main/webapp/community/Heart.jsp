@@ -45,6 +45,7 @@
     int totalPages = (int) Math.ceil((double) totalPosts / postsPerPage);
 %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

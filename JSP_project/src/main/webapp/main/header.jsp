@@ -1,5 +1,6 @@
 <%@page import="notice.NoticeMgr"%>
 <%@ page language="java"  pageEncoding="UTF-8"%>
+<%@ include file="../alarm/alarm.jsp" %>
 
 <%
 	// 이미 제공되는 session 객체를 사용하여 userId를 가져옴
@@ -44,6 +45,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="../alarm/alarm.jsp" />
 	<!-- header.jsp -->
 	<header>
     <div class="banner">
@@ -92,11 +94,13 @@
                 </li>
                 <li>
 
-                	<a href="">Community</a>
+
+                	<a href="../community/Community_Main.jsp">Community</a>
                 	<ul class="dropdown-menu">
                         <li><a href="../community/Community_Main.jsp">나의 게시글</a></li>
                         <li><a href="../community/Heart.jsp">인기글</a></li>
-                        <li><a href="../community/post_create.jsp">게시물 작성</a></li>	
+                        <li><a href="../community/post_create.jsp">게시물 작성</a></li>
+
                     </ul>
 
                 </li>

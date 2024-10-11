@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+.notification-container {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 400px;
+    display: inline-block;
+    z-index: 1100;
+}
+
+.notification-bell {
+	position: fixed;
+    top: 60px;
+    left: 140px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer; 
+}
+
+.notification-box {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    width: 350px; /* 박스 크기 조정 */
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 그림자 강도 증가 */
+    border-radius: 10px;
+    padding: 15px;
+    display: none; /* 기본적으로 숨김 */
+    overflow-y: auto; /* 목록이 많을 경우 스크롤 가능하게 설정 */
+}
+
+.notification-box ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-box li {
+    display: block; /* 블록 요소로 변경 */
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px; /* 글씨 크기 조정 */
+}
+
+.notification-box li:last-child {
+    border-bottom: none;
+}
+
+.notification-message {
+    display: block; /* 블록 요소로 변경하여 세로로 나열 */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-date {
+    display: block; /* 블록 요소로 변경하여 세로로 나열 */
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.notification-close {
+    display: block; /* 블록 요소로 변경 */
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: right; /* 오른쪽으로 정렬 */
+    margin-top: 5px;
+}
+
+/* Hover effect on notification items */
+.notification-box li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* 닫기 버튼 스타일 */
+.close-btn {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    z-index: 1100;
+}
+
+.close-btn:hover {
+    background-color: #ddd;
+}

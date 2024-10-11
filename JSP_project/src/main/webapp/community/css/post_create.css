@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 전역 폰트 스타일 적용 */
+body {
+    font-family: 'S-CoreDream-3Light', Arial, sans-serif; /* Arial과 sans-serif는 대체 폰트 */
+}
+
 .main_container {
     width: 90%; /* 화면의 90%를 차지하게 설정 */
     max-width: 800px; /* 최대 폭을 제한 */
@@ -10,7 +22,6 @@
 }
 
 .post_header {
-	
     display: flex;
     justify-content: center; /* 중앙 정렬 */
     align-items: center;

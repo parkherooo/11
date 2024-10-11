@@ -43,8 +43,13 @@ public class PostManagementServlet extends HttpServlet {
             if (filePart != null && filePart.getSize() > 0) {
                 // 파일 업로드 처리 로직
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                cuImg = "uploads/" + fileName;  // 경로와 파일명을 조합하여 저장
-                filePart.write(request.getServletContext().getRealPath("/") + cuImg);  // 실제 파일 저장
+                
+                // 경로를 제외하고 파일 이름만 저장
+                cuImg = fileName;  // 파일 이름만 저장
+
+                // 파일을 실제 경로에 저장 (경로는 하드코딩 또는 설정 파일로 관리)
+                String uploadPath = request.getServletContext().getRealPath("/") + "community/upload/";
+                filePart.write(uploadPath + fileName);  // 파일을 지정된 경로에 저장
             }
 
             CommunityBean post = new CommunityBean();
