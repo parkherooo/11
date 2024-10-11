@@ -342,7 +342,7 @@ nav ul li:hover .dropdown-menu {
 
 /* 로그인 버튼 */
 .login-btn2 {
-    background-color: #333;
+    background-color: #666;
     color: white;
     border: none;
     padding: 15px;
@@ -353,7 +353,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .login-btn2:hover {
-    background-color: #222;
+    background-color: #333;
 }
 
 /* 회원가입 및 로그인 정보 찾기 링크 */
@@ -380,11 +380,19 @@ nav ul li:hover .dropdown-menu {
     box-sizing: border-box;
 }
 
-
 .additional-info-section div {
     margin-bottom: 15px; /* 각 폼 요소 간 간격 */
 }
 
+.google-signin-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* 구글 로그인 버튼을 가로로 중앙에 정렬 */
+}
+
+#google-signin-button {
+    display: inline-block; /* 버튼 크기 조정 */
+}
 
 /* ---- signup CSS ---- */
 .signup-section {
@@ -392,11 +400,9 @@ nav ul li:hover .dropdown-menu {
     width: 400px;
     padding: 40px;
     border-radius: 10px;
-
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     margin: 210px auto; /* 중앙 정렬 */
-
 }
 
 /* 회원가입 폼 타이틀 */
@@ -423,6 +429,9 @@ nav ul li:hover .dropdown-menu {
 /* 소셜 로그인 섹션 */
 .social-login {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 모든 로그인 버튼을 중앙에 정렬 */
 }
 
 .social-login p {
@@ -552,11 +561,9 @@ nav ul li:hover .dropdown-menu {
 	width: 500px;
 	padding: 40px;
 	border-radius: 10px;
-
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 	text-align: center;
 	margin: 270px auto; /* 중앙 정렬 */
-
 }
 
 .find-id-section h1 {
@@ -574,7 +581,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .find-id-btn {
-	background-color: #319815;
+	background-color: #666;
 	color: white;
 	border: none;
 	padding: 15px;
@@ -585,7 +592,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .find-id-btn:hover {
-	background-color: #28710d;
+	background-color: #333;
 }
 
 .result-message {
@@ -598,7 +605,6 @@ nav ul li:hover .dropdown-menu {
 /* 비밀번호 찾기 섹션 */
 .find-pwd-section {
     background-color: white;
-
     width: 400px;
     padding: 40px;
     border-radius: 10px;
@@ -625,8 +631,7 @@ nav ul li:hover .dropdown-menu {
 
 /* 버튼 스타일 */
 .find-pwd-section button {
-
-    background-color: #319815;
+    background-color: #666;
     color: white;
     border: none;
     padding: 15px;
@@ -638,8 +643,7 @@ nav ul li:hover .dropdown-menu {
 }
 
 .find-pwd-section button:hover {
-    background-color: #28710d;
-
+    background-color: #333;
 }
 
 /* ---- footer CSS ---- */
