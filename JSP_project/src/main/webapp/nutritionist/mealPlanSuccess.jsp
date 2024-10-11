@@ -7,13 +7,6 @@
 <meta charset="UTF-8">
 <title>Fit Time</title>
 <link rel="stylesheet" href="../css/mealplanrequest.css">
-<style>
-.button-container {
-        display: flex;
-        justify-content: center; /* 수평 중앙 정렬 */
-        margin-top: 50px; /* 버튼과 위쪽 요소 간의 간격 조정 */
-}
-</style>
 </head>
 <body class="request-body">
 	<p class="request-p" style="font-size: 30px; margin-bottom: 70px;">식단 신청 완료</p>
@@ -25,5 +18,5 @@
 	</div>
 <%@ include file="/chatbot/chatbot.jsp" %>    
 </body>
-<footer><%@ include file="/main/footer.jsp" %></footer>body>
+<footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

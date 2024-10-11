@@ -1,13 +1,16 @@
 @charset "UTF-8";
 
+
 .result-body{
 	position: relative;
 	top: 200px;
+	
 }
 .container {
 	width: 60%;
 	margin: 0 auto;
-	margin-bottom:150px;
+	margin-top:50px;
+	margin-bottom:320px;
 	padding: 20px;
 	background-color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

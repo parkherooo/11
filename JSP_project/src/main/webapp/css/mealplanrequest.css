@@ -4,6 +4,7 @@
 	position: relative;
 	top: 200px;
 }
+
 .container {
 	width: 60%;
 	margin: 0 auto;
@@ -26,7 +27,7 @@ label {
 
 label[for="title"] {
 	font-size: 18px;
-	margin:0 10px;
+	margin: 0 10px;
 }
 
 input {
@@ -67,7 +68,6 @@ input[type="button"]:hover {
 .form-row {
 	display: flex;
 	align-items: center; /* 세로 정렬 */
-	
 }
 
 small {
@@ -76,16 +76,19 @@ small {
 }
 
 .form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 20px;
 }
 
-.already{
+.already {
 	margin-top: 50px;
 	margin-bottom: 150px;
 }
 
-.button-container{
-	margin-bottom: 150px;
+.button-container {
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+	margin-top: 50px; /* 버튼과 위쪽 요소 간의 간격 조정 */
+	margin-bottom: 240px;
 }

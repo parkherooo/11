@@ -12,6 +12,8 @@
 	display: flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
+	margin-top: 25px;
+	margin-bottom: 100px;
 }
 
 .exercise-container {
