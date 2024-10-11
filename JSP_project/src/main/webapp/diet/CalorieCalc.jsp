@@ -173,7 +173,7 @@ input[type="text"], input[type="number"] {
 	<main class="diet-page">
 		<h2>Diet</h2>
 		<div class="calorie-calc">
-			<img src="../human-figure.png" alt="인체 도형" class="human-figure">
+			<img src="../img/human-figure.png" alt="인체 도형" class="human-figure">
 			<form class="calc-form">
 				<div class="form-row radio-group gender-group">
 					<label>남성<input type="radio" name="gender" value="male"
