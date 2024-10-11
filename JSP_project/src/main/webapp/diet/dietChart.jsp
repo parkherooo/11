@@ -46,6 +46,28 @@
             max-width: 800px;
             margin: 0 auto;
         }
+        
+        #sugarChart {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        #carbohydrateChart {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        #proteinChart {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        #fatChart {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        
 
         @media (max-width: 768px) {
             body {
@@ -59,6 +81,10 @@
     
     <h2>주간 식단 차트</h2>
     <canvas id="calorieChart" width="1000" height="600"></canvas>
+    <canvas id="sugarChart" width="1000" height="600"></canvas>
+    <canvas id="carbohydrateChart" width="1000" height="600"></canvas>
+    <canvas id="proteinChart" width="1000" height="600"></canvas>
+    <canvas id="fatChart" width="1000" height="600"></canvas>
 
     <%!
     // 날짜를 하루 뒤로 조정하는 메서드
@@ -106,7 +132,7 @@
         // 데이터베이스에서 데이터 가져오기
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
              PreparedStatement pstmt = conn.prepareStatement(
-                 "SELECT drDate, calorie FROM tblDietaryRecords WHERE userId = ? AND drDate BETWEEN ? AND ? ORDER BY drDate")) {
+                 "SELECT drDate, calorie,sugar, carbohydrate, protein, fat FROM tblDietaryRecords WHERE userId = ? AND drDate BETWEEN ? AND ? ORDER BY drDate")) {
             
             pstmt.setString(1, userId);
             pstmt.setString(2, startDate);
@@ -163,67 +189,29 @@
     %>
 
     <script>
-    var ctx = document.getElementById('calorieChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+// 차트 생성 함수
+function createChart(canvasId, label, data, color, yAxisLabel, yAxisMax) {
+    var ctx = document.getElementById(canvasId).getContext('2d');
+    return new Chart(ctx, {
         type: 'bar',
         data: {
             labels: <%= labels.toJSONString() %>,
             datasets: [{
-                label: '칼로리 섭취량',
-                data: <%= calorieValues.toJSONString() %>,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                yAxisID: 'y-calorie'
-            }, {
-                label: '당류',
-                data: <%= sugarValues.toJSONString() %>,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-                yAxisID: 'y-nutrient'
-            }, {
-                label: '탄수화물',
-                data: <%= carbohydrateValues.toJSONString() %>,
-                backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                borderWidth: 1,
-                yAxisID: 'y-nutrient'
-            }, {
-                label: '단백질',
-                data: <%= proteinValues.toJSONString() %>,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-                yAxisID: 'y-nutrient'
-            }, {
-                label: '지방',
-                data: <%= fatValues.toJSONString() %>,
-                backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 1,
-                yAxisID: 'y-nutrient'
+                label: label,
+                data: data,
+                backgroundColor: color + '0.6)',
+                borderColor: color + '1)',
+                borderWidth: 1
             }]
         },
         options: {
             scales: {
-                'y-calorie': {
-                    type: 'linear',
-                    position: 'left',
+                y: {
                     beginAtZero: true,
-                    max: 5000,
+                    //max: yAxisMax,
                     title: {
                         display: true,
-                        text: '칼로리 (kcal)'
-                    }
-                },
-                'y-nutrient': {
-                    type: 'linear',
-                    position: 'right',
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '영양소 (g)'
+                        text: yAxisLabel
                     }
                 },
                 x: {
@@ -236,7 +224,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: '최근 7일간 영양소 섭취량'
+                    text: '최근 7일간 ' + label + ' 섭취량'
                 }
             },
             animation: {
@@ -245,7 +233,15 @@
             }
         }
     });
-    </script>
+}
+
+// 각 차트 생성
+var calorieChart = createChart('calorieChart', '칼로리', <%= calorieValues.toJSONString() %>, 'rgba(75, 192, 192, ', '칼로리 (kcal)', 5000);
+var sugarChart = createChart('sugarChart', '당류', <%= sugarValues.toJSONString() %>, 'rgba(255, 99, 132, ', '당류 (g)', 200);
+var carbohydrateChart = createChart('carbohydrateChart', '탄수화물', <%= carbohydrateValues.toJSONString() %>, 'rgba(255, 206, 86, ', '탄수화물 (g)', 600);
+var proteinChart = createChart('proteinChart', '단백질', <%= proteinValues.toJSONString() %>, 'rgba(54, 162, 235, ', '단백질 (g)', 200);
+var fatChart = createChart('fatChart', '지방', <%= fatValues.toJSONString() %>, 'rgba(153, 102, 255, ', '지방 (g)', 200);
+</script>
     
     <%@ include file="/chatbot/chatbot.jsp"%>
     <%@ include file="../main/footer.jsp"%>
