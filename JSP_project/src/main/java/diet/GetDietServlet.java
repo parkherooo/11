@@ -46,7 +46,7 @@ public class GetDietServlet extends HttpServlet {
                         jsonResult.put("calories", calorie);
                     } else {
                         System.out.println("No data found for the selected date");
-                        jsonResult.put("message", "No data found for the selected date");
+                        //jsonResult.put("message", "No data found for the selected date");
                     }
                 }
             } catch (SQLException e) {

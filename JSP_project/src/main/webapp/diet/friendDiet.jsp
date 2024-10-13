@@ -198,34 +198,11 @@ body {
      <script src="../diet/common-calendar.js"></script>
     <script src="../diet/diet-calendar.js"></script>
     <script>
-// 친구의 식단 데이터를 로드하는 함수
-function loadDietData(date) {
-    const friendId = document.getElementById('friendId').value;
-    const encodedFriendId = encodeURIComponent(friendId);
-    console.log('Loading diet data for friendId:', encodedFriendId, 'and date:', date);
-
-    // fetch 요청에서 encodeURIComponent 없이 사용
-    fetch(`GetDietServlet?userId=${encodedFriendId}&selectedDate=${date}`)
-        .then(response => response.json())  // 서버 응답을 JSON으로 파싱
-        .then(data => {
-            if (data.diet) {
-                document.getElementById('diet').value = data.diet;
-                document.getElementById('calories').value = data.calories || '';
-            } else if (data.message) {
-                document.getElementById('diet').value = data.message;
-                document.getElementById('calories').value = '';
-            } else if (data.error) {
-                throw new Error(data.error);
-            } else {
-                document.getElementById('diet').value = '해당 날짜의 식단 정보가 없습니다.';
-                document.getElementById('calories').value = '';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('식단 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
-        });
-}
+    document.addEventListener('DOMContentLoaded', function() {
+        initCalendar();
+        const today = new Date().toISOString().split('T')[0];
+        loadDietData(today);
+    });
 </script>
 
 </body>

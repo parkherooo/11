@@ -309,7 +309,7 @@ body {
 							id="calories" name="calories" step="1" required> <span>kcal</span>
 					</div>
 					<div class="form-actions">
-						<button type="reset">취소</button>
+						<button type="button" onclick="deleteDiet()">취소</button>
 						<button type="submit">저장</button>
 					</div>
 				</form>

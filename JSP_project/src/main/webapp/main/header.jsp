@@ -88,7 +88,7 @@
                 <li>
                 	<a href="">Exercise</a>
                 	<ul class="dropdown-menu">
-                        <li><a href="diet1.jsp">운동 기록</a></li>
+                        <li><a href="../exercise/ExerciseRecord.jsp">운동 기록</a></li>
                         <li><a href="../exercise/setGoal.jsp">목표 설정</a></li>
                         <li><a href="../exercise/Exroutine.jsp">오늘의 루틴 추천</a></li>
                     </ul>
