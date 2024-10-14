@@ -1,3 +1,5 @@
+<%@page import="user.UserMgr"%>
+<%@page import="user.UserBean"%>
 <%@page import="notice.NoticeMgr"%>
 <%@page import="nutritionist.nutritionistBean"%>
 <%@page import="nutritionist.nutritionistMgr"%>
@@ -51,12 +53,17 @@ function send() {
   	<input type="number" id="calorie" name="calorie" min="500" max="5000" required>
 	</div></div>
   	
+  	
+  	<%
+    UserMgr uMgr = new UserMgr(); 
+    UserBean uBean = uMgr.myInfo(userId);
+	%>
   	<div class="form-group">
   	<div class="form-row">
   	<label for="title">알러지</label>
   	<small>* 해당되는 경우 입력해주세요.</small>
 	</div>
- 	<textarea id="allergy" name="allergy" placeholder="ex) 견과류, 유제품"></textarea>
+ 	<textarea id="allergy" name="allergy" placeholder="ex) 견과류, 유제품"><%= uBean.getAllergy() %></textarea>
 	</div>
   	
   	<div class="form-group">
