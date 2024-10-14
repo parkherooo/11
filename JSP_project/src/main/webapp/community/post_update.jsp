@@ -48,7 +48,6 @@
 
     <main class="main_container">
         <div class="post_header">
-            <button class="close_btn"><i class="xi-close"></i></button>
             <h2>게시물 수정 및 삭제</h2>
         </div>
         <div class="middle_Top">
