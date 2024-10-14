@@ -100,17 +100,14 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 		</div>
 
 		<div class="middle_review">
-
+			<button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
+			    ♥
+			</button>
+		            <div>
+		              좋아요<%= post.getRecommend() %>
+		              </div>
 			<div class="comment_part">
 				<ul>
-					<li class="like_count">
-						 <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
-                                    ♥
-                                </button>
-            <div>
-              좋아요<%= post.getRecommend() %>
-              </div>
-					</li>
 					<div>
 						<span class="user1"><%=post.getContent()%></span>
 						<time class="before">
