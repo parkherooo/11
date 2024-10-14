@@ -13,6 +13,7 @@ public class UserBean {
 	private String profile;
 	private int gender;
 	private String msg;
+	private String loginPlatform;
 	
 	public String getUserId() {
 		return userId;
@@ -86,5 +87,11 @@ public class UserBean {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	public String getLoginPlatform() {
+        return loginPlatform;
+    }
+    public void setLoginPlatform(String loginPlatform) {
+        this.loginPlatform = loginPlatform;
+    }
 	
 }

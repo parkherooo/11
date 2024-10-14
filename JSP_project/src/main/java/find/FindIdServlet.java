@@ -1,7 +1,6 @@
 package find;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,6 @@ public class FindIdServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 한글 인코딩 설정
         request.setCharacterEncoding("UTF-8");
 
         // 파라미터로 전달된 이름과 전화번호를 받습니다.
@@ -28,12 +26,22 @@ public class FindIdServlet extends HttpServlet {
         UserMgr userMgr = new UserMgr();
         String foundId = userMgr.findUserId(name, phone);
 
-        // 아이디가 찾아졌을 경우 결과를 request에 설정
-        if (foundId != null) {
-            request.setAttribute("foundId", foundId);
-        } else {
-            request.setAttribute("foundId", "");
+        String loginPlatform = null;
+        if (foundId != null && !foundId.isEmpty()) {
+            // 각 소셜 로그인 플랫폼에 대해 확인
+            if (userMgr.isSocialUserExist(foundId, "KAKAO")) {
+                loginPlatform = "카카오";
+            } else if (userMgr.isSocialUserExist(foundId, "NAVER")) {
+                loginPlatform = "네이버";
+            } else if (userMgr.isSocialUserExist(foundId, "GOOGLE")) {
+                loginPlatform = "구글";
+            }
         }
+
+        // 결과를 request에 설정
+        request.setAttribute("foundId", foundId);
+        request.setAttribute("loginPlatform", loginPlatform);
+        request.setAttribute("searchPerformed", true); // 검색 작업이 수행됨을 표시
 
         // findId.jsp로 포워드하여 결과 표시
         RequestDispatcher dispatcher = request.getRequestDispatcher("/find/findId.jsp");
