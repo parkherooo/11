@@ -13,22 +13,33 @@ function selectDate(day) {
 }
 
 function loadDietData(date) {
-	const userId = document.getElementById('userId').value;
-	fetch(`GetDietServlet?userId=${userId}&selectedDate=${date}`)
-		.then(response => response.json())
+    const friendId = document.getElementById('friendId') ? document.getElementById('friendId').value : document.getElementById('userId').value;
+    console.log('Loading diet data for friendId:', friendId, 'and date:', date);
+    
+    fetch(`GetDietServlet?userId=${encodeURIComponent(friendId)}&selectedDate=${encodeURIComponent(date)}`)
+        .then(response => response.text())
+        .then(text => {
+            console.log('Server response:', text);
+            return JSON.parse(text);
+        })
 		.then(data => {
-			if (data.diet) {
-				document.getElementById('diet').value = data.diet;
-				document.getElementById('calories').value = data.calories || '';
-			} else {
-				document.getElementById('diet').value = '';
-				document.getElementById('calories').value = '';
-			}
-		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('식단 정보를 불러오는 중 오류가 발생했습니다.');
-		});
+		        const dietTextarea = document.getElementById('diet');
+		        const caloriesInput = document.getElementById('calories');
+
+		        if (data.diet) {
+		            dietTextarea.value = data.diet;
+		            dietTextarea.placeholder = '';  // 데이터가 있으면 플레이스홀더 제거
+		            caloriesInput.value = data.calories || '';
+		        } else {
+		            dietTextarea.value = '';  // 값을 비움
+		            dietTextarea.placeholder = "식단을 자유롭게 기입해 주세요";  // 플레이스홀더 설정
+		            caloriesInput.value = '';
+		        }
+		    })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('식단 정보를 불러오는 중 오류가 발생했습니다: ' + error.message);
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -106,4 +117,33 @@ function calculateTotalCalories() {
 
     // 결과를 정수로 설정
     document.getElementById('calories').value = totalCalories;
+}
+
+function deleteDiet() {
+    const selectedDate = document.getElementById('selectedDate').value;
+    const friendId = document.getElementById('friendId') ? document.getElementById('friendId').value : document.getElementById('userId').value;
+
+    if (!selectedDate) {
+        alert('삭제할 날짜가 선택되지 않았습니다.');
+        return;
+    }
+
+    if (confirm(`식단을 삭제하시겠습니까?`)) {
+        fetch(`DeleteDietServlet?userId=${encodeURIComponent(friendId)}&selectedDate=${encodeURIComponent(selectedDate)}`, {
+            method: 'POST',
+        })
+        .then(response => response.text())
+        .then(message => {
+            alert(message);
+            if (message.includes("성공적으로 삭제")) {
+                document.getElementById('diet').value = '';
+                document.getElementById('calories').value = '';
+                updateCalendar();  // 캘린더 업데이트 함수가 있다면 호출
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('식단을 삭제하는 중 오류가 발생했습니다. 다시 시도해주세요.');
+        });
+    }
 }

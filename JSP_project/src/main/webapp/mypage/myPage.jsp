@@ -307,7 +307,7 @@
 					   			
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
-						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
+						   			<button class="mypage-button" type="button" onclick="viewFriendDiet('<%=frbean.getUserId() %>')">식단관리</button>
 						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
@@ -338,5 +338,14 @@
 
 <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<script>
+function viewFriendDiet(friendId) {
+	// 현재 날짜를 YYYY-MM-DD 형식으로 가져옵니다.
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+	
+	window.location.href = '../diet/friendDiet.jsp?friendId=' + friendId;
+}
+</script>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>
