@@ -100,12 +100,16 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 		</div>
 
 		<div class="middle_review">
+
 			<div class="comment_part">
 				<ul>
 					<li class="like_count">
 						 <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
-                                    ♥<%= post.getRecommend() %>
+                                    ♥
                                 </button>
+            <div>
+              좋아요<%= post.getRecommend() %>
+              </div>
 					</li>
 					<div>
 						<span class="user1"><%=post.getContent()%></span>
@@ -164,7 +168,9 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 	}
 	} else {
 	%>
-	<p>게시물이 없습니다.</p>
+	<p style="text-align: center; font-size: 24px; margin-top: 220px; margin-bottom: 350px;">
+	게시물이 없습니다.
+	</p>
 	<%
 	}
 	%>

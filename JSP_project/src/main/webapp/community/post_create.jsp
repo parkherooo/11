@@ -25,6 +25,7 @@
     <title>게시물 작성</title>
     <link rel="stylesheet" href="css/post_create.css?after">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    
     <script>
         // 자바스크립트 함수로 이미지 추가 버튼 클릭 시 파일 선택 창을 열도록 설정
         function triggerFileInput() {
@@ -64,7 +65,6 @@
 
     <main class="main_container">
         <div class="post_header">
-            <button class="close_btn"><i class="xi-close"></i></button>
             <h2>게시물 작성</h2>
         </div>
         <div class="middle_Top">

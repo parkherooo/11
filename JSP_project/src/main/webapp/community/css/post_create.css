@@ -12,16 +12,18 @@ body {
 
 .main_container {
     width: 90%; /* 화면의 90%를 차지하게 설정 */
-    max-width: 800px; /* 최대 폭을 제한 */
+    max-width: 900px; /* 최대 폭을 제한 */
     margin: 2rem auto;
     background: white;
     padding: 20px;
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+    height: 600px; /* 고정 높이 */
 }
 
 .post_header {
+	margin-top: 35px;
     display: flex;
     justify-content: center; /* 중앙 정렬 */
     align-items: center;
@@ -30,6 +32,7 @@ body {
 }
 
 .post_header h2 {
+	margin-top: 30px;
     font-size: 24px;
     font-weight: bold;
     position: absolute; /* 절대 위치로 설정 */

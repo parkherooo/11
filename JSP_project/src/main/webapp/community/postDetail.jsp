@@ -83,7 +83,7 @@ try {
 </head>
 <body>
 
-	<h1 style="text-align: center; margin-top: 100px;">My Community</h1>
+	<h1 style="text-align: center; margin-top: 10px;">Friend Community</h1>
 
 	<div class="main_container">
 		<div class="middle_Top">
@@ -138,12 +138,14 @@ try {
                             <% } %>
                         </form>
 				<ul class="fixedclear">
+
 						
 					<li>
 						<button class="bookmark">
 							<i class="xi-bookmark-o xi-2x"></i>
 						</button>
 					</li>
+
 				</ul>
 			</div>
 

@@ -79,12 +79,22 @@ function checkNewAlarms() {
 
             if (data.length > 0) {
                 updateNotificationList(data);  // 알림 목록을 업데이트
-                bellIcon.classList.add('bell-with-notification');  // 알림이 있으면 색상 변경
+                bellIcon.src = "../img/bell2.png";  // 알림이 있을 때 alarmon 이미지로 변경
             } else {
-                bellIcon.classList.remove('bell-with-notification');  // 알림이 없으면 기본 색상으로 변경
+                bellIcon.src = "../img/bell.png";  // 알림이 없을 때 alarmoff 이미지로 변경
             }
         })
         .catch(error => console.error('Error fetching new alarms:', error));
-    }, 1000);  // 5초마다 알림 확인
+    }, 3000);  // 3초마다 알림 확인
 }
+
+window.addEventListener('load', function() {
+    const bellIcon = document.querySelector('.notification-bell');
+    if (bellIcon) {
+        console.log('Bell icon found:', bellIcon);
+        checkNewAlarms();  // 알림 확인 함수 호출
+    } else {
+        console.error('Bell icon not found!');
+    }
+});
 
