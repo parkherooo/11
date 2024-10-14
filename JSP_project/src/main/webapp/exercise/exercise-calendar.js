@@ -1,14 +1,9 @@
-// 전역 함수로 정의
 function selectDate(day) {
-    selectExerciseDate(day);
-}
-
-function selectExerciseDate(day) {
     const selectedDate = new Date(currentYear, currentMonth, day);
     selectedDate.setHours(0, 0, 0, 0);
     const formattedDate = selectedDate.toISOString().split('T')[0];
     document.getElementById('selectedDate').value = formattedDate;
-    document.querySelector('.exercise-record h4').textContent = `${currentYear}년 ${currentMonth + 1}월 ${day}일의 운동 루틴`;
+    document.querySelector('.exercise-record h4').textContent = `${currentYear}년 ${currentMonth + 1}월 ${day}일의 운동 기록`;
     
     console.log('Selected Date:', formattedDate);
     console.log('Hidden field value:', document.getElementById('selectedDate').value);
@@ -16,10 +11,10 @@ function selectExerciseDate(day) {
 }
 
 function loadExerciseData(date) {
-    const userId = document.getElementById('userId').value;
-    console.log('Loading exercise data for userId:', userId, 'and date:', date);
+    const friendId = document.getElementById('friendId') ? document.getElementById('friendId').value : document.getElementById('userId').value;
+    console.log('Loading exercise data for friendId:', friendId, 'and date:', date);
     
-    fetch(`GetExerciseServlet?userId=${encodeURIComponent(userId)}&selectedDate=${encodeURIComponent(date)}`)
+    fetch(`GetExerciseServlet?userId=${encodeURIComponent(friendId)}&selectedDate=${encodeURIComponent(date)}`)
         .then(response => response.text())
         .then(text => {
             console.log('Server response:', text);
@@ -33,7 +28,7 @@ function loadExerciseData(date) {
                 exerciseTextarea.placeholder = '';
             } else {
                 exerciseTextarea.value = '';
-                exerciseTextarea.placeholder = "운동 루틴을 자유롭게 기입해 주세요";
+                exerciseTextarea.placeholder = "운동 기록이 없습니다.";
             }
         })
         .catch(error => {
@@ -84,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function deleteExercise() {
     const selectedDate = document.getElementById('selectedDate').value;
-    const userId = document.getElementById('userId').value;
+    const friendId = document.getElementById('friendId') ? document.getElementById('friendId').value : document.getElementById('userId').value;
 
     if (!selectedDate) {
         alert('삭제할 날짜가 선택되지 않았습니다.');
@@ -92,7 +87,7 @@ function deleteExercise() {
     }
 
     if (confirm(`운동 기록을 삭제하시겠습니까?`)) {
-        fetch(`DeleteExerciseServlet?userId=${encodeURIComponent(userId)}&selectedDate=${encodeURIComponent(selectedDate)}`, {
+        fetch(`DeleteExerciseServlet?userId=${encodeURIComponent(friendId)}&selectedDate=${encodeURIComponent(selectedDate)}`, {
             method: 'POST',
         })
         .then(response => response.text())

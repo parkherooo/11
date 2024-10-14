@@ -8,6 +8,11 @@
     <title>Friend's Diet</title>
     <link rel="stylesheet" href="../css/main.css">
     <style>
+    
+        nav ul li .dropdown-menu {
+    top: calc(100% + 1px) !important; /* 드롭다운 메뉴 위치 조정 */
+    margin-top: 10px !important;
+}
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;

@@ -19,6 +19,12 @@
     <title>주간 식단 차트</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <style>
+     
+             nav ul li .dropdown-menu {
+    top: calc(100% + 1px) !important; /* 드롭다운 메뉴 위치 조정 */
+    padding: 10px 0 !important; /* 상하 패딩 줄임 */
+    margin-top: 10px !important;
+}
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
