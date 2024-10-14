@@ -10,148 +10,169 @@
 <title>Fit Time - Exercise</title>
 <link rel="stylesheet" href="../css/main.css">
 <style>
+        nav ul li .dropdown-menu {
+    top: calc(100% + 1px) !important; /* 드롭다운 메뉴 위치 조정 */
+    margin-top: 10px !important;
+}
 body {
-	font-family: Arial, sans-serif;
-	line-height: 1.6;
-	margin: 0;
-	padding: 0;
-	background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #ffffff !important;
 }
 
+/* 메인 컨텐츠 영역 스타일 */
 .exercise-page {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 20px;
-	background-color: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	padding-top: 200px;
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    background-color: #ffffff;
 }
 
+/* 메인 제목 스타일 */
 .exercise-page h2 {
-	color: #333;
-	margin-top: 0; /* 헤더 아래 여백 */
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    padding-top: 240px;
+    clear: both;
 }
 
 .content-wrapper {
-	display: flex;
-	gap: 20px;
-	margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1600px; /* 전체 콘텐츠의 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
-.calendar-wrapper, .exercise-form-wrapper, .calorie-calculator {
-	flex: 1;
-	min-width: 0;
+.calendar-wrapper, .exercise-form-wrapper {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    border: 1px solid #000;
+    box-shadow: none;
+    width: calc(50% - 2rem); /* 캘린더와 운동 입력 폼의 너비 */
 }
 
-.calendar {
-	width: 100%;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	overflow: hidden;
+.calendar-wrapper {
+    flex: 0.75;
+}
+
+.exercise-form-wrapper {
+    flex: 1.5;
+    width: 60%;
 }
 
 .calendar-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px;
-	background-color: #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
+/* 캘린더 헤더 버튼 스타일 */
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 캘린더 테이블 스타일 */
 .calendar table {
-	width: 100%;
-	border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
+/* 캘린더 셀 스타일 */
 .calendar th, .calendar td {
-	text-align: center;
-	padding: 10px;
-	border: 1px solid #ddd;
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
 }
 
-.calendar td:hover {
-	background-color: #f0f0f0;
-	cursor: pointer;
+/* 활성화된 캘린더 셀 스타일 */
+.calendar td.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 선택 가능한 캘린더 셀 스타일 */
+.calendar td.selectable {
+    cursor: pointer;
+}
+
+/* 선택 가능한 캘린더 셀 호버 스타일 */
+.calendar td.selectable:hover {
+    background-color: #f0f0f0;
+}
+
+/* 선택된 캘린더 셀 스타일 */
+.calendar td.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 운동 기록 제목 스타일 */
+.exercise-record h4 {
+    margin-bottom: 1rem;
+}
+
+/* 운동 입력 영역 스타일 */
+.exercise-input {
+    margin-bottom: 1rem;
+}
+
+.exercise-input label {
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
 .exercise-input textarea {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	resize: vertical;
+    width: 100%;
+    height: 60px;
+    width: 600px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
 }
 
+/* 폼 액션 버튼 영역 스타일 */
 .form-actions {
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
 }
 
+/* 폼 액션 버튼 공통 스타일 */
 .form-actions button {
-	padding: 10px 20px;
-	margin-left: 10px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
+/* 제출 버튼 스타일 */
 .form-actions button[type="submit"] {
-	background-color: #4CAF50;
-	color: white;
+    background-color: #4CAF50;
+    color: white;
 }
 
+/* 리셋 버튼 스타일 */
 .form-actions button[type="reset"] {
-	background-color: #f44336;
-	color: white;
+    background-color: #f44336;
+    color: white;
 }
 
-@media ( max-width : 768px) {
-	.content-wrapper {
-		flex-direction: column;
-	}
-	.calendar-wrapper, .exercise-form-wrapper {
-		width: 100%;
-	}
-}
-
-.calorie-calculator {
-	display: flex; flex-direction : column; padding : 20px; border : 1px
-	solid #ddd;
-	border-radius: 8px;
-	flex-direction: column;
-	margin-top: 30px;
-	padding: 20px;
-	border: 1px solid #ddd;
-}
-
-.calorie-calculator h3 {
-            margin-top: 0;
-        }
-
-.exercise-type, #cardioOptions, #strengthOptions, .input-group {
-	margin-bottom: 15px;
-}
-
-.input-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-label {
-	display: inline-block;
-	margin-right: 10px;
-}
-
-input[type="number"] {
-	width: 80px;
-	padding: 5px;
-	margin-bottom: 10px;
-}
-
-#result {
-	font-weight: bold;
-	margin-top: 20px;
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+    .calendar-wrapper, .exercise-form-wrapper {
+        width: 100%;
+    }
 }
 </style>
 </head>
