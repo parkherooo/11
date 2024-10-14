@@ -62,48 +62,51 @@
 <main class="main_container">
     <!-- 인기글 섹션 -->
     <section class="popular-section">
-        <h2>인기글</h2>
-        <div class="popular-list">
-            <%
-                List<CommunityBean> popularPosts = null;
-                try {
-                    popularPosts = mgr.getTopLikedPosts(4);  // 상위 4개의 인기 게시물 가져오기
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    <h2>인기글</h2>
+    <div class="popular-list">
+        <%
+            List<CommunityBean> popularPosts = null;
+            try {
+                popularPosts = mgr.getTopLikedPosts(4);  // 상위 4개의 인기 게시물 가져오기
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                if (popularPosts != null) {
-                    for (CommunityBean post : popularPosts) {
-            %>
-                        <div class="popular-item">
-                            <!-- 게시물 클릭 시 cuNum을 URL 파라미터로 전달 -->
-                            <a href="<%= request.getContextPath() %>/community/postDetail.jsp?cuNum=<%= post.getCuNum() %>">
-                                <!-- 이미지가 존재할 경우 이미지 출력 -->
-                                <% if (post.getCuImg() != null && !post.getCuImg().isEmpty()) { %>
-                                    <img src="<%= request.getContextPath() %>/<%= post.getCuImg() %>" style="width: 250px; height: 250px;">
-                                <% } else { %>
-                                    <img src="<%= request.getContextPath() %>/community/upload/default-image.jpg" alt="기본 이미지" style="width: 100px; height: 100px;">
-                                <% } %>
-                                <div class="popular-item-info">
-                                    <p>작성자: <%= post.getUserId() %></p>
-                                    <p>제목: <%= post.getTitle() %></p>
-                                    <p class="likes">
-                                        <span>♥ <%= post.getRecommend() %></span>
-                                        <span><%= sdf.format(post.getCuDate()) %></span>
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-            <%
-                    }
-                } else {
-            %>
-                <p>인기글이 없습니다.</p>
-            <%
+            if (popularPosts != null) {
+                for (CommunityBean post : popularPosts) {
+        %>
+                    <div class="popular-item">
+                        <!-- 게시물 클릭 시 cuNum을 URL 파라미터로 전달 -->
+                        <a href="<%= request.getContextPath() %>/community/postDetail.jsp?cuNum=<%= post.getCuNum() %>">
+                            <!-- 이미지가 존재할 경우 이미지 출력 -->
+                            <% if (post.getCuImg() != null && !post.getCuImg().isEmpty()) { %>
+                                <img src="<%= request.getContextPath() %>/<%= post.getCuImg() %>" style="width: 250px; height: 250px;">
+                            <% } else { %>
+                                <img src="<%= request.getContextPath() %>/community/upload/default-image.jpg" alt="기본 이미지" style="width: 100px; height: 100px;">
+                            <% } %>
+                            <div class="popular-item-info">
+                                <p>작성자: <%= post.getUserId() %></p>
+                                <p>제목: <%= post.getTitle() %></p>
+                            </div>
+                            <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
+                                    ♥<%= post.getRecommend() %>
+                                </button>
+                        </a>
+                       
+                                
+                         
+                    </div>
+        <%
                 }
-            %>
-        </div>
-    </section>
+            } else {
+        %>
+            <p>인기글이 없습니다.</p>
+        <%
+            }
+        %>
+    </div>
+</section>
+
 
     <!-- 게시물 리스트 섹션 -->
     <section class="list-section">
