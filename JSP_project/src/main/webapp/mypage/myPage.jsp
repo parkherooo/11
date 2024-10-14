@@ -308,7 +308,7 @@
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
 						   			<button class="mypage-button" type="button" onclick="viewFriendDiet('<%=frbean.getUserId() %>')">식단관리</button>
-						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
+						   			<button class="mypage-button" type="button" onclick="viewFriendExercise('<%=frbean.getUserId() %>')">운동관리</button>
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
@@ -319,8 +319,8 @@
 					   			<tr>
 					   			<td><%=frbean.getFriendId() %></td>
 					   			<td>
-						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
-						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
+						   			<button class="mypage-button" type="button" onclick="viewFriendDiet('<%=frbean.getUserId() %>')">식단관리</button>
+						   			<button class="mypage-button" type="button" onclick="viewFriendExercise('<%=frbean.getUserId() %>')">운동관리</button>
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
@@ -345,6 +345,13 @@ function viewFriendDiet(friendId) {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
 	
 	window.location.href = '../diet/friendDiet.jsp?friendId=' + friendId;
+}
+
+function viewFriendExercise(friendId) {
+	var today = new Date();
+	var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+	
+	window.location.href = '../exercise/friendExercise.jsp?friendId=' + friendId;
 }
 </script>
 <footer><%@ include file="/main/footer.jsp" %></footer>

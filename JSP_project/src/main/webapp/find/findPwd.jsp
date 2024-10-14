@@ -144,6 +144,9 @@
         <input type="hidden" name="userId" value="<%= (String) session.getAttribute("resetUserId") %>">
         <button type="button" onclick="resetPassword()">비밀번호 재설정</button>
     </form>
+    <div class="options">
+        <a href="../signup/signUp.jsp">회원가입</a> | <a href="findId.jsp">아이디 찾기</a> | <a href="findPwd.jsp">비밀번호 찾기</a>
+    </div>
 	</section>
 
 <%@ include file="../chatbot/chatbot.jsp" %>

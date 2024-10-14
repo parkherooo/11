@@ -7,3 +7,4 @@ public class MUtil {
 		return Integer.parseInt(request.getParameter(name));
 	}
 }
+

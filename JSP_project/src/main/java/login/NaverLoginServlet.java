@@ -19,6 +19,7 @@ import user.UserBean;
 @WebServlet("/login/naverLogin")
 public class NaverLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private UserMgr userMgr = new UserMgr();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -28,7 +29,8 @@ public class NaverLoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         // 네이버 로그인 콜백으로 전달된 액세스 토큰 수신
         String accessToken = request.getParameter("accessToken");
-
+        String loginPlatform = "NAVER"; // 로그인 플랫폼 설정
+        
         if (accessToken != null && !accessToken.isEmpty()) {
             try {
                 // 네이버 사용자 정보 요청
@@ -56,22 +58,32 @@ public class NaverLoginServlet extends HttpServlet {
                     String naverName = extractValue(responseBody, "name");
 
                     if (naverUserId != null && naverName != null) {
-                        // 데이터베이스에 사용자 정보 저장
-                        UserMgr userMgr = new UserMgr();
-                        UserBean user = new UserBean();
-                        user.setUserId(naverUserId);
-                        user.setName(naverName);
-
-                        // 사용자가 이미 존재하는 경우 main.jsp로 리다이렉트
-                        if (userMgr.isSocialUserExist(naverUserId)) {
+                        // 사용자가 다른 소셜 플랫폼으로 가입되어 있는지 확인
+                        if (userMgr.isSocialUserExist(naverUserId, "KAKAO")) {
+                        	// 이미 KAKAO로 가입된 사용자라면 경고 메시지 표시
+                            response.setContentType("text/html; charset=UTF-8");
+                            response.getWriter().write("<script>alert('이미 카카오 계정으로 가입되어 있습니다. 해당 계정으로 로그인해주세요.'); location.href='" + request.getContextPath() + "/login/logIn.jsp';</script>");
+                            return;
+                        }
+                        
+                        // 현재 플랫폼으로 사용자가 존재하는 경우
+                        if (userMgr.isSocialUserExist(naverUserId, loginPlatform)) {
+                            // 세션 설정 및 메인 페이지로 이동
                             request.getSession().setAttribute("userId", naverUserId);
                             request.getSession().setAttribute("name", naverName);
+                            request.getSession().setAttribute("loginPlatform", loginPlatform);
                             response.sendRedirect(request.getContextPath() + "/main/main.jsp");
                         } else {
                             // 사용자가 존재하지 않으면 새로 등록하고 추가 정보 입력 페이지로 이동
+                            UserBean user = new UserBean();
+                            user.setUserId(naverUserId);
+                            user.setName(naverName);
+                            user.setLoginPlatform(loginPlatform);
                             userMgr.insertSocialUser(user);
+
                             request.getSession().setAttribute("userId", naverUserId);
                             request.getSession().setAttribute("name", naverName);
+                            request.getSession().setAttribute("loginPlatform", loginPlatform);
                             response.sendRedirect(request.getContextPath() + "/login/additionalInfo.jsp");
                         }
                     } else {
