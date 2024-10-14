@@ -65,13 +65,13 @@
            resetProgressBar();
        }
    
-       function prevSlide() {
-           currentSlide = (currentSlide - 1) % totalSlides;
-           showSlide(currentSlide);
-       }
-       
        function nextSlide() {
            currentSlide = (currentSlide + 1) % totalSlides;
+           showSlide(currentSlide);
+       }
+
+       function prevSlide() {
+           currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
            showSlide(currentSlide);
        }
    
