@@ -3,8 +3,7 @@
 <%@ page import="notice.NoticeMgr, java.util.Vector, notice.NoticeBean" %>
 <%@ include file="../main/header.jsp" %>
 <%
-    // NoticeMgr 인스턴스 생성
-    NoticeMgr noticeMgr = new NoticeMgr();
+
     
     // 전체 공지사항 리스트
     Vector<NoticeBean> allList = noticeMgr.AllList();
@@ -16,8 +15,7 @@
     
     String category = request.getParameter("category");
     
-    //관리자 확인
-    int manger = noticeMgr.mangerChk(userId);
+
 %>
 <html>
 <head>
@@ -25,13 +23,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/notice.css">
 
+
 </head>
 
 
-<body class="noticebody" style="position: relative; /* 상대 위치 설정 */
-    top: 200px;">
-
-
+<body class="noticebody" style="position: relative; top: 200px;">
+<h1>Notice</h1>
 <div class="noticeheader">
     <div class="noticecategories">
 	    <a class="notice-a <%= (category == null || category.equals("전체")) ? "active" : "" %>" href="noticeList.jsp?category=전체">전체</a>

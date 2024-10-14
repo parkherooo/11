@@ -83,7 +83,7 @@
        <h3 class="recipe-h3">레시피 목록</h3>
        
        <form method="GET" action="recipeList.jsp">
-        <input type="text" name="search" placeholder="레시피명을 입력하세요" value="<%= searchQuery != null ? searchQuery : "" %>" required>
+        <input type="text" name="search" placeholder="레시피명을 입력하세요." value="<%= searchQuery != null ? searchQuery : "" %>" required>
         <button type="submit" class="search">
             <i class="fas fa-search"></i>
         </button>
@@ -108,6 +108,7 @@
         %>
     </div>
 
+
    <div class="pagination"> <!-- 페이지 버튼을 감싸는 div 추가 -->
     <%
         int totalRecipes = 1124; // 전체 레시피 수 (API에서 가져온 정보로 변경 가능)
@@ -127,7 +128,8 @@
         int endPage = Math.min(totalPages, startPage + 4); // 현재 페이지 기준으로 다음 4개 페이지
 
         for (int i = startPage; i <= endPage; i++) {
-            String linkStyle = (i == currentPage) ? "font-weight: bold;" : "";
+            String linkStyle = (i == currentPage) ? "text-decoration: underline;" : "";
+
     %>
         <a href="recipeList.jsp?page=<%= i %>&search=<%= searchQuery != null ? java.net.URLEncoder.encode(searchQuery, "UTF-8") : "" %>" 
            style="<%= linkStyle %>"><%= i %></a>

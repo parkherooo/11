@@ -69,7 +69,7 @@
         <div class="mypage-ca">
             <a class="mypage-a <%= (category == null || category.equals("프로필관리")) ? "active" : "" %>" href="myPage.jsp?category=프로필관리">프로필 관리</a>
             <a class="mypage-a <%= (category != null && category.equals("알러지관리")) ? "active" : "" %>" href="myPage.jsp?category=알러지관리">알러지 관리</a>
-            <a class="mypage-a <%= (category != null && category.equals("커뮤니티관리")) ? "active" : "" %>" href="myPage.jsp?category=커뮤니티관리">커뮤니티 관리</a>
+            <a class="mypage-a <%= (category != null && category.equals("커뮤니티관리")) ? "active" : "" %>" href="../community/Community_Main.jsp">커뮤니티 관리</a>
             <a class="mypage-a <%= (category != null && category.equals("친구관리")) ? "active" : "" %>" href="myPage.jsp?category=친구관리">친구 관리</a>
         </div>
         
@@ -246,7 +246,7 @@
                	<div>
 				    <form action="" method="post">
 				        <input type="text" name="friendId" placeholder="친구추가할 사용자의 ID를 입력하세요" style="width: 300px;">
-				        <button class="mypage-button" type="submit" class="search">
+				        <button class="mypage-button" type="submit" class="search" style="color: black; background-color: white;">
 				            <i class="fas fa-search"></i>
 				        </button>
 				    </form>
@@ -284,6 +284,8 @@
 							<input type="hidden" name="userId" value="<%= userId %>">
 				            <button class="mypage-button" type="submit" name="action" value="accept">수락</button>
 				            <button class="mypage-button" type="submit" name="action" value="delete" style="background-color: red;">삭제</button>
+					   		<br>
+					   		<br>
 					   		<%} %>
 					   	</form>
 					   	<form action="friendDelete" method="post">
@@ -291,8 +293,7 @@
 					   	<tr>
 					   		<td>친구 목록</td>
 					   	</tr>
-					   		<tr>
-					   			<%
+					 		  	<%
 					   				Vector<freindBean>frlist = new Vector<freindBean>();
 					   				frlist = mgr.myFriend(userId);
 					   				
@@ -302,16 +303,20 @@
 					   				for(int i=0; i<frlist.size();i++){
 					   					freindBean frbean = frlist.get(i);
 					   			%>
+					   		<tr>
+					   			
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
-						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
+						   			<button class="mypage-button" type="button" onclick="viewFriendDiet('<%=frbean.getUserId() %>')">식단관리</button>
 						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">운동관리</button>
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
+					   			</tr>	
 					   			<%} for(int i=0; i<tofrlist.size();i++){
 					   				freindBean frbean = tofrlist.get(i);
 					   			%>
+					   			<tr>
 					   			<td><%=frbean.getFriendId() %></td>
 					   			<td>
 						   			<button class="mypage-button" type="button" onclick="window.location.href='../main/main.jsp'">식단관리</button>
@@ -319,8 +324,9 @@
 						   			<button class="mypage-button" name="action" value="delete" type="submit" style="background-color: red;">삭제</button>
 						   			<input type="hidden" name="num" value="<%= frbean.getNum()%>">
 					   			</td>
+					   			</tr>
 					   			<%} %>
-					   		</tr>
+					   		
 					   	</table>
 					   	
 					   	</form>
@@ -332,5 +338,14 @@
 
 <%@ include file="/chatbot/chatbot.jsp" %>
 </body>
+<script>
+function viewFriendDiet(friendId) {
+	// 현재 날짜를 YYYY-MM-DD 형식으로 가져옵니다.
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+	
+	window.location.href = '../diet/friendDiet.jsp?friendId=' + friendId;
+}
+</script>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

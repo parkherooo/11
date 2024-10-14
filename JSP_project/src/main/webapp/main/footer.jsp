@@ -4,12 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <link rel="stylesheet" href="../css/main.css">
+
 <title>Fit Time</title>
 </head>
 <body>
 	<!-- 푸터 -->
 	<footer class="footer">
+
 		<div class="footer-container">
 			<div class="footer-info">
 				<p>

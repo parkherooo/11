@@ -2,15 +2,16 @@
 .mypage-body{
 	display: grid;
    	grid-template-columns: 30% 70%;
-    margin-top: 160px;
+    margin-top: 180px;
 }
 .myprofile {
+	height:1000px;
 	grid-column: 1;
   	background-color: #dcf8c6; /* 프로필 배경색 */
     padding: 20px;
 }
 .mypage-div {
-	height:700px;
+	height:900px;
 	margin-top:50px;
 	grid-column: 2; /* 두 번째 열에 배치 */
 
@@ -26,7 +27,7 @@
 
 .mypage-a {
 	margin:50px;
-
+	cursor: pointer;
   	font-size: 18px;
   	color: black; /* 글자 색상 검정 */
   	text-decoration: none; /* 밑줄 제거 */
@@ -89,8 +90,6 @@ input[type="submit"] {
     color: white; /* 글자색 흰색 */
     border: none; /* 버튼 테두리 제거 */
     border-radius: 10px; /* 버튼 모서리 둥글게 */
-    cursor: pointer; /* 커서 포인터로 변경 */
-    transition: background-color 0.3s; /* 배경색 변화에 애니메이션 추가 */
 }
 
 input[type="submit"]:hover {
@@ -152,4 +151,8 @@ input[type="submit"]:hover {
     padding: 5px 10px; /* 안쪽 여백 */
     text-align: center;
     border-radius: 10px;
+    cursor: pointer; /* 마우스 커서 변경 */
  }
+ .mypage-button:hover {
+    background-color: #808080; /* 마우스 오버 시 배경색 변화 */
+}

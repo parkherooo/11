@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../css/chatbot.css">
     <script src="../chatbot/chatbot.js"></script>
 </head>
+<%if(userId!=null){ %>
 <body class="chatbot-body">
     <div class="circle-button" onclick="toggleChatbot()">FitBot</div>
     <div class="chat-container" id="chatContainer">
@@ -21,4 +22,5 @@
         </div>
     </div>    
 </body>
+<%} %>
 </html>

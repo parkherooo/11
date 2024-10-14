@@ -1,4 +1,5 @@
 package mypage;
+import alarm.AlarmMgr;
 
 public class freindBean {
 	private int num;
@@ -9,8 +10,8 @@ public class freindBean {
 	public int getNum() {
 		return num;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setNum(int num) throws Exception {
+	    this.num = num;
 	}
 	public String getUserId() {
 		return userId;

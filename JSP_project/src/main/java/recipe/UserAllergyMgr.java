@@ -26,6 +26,10 @@ public class UserAllergyMgr {
 			rs=pstmt.executeQuery();
 			if (rs.next()) {
                 String allergyStr = rs.getString("allergy");
+               
+                if(allergyStr.equals("")) {
+                	allergyStr="없음";
+                }
                 allergies = allergyStr.split(","); 
 			}
 		} catch (Exception e) {

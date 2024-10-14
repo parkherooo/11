@@ -54,7 +54,7 @@
 
         .challenge-detail-container {
             width: 60%;
-            margin: 20px auto;
+            margin: 60px auto;
             padding: 20px;
             background-color: white;
             border-radius: 10px;
@@ -164,6 +164,7 @@
         <a href="challengeList.jsp">[목록]</a>
     </div>
 </div>
+<%@ include file="/chatbot/chatbot.jsp" %>
 </body>
 <footer><%@ include file="/main/footer.jsp" %></footer>
 </html>

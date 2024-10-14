@@ -30,7 +30,7 @@ public class KakaoLoginServlet extends HttpServlet {
         boolean isUserInserted = false;
         if (!userMgr.isSocialUserExist(kakaoEmail)) {
             // 새로운 사용자라면 기본 정보 저장
-            isUserInserted = userMgr.insertKakaoUser(userBean);
+            isUserInserted = userMgr.insertSocialUser(userBean);
         }
 
         // 로그인 처리 및 세션 설정
