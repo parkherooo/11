@@ -31,7 +31,7 @@ public class SendCodeServlet extends HttpServlet {
         String emailService = "naver"; 
         String from = "ekdms6700@naver.com";
         String fromName = "Fit Time";
-        String password = "SGK2L58UQ1QY"; // 앱 비밀번호
+        String password = "REXJH8ER3HBE"; // 앱 비밀번호
         String subject = "Fit Time 비밀번호 찾기 인증 코드";
         String content = "인증 코드: " + verificationCode;
 
