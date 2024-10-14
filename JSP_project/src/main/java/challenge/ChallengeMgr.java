@@ -304,7 +304,7 @@ public class ChallengeMgr {
 				pstmt.setInt(1, participantId);
 				pstmt.executeUpdate();
 				
-				sql = "insert tblheart values(null,?,?,1)";
+				sql = "insert tblheart values(null,?,null,?,1)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, participantId);
 				pstmt.setString(2, userId);

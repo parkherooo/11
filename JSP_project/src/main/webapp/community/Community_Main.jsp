@@ -100,32 +100,12 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 		</div>
 
 		<div class="middle_review">
-			<div class="review_icon">
-				<ul class="fixedclear">
-					<form method="post" action="UpdateRecommendServlet">
-						<input type="hidden" name="cuNum" value="<%=post.getCuNum()%>" />
-						<input type="hidden" name="redirectPage"
-							value="Community_Main.jsp" />
-						<button class="heartBtn" type="submit" onclick="addLike()">
-							<i class="xi-heart-o xi-2x"></i>
-						</button>
-					</form>
-
-					<li><button class="spBubble">
-							<i class="xi-speech-o xi-2x"></i>
-						</button></li>
-					<li><button class="bookmark">
-							<i class="xi-bookmark-o xi-2x"></i>
-						</button></li>
-				</ul>
-			</div>
 			<div class="comment_part">
 				<ul>
 					<li class="like_count">
-						<p>
-							좋아요
-							<%=post.getRecommend()%>개
-						</p>
+						 <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
+                                    ♥<%= post.getRecommend() %>
+                                </button>
 					</li>
 					<div>
 						<span class="user1"><%=post.getContent()%></span>

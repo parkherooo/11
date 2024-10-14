@@ -111,19 +111,34 @@ try {
 
 		<div class="middle_review">
 			<div class="review_icon">
-				<ul class="fixedclear">
-					<form method="post" action="UpdateRecommendServlet">
-						<input type="hidden" name="cuNum" value="<%=post.getCuNum()%>" />
-						<input type="hidden" name="redirectPage" value="postDetail.jsp" />
-						<button class="heartBtn" type="submit" onclick="toggleHeart(this)">
-							<i class="xi-heart-o xi-2x"></i>
-						</button>
-					</form>
+					<form action="heartPlus" method="post">
+                            <input type="hidden" name="userId" value="<%= userId %>">
+                            <input type="hidden" name="cuNum" value="<%= post.getCuNum() %>">
+							
+                            <%
+                            	CommunityMgr cumgr = new CommunityMgr();
+                                Boolean heartStatus = (Boolean) request.getAttribute("heartStatus");
+                                boolean chk = cumgr.heartChk(userId, post.getCuNum());
 
-					<button class="spBubble">
-						<i class="xi-speech-o xi-2x"></i>
-					</button>
-					</li>
+                                if ((heartStatus != null && heartStatus) || chk) {
+                            %>
+                                <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 18px; cursor: pointer;">
+                                    ♥
+                                </button>
+                                <div>
+                                좋아요<%= post.getRecommend() %>
+                                </div>
+                            <% } else { %>
+                                <button type="submit" class="heart-button" style="border: none; background: white;  width: 40px; font-size: 18px; cursor: pointer;">
+                                    ♡
+                                </button>
+                                <div>
+                                좋아요<%= post.getRecommend() %>
+                                </div>
+                            <% } %>
+                        </form>
+				<ul class="fixedclear">
+						
 					<li>
 						<button class="bookmark">
 							<i class="xi-bookmark-o xi-2x"></i>
@@ -134,9 +149,7 @@ try {
 
 			<div class="comment_part">
 				<ul>
-					<li class="like_count2">
-						<!-- 좋아요 개수 동적 표시 --> 좋아요 <%=post.getRecommend()%>개
-					</li>
+
 					<div>
 						<span class="user1"><%=post.getContent()%></span>
 						<time class="before">
