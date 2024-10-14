@@ -83,7 +83,7 @@ try {
 </head>
 <body>
 
-	<h1 style="text-align: center; margin-top: 100px;">My Community</h1>
+	<h1 style="text-align: center; margin-top: 10px;">Friend Community</h1>
 
 	<div class="main_container">
 		<div class="middle_Top">
@@ -119,16 +119,6 @@ try {
 							<i class="xi-heart-o xi-2x"></i>
 						</button>
 					</form>
-
-					<button class="spBubble">
-						<i class="xi-speech-o xi-2x"></i>
-					</button>
-					</li>
-					<li>
-						<button class="bookmark">
-							<i class="xi-bookmark-o xi-2x"></i>
-						</button>
-					</li>
 				</ul>
 			</div>
 

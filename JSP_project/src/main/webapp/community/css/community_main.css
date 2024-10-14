@@ -1,4 +1,5 @@
 
+
 li{
     list-style: none;
 }
@@ -405,10 +406,11 @@ float 속성 적용시 이후에 오는 다른 요소들까지같은 속성이 �
 
         
     .main_container {
-	margin: 30px auto;
+	margin: 0 10% 0 12%; /* 위쪽 0, 오른쪽 5%, 아래쪽 0, 왼쪽 10% 여백 */
     padding: 20px;
     width: 80%; /* 너비를 80%로 설정하여 더 넓게 확장 */
     height: auto; /* 자동 높이 설정, 내용에 따라 확장되도록 */
+    display: block; /* 블록 요소로 설정 */
     
 }
 
@@ -419,6 +421,7 @@ float 속성 적용시 이후에 오는 다른 요소들까지같은 속성이 �
 .middle_review,
 .middle_add_review {
     width: 600px; /* 기존보다 더 넓게 설정 (400px에서 600px으로 증가) */
+    
 }
 
 /* 이미지 크기도 함께 조정 */

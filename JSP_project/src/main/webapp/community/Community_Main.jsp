@@ -110,13 +110,6 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 							<i class="xi-heart-o xi-2x"></i>
 						</button>
 					</form>
-
-					<li><button class="spBubble">
-							<i class="xi-speech-o xi-2x"></i>
-						</button></li>
-					<li><button class="bookmark">
-							<i class="xi-bookmark-o xi-2x"></i>
-						</button></li>
 				</ul>
 			</div>
 			<div class="comment_part">
@@ -184,7 +177,9 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
 	}
 	} else {
 	%>
-	<p>게시물이 없습니다.</p>
+	<p style="text-align: center; font-size: 24px; margin-top: 220px; margin-bottom: 350px;">
+	게시물이 없습니다.
+	</p>
 	<%
 	}
 	%>
