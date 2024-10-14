@@ -185,13 +185,5 @@
 
     <script src="../diet/common-calendar.js"></script>
     <script src="../exercise/exercise-calendar.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        initCalendar();
-        const today = new Date().toISOString().split('T')[0];
-        loadExerciseData(today);
-    });
-    </script>
-
 </body>
 </html>

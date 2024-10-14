@@ -174,7 +174,12 @@ body {
                                 <th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th>
                             </tr>
                         </thead>
-                        <tbody id="calendarBody"></tbody>
+                        <tbody id="calendarBody">
+                        	<tr>
+								<td colspan="7" style="text-align: center; padding: 20px;">
+									캘린더를 불러오는데 문제가 발생했습니다. 페이지를 새로고침 하거나 나중에 다시 시도해주세요.</td>
+							</tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -202,13 +207,7 @@ body {
 
      <script src="../diet/common-calendar.js"></script>
     <script src="../diet/diet-calendar.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        initCalendar();
-        const today = new Date().toISOString().split('T')[0];
-        loadDietData(today);
-    });
-</script>
+    
 
 </body>
 </html>
