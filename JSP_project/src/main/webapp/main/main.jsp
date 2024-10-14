@@ -1,4 +1,3 @@
-<%@page import="java.util.Collections"%>
 <%@ page import="java.util.List" %>
 <%@ page import="exercise.ExerciseRoutineMgr"%>
 <%@ page import="exercise.ExerciseRoutineBean" %>
@@ -16,115 +15,176 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide-content');
-    const totalSlides = slides.length;
-    const banner = document.querySelector('.banner');
-    const pauseButton = document.querySelector('#play-pause-button');
-    const pauseIcon = pauseButton.querySelector('i');
-    const progressBar = document.querySelector('.progress-bar');
+	document.addEventListener('DOMContentLoaded', () => {
+		// 슬라이드 관련 코드
+	    let currentSlide = 0;
+	    const slides = document.querySelectorAll('.slide-content');
+	    const totalSlides = slides.length;
+	    const banner = document.querySelector('.banner');
+	    const pauseButton = document.querySelector('#play-pause-button');
+	    const pauseIcon = pauseButton.querySelector('i');
+	    const progressBar = document.querySelector('.progress-bar');
+	
+	    let isPaused = false;
+	    let slideInterval;
+	
+	    banner.style.backgroundColor = 'transparent';
+	
+	    banner.addEventListener('mouseenter', () => {
+	        banner.style.backgroundColor = 'white';
+	    });
+	
+	    banner.addEventListener('mouseleave', () => {
+	        if (window.scrollY > 50) {
+	            banner.style.backgroundColor = 'white';
+	        } else {
+	            banner.style.backgroundColor = 'transparent';
+	        }
+	    });
+	
+	    window.addEventListener('scroll', () => {
+	        if (window.scrollY > 50) {
+	            banner.style.backgroundColor = 'white';
+	            banner.style.transition = 'background-color 0.3s ease';
+	        } else {
+	            banner.style.backgroundColor = 'transparent';
+	        }
+	    });
+	
+	    function showSlide(index) {
+	        slides.forEach((slide, i) => {
+	            if (i === index) {
+	                slide.classList.add('active');
+	            } else {
+	                slide.classList.remove('active');
+	            }
+	        });
+	
+	        document.querySelector('.current-slide').textContent = index + 1;
+	        document.querySelector('.total-slides').textContent = totalSlides;
+	        resetProgressBar();
+	    }
+	
+	    function nextSlide() {
+	        currentSlide = (currentSlide + 1) % totalSlides;
+	        showSlide(currentSlide);
+	    }
+	
+	    function startAutoSlide() {
+	        stopAutoSlide();
+	        slideInterval = setInterval(nextSlide, 5000);
+	        isPaused = false;
+	        updatePauseButton();
+	        resetProgressBar();
+	    }
+	
+	    function stopAutoSlide() {
+	        clearInterval(slideInterval);
+	        isPaused = true;
+	        updatePauseButton();
+	        progressBar.style.width = '0%';
+	    }
+	
+	    function toggleAutoSlide() {
+	        if (isPaused) {
+	            startAutoSlide();
+	        } else {
+	            stopAutoSlide();
+	        }
+	    }
+	
+	    function updatePauseButton() {
+	        if (isPaused) {
+	            pauseIcon.classList.remove('fa-pause');
+	            pauseIcon.classList.add('fa-play');
+	        } else {
+	            pauseIcon.classList.remove('fa-play');
+	            pauseIcon.classList.add('fa-pause');
+	        }
+	    }
+	
+	    function resetProgressBar() {
+	        progressBar.style.transition = 'none';
+	        progressBar.style.width = '0%';
+	        setTimeout(() => {
+	            progressBar.style.transition = 'width 5s linear';
+	            progressBar.style.width = '100%';
+	        }, 10);
+	    }
+	
+	    document.querySelector('.left-arrow').addEventListener('click', () => {
+	        prevSlide();
+	        startAutoSlide();
+	    });
+	    document.querySelector('.right-arrow').addEventListener('click', () => {
+	        nextSlide();
+	        startAutoSlide();
+	    });
+	    pauseButton.addEventListener('click', toggleAutoSlide);
+	
+	    showSlide(currentSlide);
+	    startAutoSlide();
+	    
+	 	// 메인2와 메인3 애니메이션 통합 코드
+	 	const elementsToObserve = [
+	        document.querySelector('.content-wrapper h2'),  // 메인2 h2
+	        ...document.querySelectorAll('.promo-card'),    // 메인2 프로모카드들
+	        document.querySelector('.content-wrapper3 h2'), // 메인3 h2
+	        document.querySelector('.main3-p')              // 메인3 p
+	    ];
+	    
+	    const options = {
+	        threshold: 0.1 // 10%가 보일 때 애니메이션 실행
+	    };
+	
+	    const observer = new IntersectionObserver(function (entries) {
+	        entries.forEach((entry) => {
+	            if (entry.isIntersecting) {
+	                entry.target.classList.add('show');
+	            } else {
+	                entry.target.classList.remove('show');
+	            }
+	        });
+	    }, options);
 
-    let isPaused = false;
-    let slideInterval;
+	    // 메인2 h2, 프로모카드, 메인3 h2, p 모두 관찰
+	    elementsToObserve.forEach(element => {
+	        if (element) observer.observe(element);
+	    });
 
-    banner.style.backgroundColor = 'transparent';
 
-    banner.addEventListener('mouseenter', () => {
-        banner.style.backgroundColor = 'white';
-    });
+	    // 메인3 슬라이드 애니메이션 코드
+	    const exerciseSlides = document.querySelectorAll('.exercise-slide');
+	    const slideWrapper = document.querySelector('.exercise-slides');
+	    const slideCount = exerciseSlides.length;
+	    const slidesPerView = 4;
+	    let currentSlideIndex = 0;
 
-    banner.addEventListener('mouseleave', () => {
-        if (window.scrollY > 50) {
-            banner.style.backgroundColor = 'white';
-        } else {
-            banner.style.backgroundColor = 'transparent';
-        }
-    });
+	    function shuffleSlides() {
+	        let shuffled = Array.from(exerciseSlides);
+	        shuffled.sort(() => Math.random() - 0.5);
+	        return shuffled;
+	    }
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            banner.style.backgroundColor = 'white';
-            banner.style.transition = 'background-color 0.3s ease';
-        } else {
-            banner.style.backgroundColor = 'transparent';
-        }
-    });
+	    function showSlides(index) {
+	        slideWrapper.innerHTML = '';
+	        const shuffledSlides = shuffleSlides();
+	        const end = Math.min(index + slidesPerView, slideCount);
+	        for (let i = index; i < end; i++) {
+	            slideWrapper.appendChild(shuffledSlides[i]);
+	        }
+	    }
 
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
-        });
+	    function autoSlide() {
+	        currentSlideIndex = (currentSlideIndex + slidesPerView) % slideCount;
+	        showSlides(currentSlideIndex);
+	    }
 
-        document.querySelector('.current-slide').textContent = index + 1;
-        document.querySelector('.total-slides').textContent = totalSlides;
-        resetProgressBar();
-    }
+	    setInterval(autoSlide, 4000);
 
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    function startAutoSlide() {
-        stopAutoSlide();
-        slideInterval = setInterval(nextSlide, 5000);
-        isPaused = false;
-        updatePauseButton();
-        resetProgressBar();
-    }
-
-    function stopAutoSlide() {
-        clearInterval(slideInterval);
-        isPaused = true;
-        updatePauseButton();
-        progressBar.style.width = '0%';
-    }
-
-    function toggleAutoSlide() {
-        if (isPaused) {
-            startAutoSlide();
-        } else {
-            stopAutoSlide();
-        }
-    }
-
-    function updatePauseButton() {
-        if (isPaused) {
-            pauseIcon.classList.remove('fa-pause');
-            pauseIcon.classList.add('fa-play');
-        } else {
-            pauseIcon.classList.remove('fa-play');
-            pauseIcon.classList.add('fa-pause');
-        }
-    }
-
-    function resetProgressBar() {
-        progressBar.style.transition = 'none';
-        progressBar.style.width = '0%';
-        setTimeout(() => {
-            progressBar.style.transition = 'width 5s linear';
-            progressBar.style.width = '100%';
-        }, 10);
-    }
-
-    document.querySelector('.left-arrow').addEventListener('click', () => {
-        prevSlide();
-        startAutoSlide();
-    });
-    document.querySelector('.right-arrow').addEventListener('click', () => {
-        nextSlide();
-        startAutoSlide();
-    });
-    pauseButton.addEventListener('click', toggleAutoSlide);
-
-    showSlide(currentSlide);
-    startAutoSlide();
-});
+	    showSlides(currentSlideIndex);
+	
+	});
 
 </script>
 <%@ include file="header.jsp" %>
@@ -224,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	<!-- 메인 콘텐츠2 -->
 	<section class="main-content2">
 	    <div class="content-wrapper">
+	    <h2>Fit Time과 함께 식단 관리해요 :-)</h2>
 	        <div class="intro-section">
 	            <!-- 식단 기록 소개 -->
 	            <div class="promo-card">
@@ -251,46 +312,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	        </div>
 	    </div>
 	</section>
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-	    const slideContainer = document.getElementById('exercise-slides');
-	    const slideDuration = 5000; // 슬라이드 전환 시간 (5초)
-	    let currentIndex = 0;
-	    const totalSlides = slideContainer.children.length;
-	
-	    function showNextSlides() {
-	        // 슬라이드를 숨기고, 다음 슬라이드를 보여줍니다.
-	        for (let i = 0; i < totalSlides; i++) {
-	            slideContainer.children[i].style.display = 'none';
-	        }
-	
-	        // 현재 인덱스부터 다음 4개 슬라이드를 보여줍니다.
-	        for (let i = 0; i < 4; i++) {
-	            const slideIndex = (currentIndex + i) % totalSlides;
-	            slideContainer.children[slideIndex].style.display = 'block';
-	        }
-	
-	        // 다음 인덱스를 설정하고, 자동 슬라이드를 시작합니다.
-	        currentIndex = (currentIndex + 4) % totalSlides;
-	        setTimeout(showNextSlides, slideDuration);
-	    }
-	
-	    // 초기 슬라이드 표시 시작
-	    showNextSlides();
-	});
-
-</script>
 	<!-- 메인 콘텐츠3 -->
 	<section class="main-content3">
 	    <div class="content-wrapper3">
 	        <h2>오늘, 운동 뭐하지?</h2>
-	        <p>Fit Time과 함께 나에게 딱 맞는 운동 루틴을 추천받아보세요!</p>
-	        <div class="exercise-slides" id="exercise-slides">
-	            <% 
-	                Collections.shuffle(routineList); // 리스트 랜덤 섞기
-	                for (int i = 0; i < 4 && i < routineList.size(); i++) {
-	                    ExerciseRoutineBean routine = routineList.get(i);
-	            %>
+	        <p class="main3-p">Fit Time과 함께 나에게 딱 맞는 운동 루틴을 추천받아보세요!</p>
+	        <div class="exercise-slides">
+	            <% for (ExerciseRoutineBean routine : routineList) { %>
 	                <div class="exercise-slide">
 	                    <a href="<%= routine.getExerciseLink() %>" target="_blank">
 	                        <img src="https://img.youtube.com/vi/<%= routine.getExerciseLink().substring(routine.getExerciseLink().indexOf("v=") + 2) %>/0.jpg" alt="<%= routine.geteName() %>">
@@ -304,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	        </div>
 	    </div>
 	</section>
-
 	<%@ include file="../chatbot/chatbot.jsp" %>
 </body>
 <footer>
