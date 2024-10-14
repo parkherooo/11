@@ -88,7 +88,7 @@
                                 <p>작성자: <%= post.getUserId() %></p>
                                 <p>제목: <%= post.getTitle() %></p>
                             </div>
-                            <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px;">
+                            <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 16px; color: red;">
                                     ♥<%= post.getRecommend() %>
                                 </button>
                         </a>

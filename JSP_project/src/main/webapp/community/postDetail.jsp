@@ -111,8 +111,8 @@ try {
 
 		<div class="middle_review">
 			<div class="review_icon">
-					<form action="heartPlus" method="post">
-                            <input type="hidden" name="userId" value="<%= userId %>">
+					<form action="heart" method="post">
+                            <input type="hidden" name="userId" value="<%= userId != null ? userId : "" %>">
                             <input type="hidden" name="cuNum" value="<%= post.getCuNum() %>">
 							
                             <%
@@ -122,14 +122,14 @@ try {
 
                                 if ((heartStatus != null && heartStatus) || chk) {
                             %>
-                                <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 18px; cursor: pointer;">
+                                <button type="submit" class="heart-button" style="border: none; background: white; width: 40px; font-size: 18px; cursor: pointer; color: red;">
                                     ♥
                                 </button>
                                 <div>
                                 좋아요<%= post.getRecommend() %>
                                 </div>
                             <% } else { %>
-                                <button type="submit" class="heart-button" style="border: none; background: white;  width: 40px; font-size: 18px; cursor: pointer;">
+                                <button type="submit" class="heart-button" style="border: none; background: white;  width: 40px; font-size: 18px; cursor: pointer; color: red;">
                                     ♡
                                 </button>
                                 <div>
@@ -137,6 +137,17 @@ try {
                                 </div>
                             <% } %>
                         </form>
+<script>
+    function checkUserId() {
+        var userId = '<%= userId %>';
+        if (userId == null || userId.trim() === '') {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/JSP_project/login/logIn.jsp";  // 로그인 페이지로 이동
+            return false;  // 폼 제출 방지
+        }
+        return true;  // 로그인된 경우 폼 제출 허용
+    }
+</script>
 				<ul class="fixedclear">
 
 						
