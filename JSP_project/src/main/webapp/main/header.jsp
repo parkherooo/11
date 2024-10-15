@@ -45,7 +45,7 @@
 </script>
 </head>
 <body>
-<%@ include file="../alarm/alarm.jsp" %>>
+<%@ include file="../alarm/alarm.jsp" %>
 	<!-- header.jsp -->
 	<header>
     <div class="banner">
