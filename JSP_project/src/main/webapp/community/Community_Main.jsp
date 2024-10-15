@@ -201,8 +201,9 @@ if (newComment != null && !newComment.isEmpty() && cuNumStr != null) {
         }
 
     </script>
-	<%@ include file="/chatbot/chatbot.jsp"%>
+
 </div>
+<%@ include file="/chatbot/chatbot.jsp"%>
 </body>
 <footer>
 	<%@ include file="../main/footer.jsp"%></footer>
