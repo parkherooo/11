@@ -39,7 +39,7 @@
         // 네이버 로그인 버튼 초기화
         var naverLogin = new naver.LoginWithNaverId({
             clientId: "w345Zx3BXiwPQv_AAe9S",
-            callbackUrl: "http://localhost/JSP_project/login/naverLogin",
+            callbackUrl: "http://113.198.238.93/JSP_project/login/naverLogin",
             isPopup: false,
             loginButton: { color: "green", type: 3, height: 50 } // 버튼 색상과 타입 설정
         });
