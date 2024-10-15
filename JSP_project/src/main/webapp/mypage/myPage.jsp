@@ -307,6 +307,7 @@
 					   			
 					   			<td><%=frbean.getUserId() %></td>
 					   			<td>
+
 					   				<button class="mypage-button" type="button" onclick="location.href='../mypage/frprofile.jsp?id=<%=frbean.getUserId()%>'">프로필</button>
 						   			<button class="mypage-button" type="button" onclick="viewFriendDiet('<%=frbean.getFriendId() %>')">식단관리</button>
 						   			<button class="mypage-button" type="button" onclick="viewFriendExercise('<%=frbean.getFriendId() %>')">운동관리</button>
