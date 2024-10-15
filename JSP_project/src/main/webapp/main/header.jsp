@@ -1,6 +1,6 @@
 <%@page import="notice.NoticeMgr"%>
 <%@ page language="java"  pageEncoding="UTF-8"%>
-<%@ include file="../alarm/alarm.jsp" %>
+
 
 <%
 	// 이미 제공되는 session 객체를 사용하여 userId를 가져옴
@@ -45,7 +45,7 @@
 </script>
 </head>
 <body>
-<jsp:include page="../alarm/alarm.jsp" />
+<%@ include file="../alarm/alarm.jsp" %>>
 	<!-- header.jsp -->
 	<header>
     <div class="banner">

@@ -45,29 +45,32 @@
     }
     
     // 필터링된 레시피 목록
-    JSONArray filteredRecipes = new JSONArray();
-    if (recipes != null) {
-        for (int i = 0; i < recipes.length(); i++) {
-            JSONObject recipe = recipes.getJSONObject(i);
-            String food = recipe.getString("RCP_NA_TIP");
-            boolean containsAllergy = false;
+   JSONArray filteredRecipes = new JSONArray();
+	if (recipes != null) {
+	    for (int i = 0; i < recipes.length(); i++) {
+	        JSONObject recipe = recipes.getJSONObject(i);
+	        String recipeName = recipe.getString("RCP_NM"); // 레시피 이름
+	        
+	        boolean containsAllergy = false;
+	
+	        // 사용자 알러지 목록과 비교
+	        if (userAllergies != null) {
+	            for (String allergy : userAllergies) {
+	                // 레시피 이름에 알러지 항목이 포함되어 있는지 확인
+	                if (recipeName.toLowerCase().contains(allergy.toLowerCase())) {
+	                    containsAllergy = true;
+	                    break; // 하나의 알러지가 포함되면 더 이상 확인할 필요 없음
+	                }
+	            }
+	        }
+	
+	        // 알러지가 포함된 레시피는 제외
+	        if (!containsAllergy) {
+	            filteredRecipes.put(recipe);
+	        }
+	    }
+	}
 
-            // 사용자 알러지 목록과 비교
-            if (userAllergies != null) {
-                for (String allergy : userAllergies) {
-                    if (food.contains(allergy)) {
-                        containsAllergy = true;
-                        break; // 하나의 알러지가 포함되면 더 이상 확인할 필요 없음
-                    }
-                }
-            }
-
-            // 제외할 알러지가 포함되어 있지 않은 경우 추가
-            if (!containsAllergy) {
-                filteredRecipes.put(recipe);
-            }
-        }
-    }
 %>
 
 <!DOCTYPE html>

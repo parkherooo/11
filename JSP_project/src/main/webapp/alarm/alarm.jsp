@@ -15,6 +15,7 @@
 <body>
     <!-- header.jsp -->
     <header>
+    <%if(userId!=null){ %>
         <div class="notification-container">
             <!-- 알림 벨 아이콘 -->
             <img src="../img/bell.png" alt="Notification Bell" class="notification-bell" onclick="toggleNotificationBox()">
@@ -27,6 +28,7 @@
                 <div class="close-btn" onclick="toggleNotificationBox()">닫기</div>
             </div>
         </div>
+     <%} %>
     </header>
 </body>
 </html>
